@@ -1,7 +1,7 @@
 -- set colorscheme to nightfly with protected call
 -- in case it isn't installed
 --
-local status, _ = pcall(vim.cmd, "colorscheme duskfox")
+local status, _ = pcall(vim.cmd, "colorscheme horizon")
 
 if not status then
 	print("Colorscheme not found!") -- print error if colorscheme not installed
@@ -9,7 +9,7 @@ if not status then
 end
 
 -- Default options
-require("nightfox").setup({
+--[[ require("nightfox").setup({
 	options = {
 		-- Compiled file's destination location
 		compile_path = vim.fn.stdpath("cache") .. "/nightfox",
@@ -54,4 +54,4 @@ require("nightfox").setup({
 	groups = {
 		all = {},
 	},
-})
+}) ]]

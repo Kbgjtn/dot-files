@@ -28,13 +28,23 @@ end
 
 -- add list of plugins to install
 return packer.startup(function(use)
+	-- oil vim buffer filesystem
+	use("stevearc/oil.nvim")
+
+	-- copilot
+	use("github/copilot.vim")
+
 	-- packer can manage itself
 	use("wbthomason/packer.nvim")
+
+	-- trouble nvim
+	use("folke/trouble.nvim")
 
 	use("nvim-lua/plenary.nvim") -- lua functions that many plugins use
 
 	-- use("bluz71/vim-nightfly-guicolors") -- preferred colorscheme
-	use("EdenEast/nightfox.nvim") -- nightfox colorscheme
+	-- use("EdenEast/nightfox.nvim") -- nightfox colorscheme
+	use("lunarvim/horizon.nvim")
 
 	use({
 		"svrana/neosolarized.nvim",
@@ -51,6 +61,7 @@ return packer.startup(function(use)
 
 	-- commenting with gc
 	use("numToStr/Comment.nvim")
+	-- use("preservim/nerdcommenter")
 
 	-- file explorer
 	use("nvim-tree/nvim-tree.lua")
@@ -63,7 +74,7 @@ return packer.startup(function(use)
 
 	-- fuzzy finding w/ telescope
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" }) -- dependency for better sorting performance
-	use({ "nvim-telescope/telescope.nvim", branch = "0.1.x" }) -- fuzzy finder
+	use({ "nvim-telescope/telescope.nvim", tag = "0.1.1" }) -- fuzzy finder
 
 	-- autocompletion
 	use("hrsh7th/nvim-cmp") -- completion plugin
@@ -76,11 +87,15 @@ return packer.startup(function(use)
 	use("rafamadriz/friendly-snippets") -- useful snippets
 
 	-- managing & installing lsp servers, linters & formatters
-	use("williamboman/mason.nvim") -- in charge of managing lsp servers, linters & formatters
-	use("williamboman/mason-lspconfig.nvim") -- bridges gap b/w mason & lspconfig
+
+	use({
+		"williamboman/mason.nvim", -- in charge of managing lsp servers, linters & formatters
+		"williamboman/mason-lspconfig.nvim",
+	}) -- bridges gap b/w mason & lspconfig
 
 	-- configuring lsp servers
 	use("neovim/nvim-lspconfig") -- easily configure language servers
+	use("wbthomason/packer.nvim") -- lsp colors
 	use("hrsh7th/cmp-nvim-lsp") -- for autocompletion
 	use({ "glepnir/lspsaga.nvim", branch = "main" }) -- enhanced lsp uis
 	use("jose-elias-alvarez/typescript.nvim") -- additional functionality for typescript server (e.g. rename file & update imports)
