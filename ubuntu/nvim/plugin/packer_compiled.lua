@@ -129,6 +129,11 @@ _G.packer_plugins = {
     path = "/home/tortuga/.local/share/nvim/site/pack/packer/start/horizon.nvim",
     url = "https://github.com/lunarvim/horizon.nvim"
   },
+  ["lsp_lines.nvim"] = {
+    loaded = true,
+    path = "/home/tortuga/.local/share/nvim/site/pack/packer/start/lsp_lines.nvim",
+    url = "https://git.sr.ht/~whynothugo/lsp_lines.nvim"
+  },
   ["lspkind.nvim"] = {
     loaded = true,
     path = "/home/tortuga/.local/share/nvim/site/pack/packer/start/lspkind.nvim",

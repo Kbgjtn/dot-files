@@ -7,6 +7,16 @@ end
 
 -- import cmp-nvim-lsp plugin safely
 local cmp_nvim_lsp_status, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+local lsp_lines = require("lsp_lines")
+lsp_lines.setup({
+	icons = {
+		Error = " ",
+		Warning = " ",
+		Information = " ",
+		Hint = " ",
+	},
+})
+
 if not cmp_nvim_lsp_status then
 	return
 end
@@ -52,6 +62,7 @@ local capabilities = cmp_nvim_lsp.default_capabilities()
 -- Change the Diagnostic symbols in the sign column (gutter)
 -- (not in youtube nvim video)
 local signs = { Error = " ", Warn = " ", Hint = "ﴞ ", Info = " " }
+
 for type, icon in pairs(signs) do
 	local hl = "DiagnosticSign" .. type
 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
@@ -89,6 +100,15 @@ lspconfig["emmet_ls"].setup({
 	on_attach = on_attach,
 	filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
 })
+
+vim.diagnostic.config({
+	virtual_text = false,
+})
+
+vim.keymap.set("", "<Leader>l", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+
+vim.o.updatetime = 100 -- update diagnostics more frequently
+vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.show_line_diagnostics({focusable=false})]]) -- show diagnostics on cursor hold
 
 -- configure lua server (with special settings)
 lspconfig.lua_ls.setup({

@@ -31,6 +31,8 @@ return packer.startup(function(use)
 	-- oil vim buffer filesystem
 	use("stevearc/oil.nvim")
 
+	--
+
 	-- copilot
 	use("github/copilot.vim")
 
@@ -86,8 +88,10 @@ return packer.startup(function(use)
 	use("saadparwaiz1/cmp_luasnip") -- for autocompletion
 	use("rafamadriz/friendly-snippets") -- useful snippets
 
-	-- managing & installing lsp servers, linters & formatters
+	-- lsp-zero
+	use("https://git.sr.ht/~whynothugo/lsp_lines.nvim")
 
+	-- managing & installing lsp servers, linters & formatters
 	use({
 		"williamboman/mason.nvim", -- in charge of managing lsp servers, linters & formatters
 		"williamboman/mason-lspconfig.nvim",
