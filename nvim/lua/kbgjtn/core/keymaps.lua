@@ -8,6 +8,52 @@ local keymap = vim.keymap -- for conciseness
 -- General Keymaps
 ---------------------
 
+-- greatest vim keymap ever
+keymap.set("n", "Q", "<Nop>")
+
+keymap.set("n", "J", "mzJ`z")
+keymap.set("n", "<C-d>", "<C-d>zz")
+keymap.set("n", "<C-u>", "<C-u>zz")
+keymap.set("n", "n", "nzzzv")
+keymap.set("n", "N", "Nzzzv")
+
+keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+
+keymap.set("n", "lw", "$") -- last word
+keymap.set("n", "fw", "0") -- first word
+
+keymap.set("n", "Q", "<nop>")
+keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+keymap.set("n", "<leader>f", vim.lsp.buf.format)
+
+keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
+keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
+keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
+keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
+
+keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gc<Left><Left><Left>]])
+keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+
+keymap.set("n", "<leader>vpp", "<cmd>e ~/.dotfiles/nvim/.config/nvim/lua/theprimeagen/packer.lua<CR>")
+keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>")
+
+keymap.set("n", "<leader><leader>", function()
+	vim.cmd("so")
+end)
+
+-- save all buffer files
+keymap.set("n", "<leader>w", ":wa<CR>")
+keymap.set("n", "<leader>q", ":wa<CR>:q<CR>")
+
+-- undo tree
+keymap.set("n", "<leader>u", ":UndotreeToggle<CR>")
+
+-- tab buffer
+keymap.set("n", "<S-n>", ":tabnew<CR>")
+keymap.set("n", "<A-j>", ":tabnext<CR>")
+keymap.set("n", "<A-k>", ":tabprevious<CR>")
+keymap.set("n", "<C-c>", ":tabclose<CR>")
+
 -- use jk to exit insert mode
 keymap.set("i", "jk", "<ESC>")
 
@@ -22,7 +68,7 @@ keymap.set("n", "<C-a>", "gg<S-v>G")
 
 -- increment/decrement numbers
 keymap.set("n", "+", "<C-a>")
-keymap.set("n", "-", "<C-x>")
+keymap.set("n", "<leader>-", "<C-x>")
 
 -- window management
 keymap.set("n", "<leader>sv", "<C-w>v") -- split window vertically
@@ -65,8 +111,8 @@ keymap.set("v", "<A-k>", ":m .-2<CR>==", opts)
 keymap.set("v", "p", '"_dP', opts)
 
 -- Move text up and down
-keymap.set("x", "J", ":move '>+1<CR>gv-gv", opts)
-keymap.set("x", "K", ":move '<-2<CR>gv-gv", opts)
+keymap.set("x", "J", ":move '>+1<CR>gv=gv", opts)
+keymap.set("x", "K", ":move '<-2<CR>gv=gv", opts)
 keymap.set("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 keymap.set("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
@@ -75,6 +121,8 @@ keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>") -- toggle file explorer
 
 -- telescope
 keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>") -- find files within current working directory, respects .gitignore
+keymap.set("n", "<C-p>", "<cmd>Telescope git_files<cr>") -- find git files within current working directory
+keymap.set("n", "<C-p>", "<cmd>Telescope git_files<cr>")
 keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>") -- find string in current working directory as you type
 keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>") -- find string under cursor in current working directory
 keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>") -- list open buffers in current neovim instance

@@ -4,10 +4,9 @@ local opt = vim.opt -- for conciseness
 vim.scriptencoding = "utf-8"
 opt.encoding = "utf-8"
 opt.fileencoding = "utf-8"
-
 opt.title = true
 opt.hlsearch = true
-opt.backup = false
+opt.incsearch = true
 opt.smartindent = true
 opt.showcmd = true
 opt.laststatus = 2
@@ -20,6 +19,9 @@ opt.smarttab = true
 opt.backspace = { "start", "eol", "indent" }
 opt.path:append({ "**" }) -- Finding files - Search down into subfolders
 opt.wildignore:append({ "*/node_modules/*" })
+opt.cursorcolumn = false
+opt.isfname:append("@-@")
+opt.updatetime = 50
 
 -- Undercurl
 vim.cmd([[let &t_Cs = "\e[4:3m"]])
@@ -48,12 +50,17 @@ opt.autoindent = true -- copy indent from current line when starting new one
 -- line wrapping
 opt.wrap = false -- disable line wrapping
 
+opt.swapfile = false -- disable swap file
+opt.backup = false -- disable backup
+opt.undofile = true -- enable undo file
+opt.undodir = os.getenv("HOME") .. "/.vim/undodir" -- set undo file directory
+
 -- search settings
 opt.ignorecase = true -- ignore case when searching
 opt.smartcase = true -- if you include mixed case in your search, assumes you want case-sensitive
 
 -- cursor line
-opt.cursorline = true -- highlight the current cursor line
+opt.cursorline = false -- highlight the current cursor line
 
 -- appearance
 

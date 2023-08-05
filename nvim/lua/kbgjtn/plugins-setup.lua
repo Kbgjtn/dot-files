@@ -28,10 +28,13 @@ end
 
 -- add list of plugins to install
 return packer.startup(function(use)
+	-- nvim web devicons
+
 	-- oil vim buffer filesystem
 	use("stevearc/oil.nvim")
 
-	--
+	-- undo tree
+	use("mbbill/undotree")
 
 	-- copilot
 	use("github/copilot.vim")
@@ -44,9 +47,17 @@ return packer.startup(function(use)
 
 	use("nvim-lua/plenary.nvim") -- lua functions that many plugins use
 
+	-- colorscheme
 	-- use("bluz71/vim-nightfly-guicolors") -- preferred colorscheme
 	-- use("EdenEast/nightfox.nvim") -- nightfox colorscheme
-	use("lunarvim/horizon.nvim")
+	-- use("lunarvim/horizon.nvim")
+	-- use("rebelot/kanagawa.nvim")
+	use("https://github.com/rktjmp/lush.nvim")
+	use("https://github.com/nocksock/bloop.nvim")
+	-- use("rose-pine/neovim") -- rose pine colorscheme
+
+	-- navigation tabs
+	use("theprimeagen/harpoon")
 
 	use({
 		"svrana/neosolarized.nvim",
@@ -64,6 +75,9 @@ return packer.startup(function(use)
 	-- commenting with gc
 	use("numToStr/Comment.nvim")
 	-- use("preservim/nerdcommenter")
+
+	use("mfussenegger/nvim-dap")
+	use("mfussenegger/nvim-jdtls")
 
 	-- file explorer
 	use("nvim-tree/nvim-tree.lua")
@@ -90,6 +104,21 @@ return packer.startup(function(use)
 
 	-- lsp-zero
 	use("https://git.sr.ht/~whynothugo/lsp_lines.nvim")
+	use({
+		"VonHeikemen/lsp-zero.nvim",
+		branch = "v2.x",
+		requires = {
+			-- LSP Support
+			{ "neovim/nvim-lspconfig" }, -- Required
+			{ "williamboman/mason.nvim" }, -- Optional
+			{ "williamboman/mason-lspconfig.nvim" }, -- Optional
+
+			-- Autocompletion
+			{ "hrsh7th/nvim-cmp" }, -- Required
+			{ "hrsh7th/cmp-nvim-lsp" }, -- Required
+			{ "L3MON4D3/LuaSnip" }, -- Required
+		},
+	})
 
 	-- managing & installing lsp servers, linters & formatters
 	use({
@@ -124,6 +153,16 @@ return packer.startup(function(use)
 
 	-- git integration
 	use("lewis6991/gitsigns.nvim") -- show line modifications on left hand side
+
+	use({
+		"kylechui/nvim-surround",
+		tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+		config = function()
+			require("nvim-surround").setup({
+				-- Configuration here, or leave empty to use defaults
+			})
+		end,
+	})
 
 	if packer_bootstrap then
 		require("packer").sync()

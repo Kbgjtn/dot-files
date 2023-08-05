@@ -93,6 +93,8 @@ treesitter.setup({
 			},
 		},
 	},
+	sync_install = false,
 	-- auto install above language parsers
 	auto_install = true,
+	additional_vim_regex_highlighting = false,
 })

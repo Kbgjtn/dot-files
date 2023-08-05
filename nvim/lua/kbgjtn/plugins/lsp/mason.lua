@@ -28,12 +28,10 @@ mason_lspconfig.setup({
 		"tailwindcss",
 		"prismals",
 		"yamlls",
-		"java_language_server",
 		"graphql",
 		"jsonls",
 		"dockerls",
 		"bashls",
-		-- "sumneko_lua",
 		"emmet_ls",
 	},
 	-- auto-install configured servers (with lspconfig)
