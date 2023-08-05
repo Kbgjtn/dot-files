@@ -22,9 +22,9 @@ theme.setup({
 	invert_signs = false,
 	invert_tabline = false,
 	invert_intend_guides = false,
-	invert_diff = false,
+	invert_diff = true,
 	inverse = false, -- invert background for search, diffs, statuslines and errors
-	contrast = "", -- can be "hard", "soft" or empty string
+	contrast = "soft", -- can be "hard", "soft" or empty string
 	palette_overrides = {},
 	overrides = {
 		SignColumn = { bg = "#101010" },

@@ -6,7 +6,7 @@ end
 local colors = {
 	blue = "#73ab84",
 	cyan = "#3dccc7",
-	black = "#000000",
+	black = "#101010",
 	white = "#c6c6c6",
 	red = "#ff5189",
 	yellow = "#fdc500",
@@ -16,18 +16,18 @@ local colors = {
 
 local bubbles_theme = {
 	normal = {
-		a = { fg = colors.none, bg = colors.yellow },
+		a = { fg = colors.black, bg = colors.yellow },
 		b = { fg = colors.white, bg = colors.grey },
-		c = { fg = colors.none, bg = colors.none },
+		c = { fg = colors.white, bg = colors.black },
 	},
 
-	insert = { a = { fg = colors.none, bg = colors.blue } },
-	visual = { a = { fg = colors.none, bg = colors.cyan } },
-	replace = { a = { fg = colors.none, bg = colors.red } },
+	insert = { a = { fg = colors.black, bg = colors.blue } },
+	visual = { a = { fg = colors.black, bg = colors.cyan } },
+	replace = { a = { fg = colors.black, bg = colors.red } },
 	inactive = {
-		a = { fg = colors.white, bg = colors.none },
-		b = { fg = colors.white, bg = colors.none },
-		c = { fg = colors.none, bg = colors.none },
+		a = { fg = colors.white, bg = colors.black },
+		b = { fg = colors.white, bg = colors.black },
+		c = { fg = colors.black, bg = colors.black },
 	},
 }
 
