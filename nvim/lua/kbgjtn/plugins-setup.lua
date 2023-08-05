@@ -50,11 +50,12 @@ return packer.startup(function(use)
 	-- colorscheme
 	-- use("bluz71/vim-nightfly-guicolors") -- preferred colorscheme
 	-- use("EdenEast/nightfox.nvim") -- nightfox colorscheme
-	-- use("lunarvim/horizon.nvim")
 	-- use("rebelot/kanagawa.nvim")
-	use("https://github.com/rktjmp/lush.nvim")
-	use("https://github.com/nocksock/bloop.nvim")
+	-- use("https://github.com/rktjmp/lush.nvim")
+	-- use("https://github.com/nocksock/bloop.nvim")
 	-- use("rose-pine/neovim") -- rose pine colorscheme
+	-- use("akinsho/horizon.nvim")
+	use("ellisonleao/gruvbox.nvim")
 
 	-- navigation tabs
 	use("theprimeagen/harpoon")
@@ -104,21 +105,6 @@ return packer.startup(function(use)
 
 	-- lsp-zero
 	use("https://git.sr.ht/~whynothugo/lsp_lines.nvim")
-	use({
-		"VonHeikemen/lsp-zero.nvim",
-		branch = "v2.x",
-		requires = {
-			-- LSP Support
-			{ "neovim/nvim-lspconfig" }, -- Required
-			{ "williamboman/mason.nvim" }, -- Optional
-			{ "williamboman/mason-lspconfig.nvim" }, -- Optional
-
-			-- Autocompletion
-			{ "hrsh7th/nvim-cmp" }, -- Required
-			{ "hrsh7th/cmp-nvim-lsp" }, -- Required
-			{ "L3MON4D3/LuaSnip" }, -- Required
-		},
-	})
 
 	-- managing & installing lsp servers, linters & formatters
 	use({

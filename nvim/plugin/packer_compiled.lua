@@ -84,11 +84,6 @@ _G.packer_plugins = {
     path = "/home/tortuga/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
-  ["bloop.nvim"] = {
-    loaded = true,
-    path = "/home/tortuga/.local/share/nvim/site/pack/packer/start/bloop.nvim",
-    url = "https://github.com/nocksock/bloop.nvim"
-  },
   ["cmp-buffer"] = {
     loaded = true,
     path = "/home/tortuga/.local/share/nvim/site/pack/packer/start/cmp-buffer",
@@ -129,15 +124,15 @@ _G.packer_plugins = {
     path = "/home/tortuga/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
     url = "https://github.com/lewis6991/gitsigns.nvim"
   },
+  ["gruvbox.nvim"] = {
+    loaded = true,
+    path = "/home/tortuga/.local/share/nvim/site/pack/packer/start/gruvbox.nvim",
+    url = "https://github.com/ellisonleao/gruvbox.nvim"
+  },
   harpoon = {
     loaded = true,
     path = "/home/tortuga/.local/share/nvim/site/pack/packer/start/harpoon",
     url = "https://github.com/theprimeagen/harpoon"
-  },
-  ["lsp-zero.nvim"] = {
-    loaded = true,
-    path = "/home/tortuga/.local/share/nvim/site/pack/packer/start/lsp-zero.nvim",
-    url = "https://github.com/VonHeikemen/lsp-zero.nvim"
   },
   ["lsp_lines.nvim"] = {
     loaded = true,
@@ -158,11 +153,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tortuga/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/nvim-lualine/lualine.nvim"
-  },
-  ["lush.nvim"] = {
-    loaded = true,
-    path = "/home/tortuga/.local/share/nvim/site/pack/packer/start/lush.nvim",
-    url = "https://github.com/rktjmp/lush.nvim"
   },
   ["mason-lspconfig.nvim"] = {
     loaded = true,
