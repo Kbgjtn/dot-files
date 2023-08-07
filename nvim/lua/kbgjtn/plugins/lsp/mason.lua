@@ -33,6 +33,7 @@ mason_lspconfig.setup({
 		"dockerls",
 		"bashls",
 		"emmet_ls",
+		"gopls",
 	},
 	-- auto-install configured servers (with lspconfig)
 	automatic_installation = true, -- not the same as ensure_installed

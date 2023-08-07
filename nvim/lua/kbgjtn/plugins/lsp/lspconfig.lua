@@ -101,6 +101,16 @@ lspconfig["emmet_ls"].setup({
 	filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
 })
 
+local util = require("lspconfig/util")
+
+lspconfig.gopls.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+    cmd = {"gopls"},
+    filetypes = {"go", "gomod", "gowork", "gotmpl"},
+    root_dir = util.root_pattern("go.mod", "go.work", ".git"),
+})
+
 vim.diagnostic.config({
 	virtual_text = false,
 })

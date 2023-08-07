@@ -2,6 +2,10 @@ local utils = require("utils")
 local autocmd = utils.autocmd
 local nmap = utils.nmap
 
+vim.api.nvim_create_autocmd("BufEnter", {
+	command = "colorscheme gruvbox",
+})
+
 autocmd("VimResized", {
 	callback = function()
 		vim.cmd("tabdo wincmd =")

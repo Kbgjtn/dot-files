@@ -8,9 +8,20 @@ end
 autopairs.setup({
 	check_ts = true, -- enable treesitter
 	ts_config = {
-		lua = { "string" }, -- don't add pairs in lua string treesitter nodes
-		javascript = { "template_string" }, -- don't add pairs in javscript template_string treesitter nodes
+		lua = { "string", "source" }, -- don't add pairs in lua string treesitter nodes
+		javascript = { "string", "template_string" }, -- don't add pairs in javscript template_string treesitter nodes
 		java = false, -- don't check treesitter on java
+	},
+	disable__filetype = { "TelescopePrompt", "spectre_panel" }, -- don't add pairs in TelescopePrompt
+	fast_wrap = {
+		map = "<M-e",
+		chars = { "{", "[", "(", '"', "'" },
+		offset = 0, -- Offset from pattern match
+		end_key = "$",
+		keys = "qwertyuiopzxcvbnmasdfghjkl",
+		check_comma = true,
+		highlight = "PmenuSel",
+		hightlight_grey = "LineNr",
 	},
 })
 
@@ -22,6 +33,7 @@ end
 
 -- import nvim-cmp plugin safely (completions plugin)
 local cmp_setup, cmp = pcall(require, "cmp")
+
 if not cmp_setup then
 	return
 end

@@ -12,10 +12,12 @@ local keymap = vim.keymap -- for conciseness
 keymap.set("n", "Q", "<Nop>")
 
 keymap.set("n", "J", "mzJ`z")
-keymap.set("n", "<C-d>", "<C-d>zz")
-keymap.set("n", "<C-u>", "<C-u>zz")
+keymap.set("n", "<S-d>", "<C-d>zz")
+keymap.set("n", "<c-u>", "<C-u>zz")
 keymap.set("n", "n", "nzzzv")
 keymap.set("n", "N", "Nzzzv")
+
+keymap.set("n", "<leader>g", ":colorscheme gruvbox<CR>")
 
 keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
@@ -26,10 +28,8 @@ keymap.set("n", "Q", "<nop>")
 keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 keymap.set("n", "<leader>f", vim.lsp.buf.format)
 
-keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
-keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
-keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
-keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
+keymap.set("n", "<C-k>", "<cmd>bp<CR>")
+keymap.set("n", "<C-j>", "<cmd>bn<CR>")
 
 keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gc<Left><Left><Left>]])
 keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
@@ -42,8 +42,7 @@ keymap.set("n", "<leader><leader>", function()
 end)
 
 -- save all buffer files
-keymap.set("n", "<leader>w", ":wa<CR>")
-keymap.set("n", "<leader>q", ":wa<CR>:q<CR>")
+keymap.set("n", "<leader>w", "<cmd>wall<CR>")
 
 -- undo tree
 keymap.set("n", "<leader>u", ":UndotreeToggle<CR>")
@@ -51,7 +50,7 @@ keymap.set("n", "<leader>u", ":UndotreeToggle<CR>")
 -- tab buffer
 keymap.set("n", "<S-n>", ":tabnew<CR>")
 keymap.set("n", "<A-j>", ":tabnext<CR>")
-keymap.set("n", "<A-k>", ":tabprevious<CR>")
+keymap.set("n", "<A-l>", ":tabprevious<CR>")
 keymap.set("n", "<C-c>", ":tabclose<CR>")
 
 -- use jk to exit insert mode
@@ -67,8 +66,8 @@ keymap.set("n", "x", '"_x')
 keymap.set("n", "<C-a>", "gg<S-v>G")
 
 -- increment/decrement numbers
-keymap.set("n", "+", "<C-a>")
-keymap.set("n", "<leader>-", "<C-x>")
+keymap.set("n", "<C-i>", "<C-a>")
+keymap.set("n", "<C-d>", "<C-x>")
 
 -- window management
 keymap.set("n", "<leader>sv", "<C-w>v") -- split window vertically
@@ -76,10 +75,10 @@ keymap.set("n", "<leader>sh", "<C-w>s") -- split window horizontally
 keymap.set("n", "<leader>se", "<C-w>=") -- make split windows equal width & height
 keymap.set("n", "<leader>sx", ":close<CR>") -- close current split window
 
-keymap.set("n", "<leader>to", ":tabnew<CR>") -- open new tab
-keymap.set("n", "<leader>tx", ":tabclose<CR>") -- close current tab
-keymap.set("n", "<leader>tn", ":tabn<CR>") --  go to next tab
-keymap.set("n", "<leader>tp", ":tabp<CR>") --  go to previous tab
+-- keymap.set("n", "<leader>to", ":tabnew<CR>") -- open new tab
+-- keymap.set("n", "<leader>tx", ":tabclose<CR>") -- close current tab
+-- keymap.set("n", "<leader>tn", ":tabn<CR>") --  go to next tab
+-- keymap.set("n", "<leader>tp", ":tabp<CR>") --  go to previous tab
 
 -- Split window
 keymap.set("n", "ss", ":split<Return><C-w>w")
@@ -116,7 +115,7 @@ keymap.set("x", "K", ":move '<-2<CR>gv=gv", opts)
 keymap.set("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 keymap.set("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
--- nvim-tree
+-- nvim-tree or file explorer
 keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>") -- toggle file explorer
 
 -- telescope
@@ -138,11 +137,10 @@ keymap.set("n", "<leader>gs", "<cmd>Telescope git_status<cr>") -- list current c
 keymap.set("n", "<leader>rs", ":LspRestart<CR>") -- mapping to restart lsp if necessary
 
 -- Diagnostic keymaps
---[[ vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
- ]]
 
 -- trouble keymaps
 vim.api.nvim_set_keymap("n", "<leader>xx", "<cmd>Trouble<cr>", opts)

@@ -28,8 +28,6 @@ end
 
 -- add list of plugins to install
 return packer.startup(function(use)
-	-- nvim web devicons
-
 	-- oil vim buffer filesystem
 	use("stevearc/oil.nvim")
 
@@ -42,10 +40,23 @@ return packer.startup(function(use)
 	-- packer can manage itself
 	use("wbthomason/packer.nvim")
 
+	-- notify
+	use({
+		"rcarriga/nvim-notify",
+		config = function()
+			require("notify").setup({
+				background_colour = "#000000",
+			})
+		end,
+	})
+
 	-- trouble nvim
 	use("folke/trouble.nvim")
 
 	use("nvim-lua/plenary.nvim") -- lua functions that many plugins use
+
+	-- bufferline
+	use({ "akinsho/bufferline.nvim", tag = "*", requires = "nvim-tree/nvim-web-devicons" })
 
 	-- colorscheme
 	-- use("bluz71/vim-nightfly-guicolors") -- preferred colorscheme
@@ -56,6 +67,7 @@ return packer.startup(function(use)
 	-- use("rose-pine/neovim") -- rose pine colorscheme
 	-- use("akinsho/horizon.nvim")
 	use("ellisonleao/gruvbox.nvim")
+	use({ "catppuccin/nvim" })
 
 	-- navigation tabs
 	use("theprimeagen/harpoon")
@@ -114,7 +126,6 @@ return packer.startup(function(use)
 
 	-- configuring lsp servers
 	use("neovim/nvim-lspconfig") -- easily configure language servers
-	use("wbthomason/packer.nvim") -- lsp colors
 	use("hrsh7th/cmp-nvim-lsp") -- for autocompletion
 	use({ "glepnir/lspsaga.nvim", branch = "main" }) -- enhanced lsp uis
 	use("jose-elias-alvarez/typescript.nvim") -- additional functionality for typescript server (e.g. rename file & update imports)
