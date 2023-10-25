@@ -1,0 +1,47 @@
+"use client";
+
+import {
+  Navbar as NextUINavbar,
+  NavbarContent,
+  NavbarMenuToggle,
+  NavbarBrand,
+} from "@nextui-org/navbar";
+import NextLink from "next/link";
+import { ThemeSwitch } from "@/components/theme-switch";
+import notethingnessIcon from "../public/48px by 48px.svg";
+import Image from "next/image";
+
+export const Navbar = () => {
+  return (
+    <NextUINavbar maxWidth="xl" position="sticky">
+      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
+        <NavbarBrand as="li" className="gap-3 max-w-fit">
+          <NextLink className="flex justify-start items-center gap-1" href="/">
+            <Image
+              priority
+              className="bg-transparent fill-transparent w-8 h-8 noselect pointer-events-none"
+              src={notethingnessIcon}
+              alt="icon"
+            />
+            <span>
+              <i>
+                <span className={"font-normal"}>note</span>
+                <b className={"font-black"}>thing</b>
+                <span className={"font-normal"}>ness</span>
+              </i>
+            </span>
+          </NextLink>
+        </NavbarBrand>
+      </NavbarContent>
+
+      <ul>
+        <ThemeSwitch className="max-sm:!hidden" />
+      </ul>
+
+      <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
+        <ThemeSwitch />
+        <NavbarMenuToggle />
+      </NavbarContent>
+    </NextUINavbar>
+  );
+};

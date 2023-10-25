@@ -1,0 +1,21 @@
+PORT="4334"
+HOST="0.0.0.0"
+LOG_LEVEL="debug"
+NODE_ENV="development"
+CLIENT_ORIGIN="http://127.0.0.1:3000"
+SERVER_ORIGIN="http://127.0.0.1:4334"
+WHITE_LISTED_DOMAINS="http://127.0.0.1:3000,http://127.0.0.1:4334"
+KEY_PASSPHRASE="o_n_o_n_o_n_o_n_o_n_o_n-c-h_a-n_ge---m00e-s_o-o_n"
+CLIENT_ID="dofavourMobileApp"
+ISSUER="https://api.dofavour.com"
+
+DATABASE_URL="postgresql://p0sTgR35:jBvit5YUT56UMKmrVXhMTgNih9ZJmEDesT@127.0.0.1:15432/postgres?schema=public"
+POSTGRES_USER="p0sTgR35"
+POSTGRES_PASSWORD="jBvit5YUT56UMKmrVXhMTgNih9ZJmEDesT"
+POSTGRES_DB="postgres"
+
+# SMTP SERVER
+SMTP_HOST=127.0.0.1
+SMTP_PORT=1025
+SMTP_APIKEY_PUBLIC=
+SMTP_APIKEY_PRIVATE=

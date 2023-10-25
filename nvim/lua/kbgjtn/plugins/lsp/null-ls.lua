@@ -12,12 +12,19 @@ local diagnostics = null_ls.builtins.diagnostics -- to setup linters
 -- to setup format on save
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
+local opts = {
+	sources = {},
+}
+
 -- configure null_ls
 null_ls.setup({
 	-- setup formatters & linters
 	sources = {
 		--  to disable file types use
 		--  "formatting.prettier.with({disabled_filetypes: {}})" (see null-ls docs)
+		formatting.gofumpt,
+		formatting.goimports_reviser,
+		formatting.golines,
 		formatting.prettier, -- js/ts formatter
 		formatting.stylua, -- lua formatter
 		diagnostics.eslint_d.with({ -- js/ts linter

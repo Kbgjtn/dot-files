@@ -1,0 +1,6 @@
+package usecases.NomNomCo.Menu;
+
+interface Command {
+    void execute();
+}
+

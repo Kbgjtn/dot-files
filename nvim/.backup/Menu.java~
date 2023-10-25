@@ -1,0 +1,17 @@
+package usecases.NomNomCo.Menu;
+
+public class Menu {
+    protected Command[] commands;
+    
+    public Menu() {
+        this.commands = {
+            new ViewConfectionaryOrderCommand(),
+            new BakeConfectionaryCommand(),
+        }
+
+
+    }
+    public static void main(String[] args) {
+    }
+
+}

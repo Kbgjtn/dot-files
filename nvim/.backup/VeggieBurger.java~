@@ -1,0 +1,19 @@
+package Creational.FactoryMethod.Restaurant;
+
+public class VeggieBurger implements Burger {
+    private String name;
+    private int price;
+    private String code;
+
+    public VeggieBurger() {
+        this.name = "Veggie Burger";
+        this.price = 8;
+        this.code = "VB_5001";
+    }
+
+    @Override
+    public void prepare() {
+        System.out.println("Preparing " + name + " with price $" + price + " and code " + code);
+    }
+    
+}

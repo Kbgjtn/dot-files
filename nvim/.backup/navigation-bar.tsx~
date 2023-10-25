@@ -1,0 +1,78 @@
+"use client";
+
+import { useCurrentTheme } from "@/hooks/useCurrentTheme";
+import { cn } from "@/libs/utils";
+import { motion as m } from "framer-motion";
+
+import { Image } from "@nextui-org/react";
+import React from "react";
+import { redirect } from "next/navigation";
+import { container, item } from "@/utils/variants";
+
+export function NavigationBar() {
+    const { isDark } = useCurrentTheme();
+
+    return (
+        <>
+            <div
+                className={cn(
+                    "flex justify-center items-center",
+                    "max-sm:flex-col max-sm:space-x-0",
+                    "space-x-32",
+                    "font-mono",
+                    "dark:bg-black"
+                )}
+            >
+                <div className={cn("flex", "py-6 space-x-2")}>
+                    <m.div
+                        initial={{ opacity: 0 }}
+                        animate={{
+                            opacity: [0.5, 1, 0.5, 1],
+                            scale: [1, 1.1, 1, 1.1, 1],
+                            rotate: [0, 16, 0, -16, 0],
+                        }}
+                    >
+                        <Image
+                            className={cn("pointer-events-none select-none")}
+                            src={
+                                isDark
+                                    ? "/icon_logo_120px_by_120px.png"
+                                    : "/icon_logo_darker_120px_by_120px.png"
+                            }
+                            alt="icon"
+                            isZoomed
+                            width={24}
+                            height={24}
+                            draggable={false}
+                            loading="eager"
+                        />
+                    </m.div>
+                    <span className={cn("select-none")} onClick={() => redirect("/")}>
+                        <m.i variants={container} initial="hidden" animate="show">
+                            <m.span variants={item} className={cn("font-normal")}>
+                                note
+                            </m.span>
+                            <m.b variants={item} className={cn("font-black")}>
+                                thing
+                            </m.b>
+                            <m.span variants={item} className={cn("font-normal")}>
+                                ness
+                            </m.span>
+                        </m.i>
+                    </span>
+                </div>
+
+                <div className={cn("flex", "space-x-4")}>
+                    <div className={"flex"}>
+                        <p className="text-[12px] font-medium text-muted-foreground opacity-90">
+                            press{" "}
+                            <kbd className="dark:bg-black pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 ">
+                                <span className="text-md font-medium">Shift </span>⌘
+                            </kbd>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+}

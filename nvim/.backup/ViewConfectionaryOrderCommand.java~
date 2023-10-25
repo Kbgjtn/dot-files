@@ -1,0 +1,13 @@
+package usecases.NomNomCo.Menu;
+
+class BakeConfectionaryCommand implements Command {
+    private String command = "View Confectionary Order";
+
+    public String getCommand() {
+        return this.command;
+    }
+
+    public void execute() {
+        System.out.println(this.getCommand());
+    }
+}

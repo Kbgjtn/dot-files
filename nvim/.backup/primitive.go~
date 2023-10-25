@@ -1,0 +1,20 @@
+package main
+
+import "fmt"
+
+func primitive() {
+	// Boolean
+	var isOpen bool = true
+	n := 1 == 2
+	m := 1 == 1
+	o := false == true
+	fmt.Printf("isOpen: %v", "%T\n", isOpen, isOpen)
+	fmt.Printf("n: %v\n", n)
+	fmt.Printf("m: %v\n", m)
+	fmt.Printf("o: %v\n", o)
+}
+
+func main() {
+	rolesCase()
+	primitive()
+}

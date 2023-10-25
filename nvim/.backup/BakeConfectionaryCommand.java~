@@ -1,0 +1,14 @@
+package usecases.NomNomCo.Menu;
+
+class BakeConfectionaryCommand implements Command {
+    private String command = "Bake Confectionary";
+
+    public String getCommand() {
+        return this.command;
+    }
+
+    @Override
+    public void execute() {
+        System.out.println(this.getCommand());
+    }
+}

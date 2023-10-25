@@ -1,0 +1,31 @@
+package main
+
+import "fmt"
+
+const (
+	isAdmin        = 1 << iota // 0000 0001 : 1
+	isHeadquarters             // 0000 0010 : 2
+	isManager                  // 0000 0100 : 4
+	isAccountant               // 0000 1000 : 8
+	isSalesman                 // 0001 0000 : 16
+
+	canRead   // 0010 0000 : 32
+	canWrite  // 0100 0000 : 64
+	canUpdate // 1000 0000 : 128
+	canDelete // 0001 0000 0000 : 256
+)
+
+func rolesCase() {
+	var rolesOne byte = isAdmin | canRead | canWrite
+	var rolesTwo byte = isHeadquarters | canRead | canWrite | canUpdate
+
+	// check if rolesOne has Admin
+	fmt.Printf("-----\n")
+	fmt.Printf("\nBinary: %b\n", rolesOne)
+	fmt.Printf("Is RolesOne Admin: %b\n", isAdmin&rolesOne == isAdmin)
+	fmt.Printf("-----\n")
+
+	// check if rolesOne has headquarters
+	fmt.Printf("Binary: %b\n", rolesTwo)
+	fmt.Printf("IS HQ? %v\n", isHeadquarters&rolesTwo == isHeadquarters)
+}

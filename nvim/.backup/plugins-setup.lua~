@@ -172,7 +172,8 @@ return packer.startup(function(use)
 	use("mfussenegger/nvim-dap")
 	use("mfussenegger/nvim-jdtls")
 	use("nvim-lua/plenary.nvim")
-	use("rafamadriz/friendly-snippets")
+use        ("rafamadriz/friendly-snippets"},
+
 
 	if packer_bootstrap then
 		require("packer").sync()

@@ -119,7 +119,6 @@ vim.keymap.set("", "<Leader>l", require("lsp_lines").toggle, { desc = "Toggle ls
 
 lspconfig.intelephense.setup({
 	on_attach = on_attach,
-	capabilities = capabilities,
 })
 
 -- configure lua server (with special settings)

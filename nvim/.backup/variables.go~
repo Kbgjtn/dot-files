@@ -1,0 +1,11 @@
+package main
+
+import "fmt"
+
+func variables() {
+	i := 54
+	fmt.Printf("%T", i, "\n")
+	fmt.Printf("%v", i, "\n")
+}
+
+variables()

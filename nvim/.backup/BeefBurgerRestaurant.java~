@@ -1,0 +1,7 @@
+
+package Creational.FactoryMethod.Restaurant;
+
+public abstract class BeefBurgerRestaurant extends Restaurant{
+    public Burger createBurger();
+}
+

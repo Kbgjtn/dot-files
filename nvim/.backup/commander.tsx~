@@ -1,0 +1,53 @@
+"use client";
+
+import * as React from "react";
+
+export function CommandDialogDemo() {
+    const [open, setOpen] = React.useState(false);
+
+    React.useEffect(() => {
+        const down = (e: KeyboardEvent) => {
+            if (e.key === "j" && e.metaKey) {
+                setOpen((open) => !open);
+            }
+        };
+
+        document.addEventListener("keydown", down);
+        return () => document.removeEventListener("keydown", down);
+    }, []);
+
+    return <></>;
+}
+
+export function CommandMenu() {
+    const [open, setOpen] = React.useState(false);
+
+    React.useEffect(() => {
+        const down = (e: KeyboardEvent) => {
+            if ((e.shiftKey && e.metaKey) || (e.shiftKey && e.ctrlKey)) {
+                setOpen((open) => !open);
+            }
+        };
+        document.addEventListener("keydown", down);
+        return () => document.removeEventListener("keydown", down);
+    }, []);
+
+    return (
+        <CommandDialog open={open} onOpenChange={setOpen}>
+            <CommandInput
+                placeholder="Type a command or search..."
+                className={"border-none border-0 ring-0 appearance-none"}
+            />
+            <CommandList>
+                <CommandEmpty>No results found.</CommandEmpty>
+                <CommandGroup heading="Suggestions">
+                    <CommandItem>Home</CommandItem>
+
+                    <CommandItem>About</CommandItem>
+                    <CommandItem>Social Media</CommandItem>
+                    <CommandItem>Supports</CommandItem>
+                </CommandGroup>
+            </CommandList>
+        </CommandDialog>
+    );
+}
