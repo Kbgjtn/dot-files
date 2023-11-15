@@ -83,10 +83,11 @@ o.tabstop = 4 -- 2 spaces for tabs (prettier default)
 o.shiftwidth = 4 -- 2 spaces for indent width
 o.expandtab = true -- expand tab to spaces
 o.autoindent = true -- copy indent from current line when starting new one
-o.textwidth = 80 -- wrap lines at 80 characters
+o.textwidth = 50 -- wrap lines at 80 characters
 
 -- line wrapping
 o.wrap = false -- disable line wrapping
+o.linebreak = true
 
 o.backup = true
 o.swapfile = false
@@ -104,7 +105,12 @@ o.ignorecase = true -- ignore case when searching
 o.smartcase = true -- if you include mixed case in your search, assumes you want case-sensitive
 
 -- cursor line
-o.cursorline = false -- highlight the current cursor line
+o.cursorline = true -- highlight the current cursor line
+
+o.termguicolors = true
+o.winblend = 1
+o.wildoptions = "pum"
+o.background = "dark"
 
 -- appearance
 

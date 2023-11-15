@@ -1,7 +1,6 @@
 import type { DoneFuncWithErrOrRes, FastifyReply, FastifyRequest } from "fastify";
 import JwtToken from "@/common/utils/token";
 import * as constant from "@/common/constant";
-import * as utils from "@/common/utils/utils";
 import AbilityFactory from "@/domain/factory/ability";
 import HTTPUtil from "@/common/utils/http.util";
 

@@ -1,20 +1,69 @@
-import type { DeepReadonly } from "@/types/utils";
+export function secondsToTime(s: number): string {
+    const minutes = Math.floor((s % 3600) / 60)
+        .toString()
+        .padStart(2, "0");
+    const seconds = Math.floor(s % 60)
+        .toString()
+        .padStart(2, "0");
+    return `${minutes}:${seconds}`;
+}
 
-export default class CommonUtil {
-    public static deepFreeze<T>(obj: T): DeepReadonly<T> {
-        if (typeof obj !== "object" || obj === null) return obj as DeepReadonly<T>;
+export function formatDate(timestamp: number): string {
+    return new Date(timestamp).toLocaleDateString("en-US", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+    });
+}
 
-        if (Array.isArray(obj)) {
-            const frozenArray = obj.map((item) => CommonUtil.deepFreeze(item));
-            return Object.freeze(frozenArray) as DeepReadonly<T>;
-        }
-        const frozenObj: { [key: string]: unknown } = {};
-        for (const key in obj) {
-            if (Object.prototype.hasOwnProperty.call(obj, key)) {
-                frozenObj[key] = CommonUtil.deepFreeze(obj[key]);
+export function rounder(value: number, precision: number): number {
+    const factor = Math.pow(10, precision ?? 0);
+    return Math.round(value * factor) / factor;
+}
+
+export function getIncorrectCharsAt(input: string, actualStr: string): number {
+    let answer = "";
+    let used = new Array(input.length).fill(false);
+    let incorrect = 0;
+
+    for (let i = 0; i < input.length; i++) {
+        let flag = false;
+
+        // run a loop for all characters in the actual string
+        for (let j = 0; j < actualStr.length; j++) {
+            // if the character is present in the actual string
+            if (input[i] === actualStr[j]) {
+                flag = true;
+                break;
             }
         }
 
-        return Object.freeze(obj) as DeepReadonly<T>;
+        // means that the character is not present in the actual string
+        if (!flag && !used[input.charCodeAt(i) - 97]) {
+            answer += input[i];
+            used[input.charCodeAt(i) - 97] = true; // mark the character as used
+        }
     }
+
+    for (let i = 0; i < actualStr.length; i++) {
+        let flag = false;
+
+        for (let j = 0; j < input.length; j++) {
+            // if the character is present in the actual string
+            if (actualStr[i] === input[j]) {
+                flag = true;
+                break;
+            }
+        }
+
+        if (!flag && !used[actualStr.charCodeAt(i) - 97]) {
+            answer += actualStr[i];
+            used[actualStr.charCodeAt(i) - 97] = true; // mark the character as used
+        }
+    }
+
+    answer = answer.split("").sort().join("");
+
+    if (answer.length === 0) return 0;
+    return answer.length;
 }

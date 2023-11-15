@@ -2,11 +2,11 @@ auto-install-peers=true
 enable-pre-post-scripts=true
 engine-strict=true
 node-version=18.12.1
-public-hoist-pattern[]=*eslint,@nextui-org/*
-public-hoist-pattern[]=*@nextui-org/*
+public-hoist-pattern[]=*eslint*
 save-exact=true
 tag-version-prefix=""
 strict-peer-dependencies=true
 lockfile=true
 ignore-workspace-root-check=false
 legacy-peer-deps=true
+

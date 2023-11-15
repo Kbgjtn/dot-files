@@ -1,74 +1,144 @@
-import type { FastifyRequest } from "fastify";
-import type { RequestHandler, unknown as _ } from "@/types/types";
-import type AuthenticationService from "@/adapter/service/authentication";
+import { POST_REGISTER_IDENTITY_BODY_SCHEMA } from "@/adapter/schema/auth";
 
-import * as schema from "@/adapter/schema/auth";
-import * as config from "@/application/config/cookie.config";
-import HTTPUtil from "@/common/utils/http.util";
+import type { RegisterIdentityBody } from "@/adapter/schema/auth";
+import type TokenManagementService from "@/adapter/service/tokens/token";
+import type { QueryWhitelistedTokenArgs } from "@/infrastructure/data-source/token.data-source";
+import type { LoginServiceArgs, TokenContract } from "@/types/types";
+import type IdentityService from "./identity";
 
-/**
- * @todo:
- *  ☐ clean up this mess (code smells & clean code)
- *
- */
-export default class AuthLocalStrategyHandler {
-    constructor(private readonly authenticationService: AuthenticationService) {}
+import BadCredentialsException from "@/adapter/middleware/errors/bad-credential-exception";
+import BadRequestException from "@/adapter/middleware/errors/bad-request-exception";
+import UnauthorizedException from "@/adapter/middleware/errors/unauthorized";
+import TokenFactory from "@/domain/factory/token";
+import PasswordUtil from "@/common/utils/password.util";
 
-    protected login: RequestHandler<_, _, schema.LoginIdentityBody> = async (
-        request,
-        reply
-    ) => {
-        const { body } = request;
-        const ip_address = HTTPUtil.getIpAddress(Object.freeze<FastifyRequest>(request));
-        const parsedBody = schema.POST_LOGIN_IDENTITY_BODY_SCHEMA.safeParse(body);
-        const cookies = HTTPUtil.parseCookies(request.headers.cookie as string);
+export default class AuthenticationService {
+    constructor(
+        private readonly identityService: IdentityService,
+        private readonly tokenManagementService: TokenManagementService
+    ) {}
 
-        if ("success" in parsedBody === false) {
-            return reply.status(400).send({
-                status: "failed",
-                code: 400,
-                codeStatus: "Bad Request",
-                message: "bad request",
-            });
+    /*
+     * TODO:
+     *  ☐ handle the traits email or phone number
+     *     - if email, then send email verification
+     *     - if phone number, then send sms verification
+     *
+     * */
+    async registration(body: RegisterIdentityBody): Promise<void> {
+        const { traits, password: _ } = body;
+
+        await POST_REGISTER_IDENTITY_BODY_SCHEMA.parseAsync(body);
+        await this.identityService.create({
+            email: traits.email as string,
+            password: await PasswordUtil.hash({
+                _,
+                salt: await PasswordUtil.generateSalt(32),
+            }),
+            phoneNumber: traits.phone_number as string,
+        });
+    }
+
+    async login(data: LoginServiceArgs): Promise<Readonly<TokenContract> | null> {
+        const {
+            body: { password: _, traits },
+            ip_address,
+            device_id,
+        } = data;
+        const identity = await this.identityService.getIdentityByTraits(traits);
+
+        console.log({ this_identity_try_to_login: { ...identity } });
+
+        if (!identity) throw new BadCredentialsException();
+        if ("id" in identity === undefined) throw new BadCredentialsException();
+
+        const { id, email, username, role, state, password: __ } = identity;
+        const traitsIdentity = { email, username };
+
+        await this.identityService.checkAndAutoActivateState(state, true, traitsIdentity);
+        await this.identityService.verifyPassword({ _, __ });
+
+        const payload = TokenFactory.simplePayloadIdentity({
+            id,
+            email,
+            ip_address,
+            device_id,
+            role,
+        });
+
+        const [{ value: access_token }, { value: refresh_token }] = await Promise.all([
+            this.tokenManagementService.generate(TokenFactory.accessToken(payload)),
+            this.tokenManagementService.generate(TokenFactory.refreshToken(payload)),
+        ]);
+
+        if (!access_token || !refresh_token) {
+            console.error("failed to generate token");
+            console.error("@file: func login");
+            throw new BadRequestException(
+                "Error: we have some problem, server cannot respond right now!"
+            );
         }
 
-        const result = await this.authenticationService.login(
-            body,
-            ip_address,
-            cookies![config.cookieConfig.cookies.deviceId] as string
+        return {
+            access_token,
+            refresh_token,
+        };
+    }
+
+    async logout(access_token: string): Promise<void | Error> {
+        if (!access_token) {
+            throw new BadRequestException("Untracked credential, you can login again!");
+        }
+
+        const authorization = this.tokenManagementService.splitAuthzHeader(access_token);
+        const validate =
+            await this.tokenManagementService.getAllTokenSessions(access_token);
+
+        if (!validate || (validate && !validate?.length)) {
+            throw new BadRequestException("Untracked credential, you can login again!");
+        }
+
+        const decoded = await this.tokenManagementService.decodeToken(authorization);
+
+        if (!decoded) throw new UnauthorizedException("Error: cannot validate token!");
+
+        const tokenJtiAndIdentityId: QueryWhitelistedTokenArgs = {
+            tokenId_identityId: {
+                tokenId: decoded.jti as string,
+                identityId: decoded.id as string,
+            },
+        };
+
+        const token = await this.tokenManagementService.verifyToken(
+            authorization,
+            tokenJtiAndIdentityId
         );
 
-        if (!result) {
-            return reply.status(401).send({
-                status: "failed",
-                code: 401,
-                codeStatus: "Unauthorized",
-                message:
-                    "Please cross check again! username, email or password are incorrect!",
-            });
-        }
+        if (!token) throw new UnauthorizedException("Error: cannot verify Token!");
 
-        return reply.status(200).send(result);
-    };
+        const userTokens =
+            await this.tokenManagementService.getAllTokenSessions(access_token);
 
-    protected registration: RequestHandler<_, _, schema.RegisterIdentityBody> = async (
-        request,
-        reply
-    ) => {
-        await this.authenticationService.registration({
-            ...request.body,
-        });
+        if (!userTokens)
+            throw new UnauthorizedException("Error: cannot get token sessions!");
 
-        return reply.status(201).send({
-            status: "ok",
-            code: 201,
-            codeStatus: "created",
-            message: "successfull creating identity",
-        });
-    };
+        const refreshTokens = userTokens?.filter((t) => t.type === "refresh").at(0);
+        const revoked = await Promise.all([
+            this.tokenManagementService.revokeToken(decoded.jti as string),
+            this.tokenManagementService.revokeToken(refreshTokens?.jti as string),
+        ]);
 
-    protected logout: RequestHandler<_> = async (request, reply) => {
-        await this.authenticationService.logout(request.headers.authorization as string);
-        return reply.status(204).send();
-    };
+        // deleted from whitelist
+        await Promise.all([
+            this.tokenManagementService.deleteWhitelistedToken(tokenJtiAndIdentityId),
+            this.tokenManagementService.deleteWhitelistedToken({
+                tokenId_identityId: {
+                    tokenId: refreshTokens?.jti as string,
+                    identityId: decoded.id as string,
+                },
+            }),
+        ]);
+
+        if (!revoked) throw new BadCredentialsException("Error: cannot revoke token!");
+    }
 }

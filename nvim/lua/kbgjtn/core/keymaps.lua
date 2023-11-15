@@ -17,7 +17,7 @@ keymap.set("n", "<c-u>", "<C-u>zz")
 keymap.set("n", "n", "nzzzv")
 keymap.set("n", "N", "Nzzzv")
 
-keymap.set("n", "<leader>g", ":colorscheme catppuccin<CR>")
+keymap.set("n", "<leader>g", ":colorscheme kanagawa-dragon<CR>")
 
 keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
@@ -34,9 +34,7 @@ keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 keymap.set("n", "<leader>vpp", "<cmd>e ~/.dotfiles/nvim/.config/nvim/lua/theprimeagen/packer.lua<CR>")
 keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>")
 
-keymap.set("n", "<leader><leader>", function()
-	vim.cmd("so")
-end)
+keymap.set("n", "<leader><leader>f", "<cmd>Neoformat clangformat<cr>", { desc = "Format file" })
 
 -- save all buffer files
 keymap.set("n", "<leader>w", ":wall<CR>")
@@ -45,10 +43,9 @@ keymap.set("n", "<leader>w", ":wall<CR>")
 keymap.set("n", "<leader>u", ":UndotreeToggle<CR>")
 
 -- tab buffer
-keymap.set("n", "<S-n>", ":tabnew<CR>")
-keymap.set("n", "<A-.>", ":tabnext<CR>")
-keymap.set("n", "<A-,>", ":tabprevious<CR>")
-keymap.set("n", "<C-c>", ":tabclose<CR>")
+keymap.set("n", "<A-K>", ":BufferLineCycleNext<CR>")
+keymap.set("n", "<A-J>", ":BufferLineCyclePrev<CR>")
+keymap.set("n", "<A-X>", ":BufferLinePickClose<CR>")
 
 -- use jk to exit insert mode
 keymap.set("i", "jk", "<ESC>")

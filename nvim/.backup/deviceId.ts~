@@ -26,7 +26,7 @@ export function deviceIdHook(
 
     reply.header(
         "set-cookie",
-        `${cookieConfig.cookies.user_session}=${cryptoUtils.generateRandomString(
+        `${cookieConfig.cookies.user_session}=${CryptoUtil.generateRandomString(
             16
         )}; Path=/; HttpOnly; SameSite=Strict;`
     );

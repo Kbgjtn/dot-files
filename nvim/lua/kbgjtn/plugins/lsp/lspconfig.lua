@@ -28,10 +28,24 @@ if not typescript_setup then
 	return
 end
 
+local lsp_status = require("lsp-status")
+
+lsp_status.config({
+	status_symbol = "",
+	indicator_errors = "",
+	indicator_warnings = "",
+	indicator_info = "",
+	indicator_hint = "",
+	indicator_ok = "",
+})
+
 -- enable keybinds only for when lsp server available
 local on_attach = function(client, bufnr)
 	-- keybind options
+	lsp_status.register_progress()
 	local opts = { noremap = true, silent = true, buffer = bufnr }
+
+	require("completion").on_attach(client, bufnr)
 
 	-- set keybinds
 
@@ -50,7 +64,7 @@ local on_attach = function(client, bufnr)
 
 	-- typescript specific keymaps (e.g. rename file and update imports)
 	if client.name == "tsserver" then
-		vim.keymap.set("n", "<leader>rf", ":TypescriptRenameFile<CR>") -- rename file and update imports
+		vim.keymap.set("n", "<leauer>rf", ":TypescriptRenameFile<CR>") -- rename file and update imports
 		vim.keymap.set("n", "<leader>oi", ":TypescriptOrganizeImports<CR>") -- organize imports (not in youtube nvim video)
 		vim.keymap.set("n", "<leader>ru", ":TypescriptRemoveUnused<CR>") -- remove unused variables (not in youtube nvim video)
 	end
@@ -58,6 +72,7 @@ end
 
 -- used to enable autocompletion (assign to every lsp server config)
 local capabilities = cmp_nvim_lsp.default_capabilities()
+capabilities.offsetEncoding = { "utf-16" }
 
 -- Change the Diagnostic symbols in the sign column (gutter)
 -- (not in youtube nvim video)
@@ -103,6 +118,11 @@ lspconfig["emmet_ls"].setup({
 
 local util = require("lspconfig/util")
 
+lspconfig.clangd.setup({
+	on_attach = on_attach,
+	capabilities = capabilities,
+})
+
 lspconfig.gopls.setup({
 	on_attach = on_attach,
 	capabilities = capabilities,
@@ -122,9 +142,14 @@ lspconfig.intelephense.setup({
 	capabilities = capabilities,
 })
 
+lspconfig.cmake.setup({
+	on_attach = on_attach,
+	capabilities = capabilities,
+})
+
 -- configure lua server (with special settings)
 lspconfig.lua_ls.setup({
-	capabilities = capabilities,
+	capabilities = lsp_status.capabilities,
 	on_attach = on_attach,
 	settings = { -- custom settings for lua
 		Lua = {

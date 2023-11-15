@@ -1,8 +1,8 @@
 /* eslint-disable class-methods-use-this */
 
-import JWTException from "@/adapter/middleware/error/jwt-error";
-import UnauthorizedException from "@/adapter/middleware/error/unauthorized";
-import ForbiddenException from "@/adapter/middleware/error/forbidden-exception";
+import JWTException from "@/adapter/middleware/errors/jwt-error";
+import UnauthorizedException from "@/adapter/middleware/errors/unauthorized";
+import ForbiddenException from "@/adapter/middleware/errors/forbidden-exception";
 import {
     jwksURL,
     publicKeyFile,
@@ -11,7 +11,6 @@ import {
     rsaKeysDirPath,
     TokenAlgorithm,
 } from "@/common/constant";
-import FileUtil from "./file.util";
 
 import path from "path";
 import * as fs from "fs";
@@ -32,6 +31,7 @@ import type {
     TokenPayloadIdentity,
     TokenPayloadProtected,
 } from "@/types/token";
+import FileUtil from "@/common/utils/file.util";
 
 class JwtToken {
     constructor(

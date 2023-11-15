@@ -1,4 +1,6 @@
-require("nvim-web-devicons").setup({
+local devicon = require("nvim-web-devicons")
+devicon.set_default_icon("", "#6d8086", 65)
+devicon.setup({
 	-- your personnal icons can go here (to override)
 	-- you can specify color or cterm_color instead of specifying both of them
 	-- DevIcon will be appended to `name`
@@ -30,11 +32,6 @@ require("nvim-web-devicons").setup({
 			name = "gitignore",
 		},
 		[".eslintignore"] = {
-			icon = "⚙",
-			color = "#f1502f",
-			name = "gitignore",
-		},
-		[".env.local"] = {
 			icon = "⚙",
 			color = "#f1502f",
 			name = "gitignore",
@@ -92,6 +89,32 @@ require("nvim-web-devicons").setup({
 			icon = "◮",
 			color = "#81e043",
 			name = "Log",
+		},
+		["env"] = {
+			icon = "⚙",
+			color = "#f1502f",
+			name = "gitignore",
+		},
+		["sample"] = {
+			icon = "⚙",
+			color = "#f1502f",
+			name = "gitignore",
+		},
+		["prod"] = {
+			icon = "⚙",
+			color = "#f1502f",
+			name = "gitignore",
+		},
+		["dev"] = {
+			icon = "⚙",
+			color = "#f1502f",
+			name = "gitignore",
+		},
+		["local"] = {
+
+			icon = "⚙",
+			color = "#f1502f",
+			name = "gitignore",
 		},
 	},
 })

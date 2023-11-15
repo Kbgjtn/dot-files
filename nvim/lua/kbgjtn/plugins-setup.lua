@@ -30,6 +30,7 @@ end
 return packer.startup(function(use)
 	-- oil vim buffer filesystem
 	use("stevearc/oil.nvim")
+	use("sbdchd/neoformat")
 
 	-- undo tree
 	use("mbbill/undotree")
@@ -37,45 +38,28 @@ return packer.startup(function(use)
 	-- copilot
 	use("github/copilot.vim")
 
-	-- packer can manage itself
-	use("wbthomason/packer.nvim")
-
-	-- notify
-	use({
-		"rcarriga/nvim-notify",
-		config = function()
-			require("notify").setup({
-				background_colour = "#000000",
-			})
-		end,
-	})
-
 	-- trouble nvim
 	use("folke/trouble.nvim")
-
-	use("nvim-lua/plenary.nvim") -- lua functions that many plugins use
-
 	-- bufferline
 	use({ "akinsho/bufferline.nvim", tag = "*", requires = "nvim-tree/nvim-web-devicons" })
 
 	-- colorscheme
 	-- use("bluz71/vim-nightfly-guicolors") -- preferred colorscheme
 	-- use("EdenEast/nightfox.nvim") -- nightfox colorscheme
-	-- use("rebelot/kanagawa.nvim")
-	-- use("https://github.com/rktjmp/lush.nvim")
+	use("rebelot/kanagawa.nvim")
+	use("https://github.com/rktjmp/lush.nvim")
 	-- use("https://github.com/nocksock/bloop.nvim")
 	-- use("rose-pine/neovim") -- rose pine colorscheme
 	-- use("akinsho/horizon.nvim")
 	use("ellisonleao/gruvbox.nvim")
 	use({ "catppuccin/nvim" })
 
-	-- navigation tabs
-	use("theprimeagen/harpoon")
-
 	use({
 		"svrana/neosolarized.nvim",
 		requires = { "tjdevries/colorbuddy.nvim" },
 	})
+
+	use("koalhack/koalight.nvim")
 
 	use("christoomey/vim-tmux-navigator") -- tmux & split window navigation
 
@@ -89,7 +73,6 @@ return packer.startup(function(use)
 	use("numToStr/Comment.nvim")
 	-- use("preservim/nerdcommenter")
 
-	use("mfussenegger/nvim-dap")
 	use("mfussenegger/nvim-jdtls")
 
 	-- file explorer
@@ -115,7 +98,6 @@ return packer.startup(function(use)
 	-- snippets
 	use("L3MON4D3/LuaSnip") -- snippet engine
 	use("saadparwaiz1/cmp_luasnip") -- for autocompletion
-	use("rafamadriz/friendly-snippets") -- useful snippets
 
 	-- lsp-zero
 	use("https://git.sr.ht/~whynothugo/lsp_lines.nvim")
@@ -144,6 +126,9 @@ return packer.startup(function(use)
 			local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
 			ts_update()
 		end,
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter-textobjects",
+		},
 	})
 
 	-- auto closing
@@ -170,9 +155,18 @@ return packer.startup(function(use)
 	-- java plugin stuff
 	use("wbthomason/packer.nvim")
 	use("mfussenegger/nvim-dap")
-	use("mfussenegger/nvim-jdtls")
 	use("nvim-lua/plenary.nvim")
 	use("rafamadriz/friendly-snippets")
+	use("nvim-lua/lsp-status.nvim")
+
+	-- notify nvim
+	use("rcarriga/nvim-notify")
+
+	-- python
+	use("hkupty/iron.nvim")
+
+	-- ollama gen.nvim
+	use("david-kunz/gen.nvim")
 
 	if packer_bootstrap then
 		require("packer").sync()

@@ -1,45 +1,4 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@layer base {
-  html,
-  body,
-  #__next,
-  #__root {
-    @apply h-full;
-  }
-
-  body {
-    -mox-osx-font-smoothing: grayscale;
-    font-smooth: always;
-    @apply font-sans;
-  }
-
-  .noselect {
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Old versions of Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
-  }
-
-  :focus-visible {
-    @apply relative rounded-xl outline-none ring-2;
-  }
-
-  ::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-  }
-
-  .disable_scrollbar {
-    width: 0px;
-    background: transparent;
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-  }
-}
+```

@@ -1,23 +1,15 @@
-import { useIsSSR } from "@react-aria/ssr";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
 export function useCurrentTheme() {
-  const [isDark, setIsDark] = useState<boolean>();
-  const { theme } = useTheme();
-  const isSSR = useIsSSR();
+    const [isDark, setIsDark] = useState<boolean>();
+    const { theme } = useTheme();
 
-  useEffect(() => {
-    if (theme === "dark") {
-      setIsDark(true);
-      return;
-    }
+    useEffect(() => {
+        if (theme === "dark") setIsDark(true);
+        else setIsDark(false);
+        return;
+    }, [theme]);
 
-    if (isSSR) return;
-    if (theme === "light") return;
-    setIsDark(false);
-    return;
-  }, [theme]);
-
-  return { isDark, theme, isSSR };
+    return { isDark, theme };
 }

@@ -10,7 +10,7 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 -- change color for arrows in tree to light blue
-vim.cmd([[ highlight NvimTreeIndentMarker guifg=#f3f3f3]])
+vim.cmd([[ highlight NvimTreeIndentMarker guifg=#101010]])
 
 -- configure nvim-tree
 nvimtree.setup({
@@ -19,15 +19,12 @@ nvimtree.setup({
 		icons = {
 			glyphs = {
 				folder = {
-					arrow_closed = "", -- arrow when folder is closed
-					arrow_open = "", -- arrow when folder is open
+					arrow_closed = "↦",
+					arrow_open = "↳",
 				},
 			},
 		},
 	},
-	-- disable window_picker for
-	-- explorer to work well with
-	-- window splits
 	actions = {
 		open_file = {
 			window_picker = {
