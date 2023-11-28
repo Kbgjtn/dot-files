@@ -1,7 +1,0 @@
-package Creational.FactoryMethod.Restaurant;
-
-public abstract class Restaurant {
-    public abstract Burger createBurger();
-
-}
-

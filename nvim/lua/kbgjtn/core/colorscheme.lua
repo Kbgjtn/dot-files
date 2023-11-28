@@ -23,6 +23,7 @@ theme.setup({
 			CursorLine = { bg = "#1c1c1c" },
 			SingnalColumn = { bg = "#1c1c1c" },
 			LineNr = { bg = "#1c1c1c" },
+			CopilotSuggestion = { bg = "#f3f3f3" },
 		}
 	end,
 	theme = "dragon", -- Load "wave" theme when 'background' option is not set

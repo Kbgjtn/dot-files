@@ -1,9 +1,0 @@
-export default async function Navbar() {
-  const menu = ["Home", "About", "Contact", "Blog"];
-
-  return (
-    <nav>
-      <div className="block flex-none md:hidden"></div>
-    </nav>
-  );
-}

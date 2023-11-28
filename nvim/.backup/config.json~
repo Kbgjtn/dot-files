@@ -1,8 +1,0 @@
-{
-  "config": {
-    "platform": {
-      "php": "8.1",
-      "ext-bcmath": "8.1"
-    }
-  }
-}
