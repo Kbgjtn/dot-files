@@ -27,18 +27,13 @@ nvimtree.setup({
 	renderer = {
 		icons = {
 			symlink_arrow = "",
-			web_devicons = {
-				file = {
-					enable = true,
-					color = false,
-				},
-			},
+			web_devicons = {},
 			glyphs = {
 				folder = {
 					arrow_closed = "",
 					arrow_open = "",
-					default = "",
-					open = "",
+					default = "",
+					open = "",
 					empty = "",
 					empty_open = "",
 					symlink = "",

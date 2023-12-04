@@ -1,118 +1,114 @@
+require("nvim-web-devicons").set_default_icon("", "#6d8086", 65)
 require("nvim-web-devicons").setup({
-	-- your personnal icons can go here (to override)
-	-- you can specify color or cterm_color instead of specifying both of them
-	-- DevIcon will be appended to `name`
+	color_icons = true,
+	default = true,
+	strict = true,
 	override = {
-		zsh = {
-			icon = "",
-			color = "#428850",
-			cterm_color = "65",
-			name = "Zsh",
+		file = {
+			icon = "",
 		},
 	},
-	-- globally enable different highlight colors per icon (default to true)
-	-- if set to false all icons will have the default icon's color
-	color_icons = true,
-	-- globally enable default icons (default to false)
-	-- will get overriden by `get_icons` option
-	default = true,
-	-- globally enable "strict" selection of icons - icon will be looked up in
-	-- different tables, first by filename, and if not found by extension; this
-	-- prevents cases when file doesn't have any extension but still gets some icon
-	-- because its name happened to match some extension (default to false)
-	strict = true,
-	-- same as `override` but specifically for overrides by filename
-	-- takes effect when `strict` is true
 	override_by_filename = {
-		[".gitignore"] = {
-			icon = "",
-			color = "#f1502f",
-			name = "gitignore",
+		[".env"] = {
+			icon = "",
 		},
-		[".eslintignore"] = {
-			icon = "⚙",
-			color = "#f1502f",
-			name = "gitignore",
-		},
-		["docker-compose.yml"] = {
-			icon = "🐳",
-			color = "#f1502f",
-			name = "Dockercompos",
-		},
-		["docker-compose-dev.yml"] = {
-			icon = "🐳",
-			color = "#f1502f",
-			name = "Dockercompos",
-		},
-		[".dockerignore"] = {
-			icon = "🐳",
-			color = "#f1502f",
-			name = "dockerignore",
+		[".editorconfig"] = {
+			icon = "",
 		},
 		[".prettierrc"] = {
-			icon = "⚙",
-			color = "#f3f3f3",
-			name = "dockerignore",
+			icon = "P",
+		},
+		[".eslintignore"] = {
+			icon = "E",
 		},
 		[".prettierignore"] = {
-			icon = "⚙",
-			color = "#f3f3f3",
-			name = "dockerignore",
-		},
-		[".czrc"] = {
-			icon = "⚙",
-			color = "#81e043",
-			name = "Log",
+			icon = "P",
 		},
 		[".nvimrc"] = {
 			icon = "⌨",
-			color = "#f3f3f3",
-			name = "dockerignore",
+		},
+		[".czrc"] = {
+			icon = "Z",
 		},
 	},
-	-- same as `override` but specifically for overrides by extension
-	-- takes effect when `strict` is true
+
 	override_by_extension = {
+		["txt"] = {
+			icon = "",
+		},
+		["yml"] = {
+			icon = "Y",
+		},
+		["yaml"] = {
+
+			icon = "Y",
+		},
+		["xml"] = {
+			icon = "X",
+		},
+		["png"] = {
+			icon = "",
+		},
+		["jpeg"] = {
+			icon = "",
+		},
+		["jpg"] = {
+			icon = "",
+		},
+		["gitignore"] = {
+			icon = "",
+		},
+		["gitattributes"] = {
+			icon = "",
+		},
+		["docker-compose.yml"] = {
+			icon = "🐳",
+		},
+		["docker-compose-dev.yml"] = {
+			icon = "🐳",
+		},
+		["dockerignore"] = {
+			icon = "🐳",
+		},
+		["prettierrc"] = {
+			icon = "⚙",
+		},
+		["prettierignore"] = {
+			icon = "⚙",
+		},
+
 		["log"] = {
 			icon = "",
-			color = "#81e043",
-			name = "Log",
-		},
-		["txt"] = {
-			icon = "",
-			color = "#81e043",
-			name = "Log",
 		},
 		["prisma"] = {
 			icon = "◮",
-			color = "#81e043",
-			name = "Log",
 		},
 		["env"] = {
-			icon = "⚙",
-			color = "#f1502f",
-			name = "gitignore",
+			icon = "",
 		},
 		["sample"] = {
-			icon = "⚙",
-			color = "#f1502f",
-			name = "gitignore",
+			icon = "",
+		},
+		["example"] = {
+			icon = "",
 		},
 		["prod"] = {
-			icon = "⚙",
-			color = "#f1502f",
-			name = "gitignore",
+			icon = "",
 		},
 		["dev"] = {
-			icon = "⚙",
-			color = "#f1502f",
-			name = "gitignore",
+			icon = "",
 		},
 		["local"] = {
-
-			icon = "⚙",
-			color = "#f1502f",
-			name = "gitignore",
+			icon = "",
+		},
+		["sum"] = {
+			icon = "",
+		},
+		["mod"] = {
+			icon = "",
+		},
+		["sql"] = {
+			icon = "",
 		},
 	},
 })
