@@ -17,12 +17,10 @@ keymap.set("n", "<c-u>", "<C-u>zz")
 keymap.set("n", "n", "nzzzv")
 keymap.set("n", "N", "Nzzzv")
 
-keymap.set("n", "<leader>g", ":colorscheme kanagawa-dragon<CR>")
-
 keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
-keymap.set("n", "lw", "$") -- last word
-keymap.set("n", "fw", "0") -- first word
+keymap.set("n", "W", "0") -- first word
+keymap.set("n", "E", "$") -- last word
 
 keymap.set("n", "Q", "<nop>")
 keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
@@ -31,10 +29,7 @@ keymap.set("n", "<leader>f", vim.lsp.buf.format)
 keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gc<Left><Left><Left>]])
 keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
-keymap.set("n", "<leader>vpp", "<cmd>e ~/.dotfiles/nvim/.config/nvim/lua/theprimeagen/packer.lua<CR>")
 keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>")
-
-keymap.set("n", "<leader><leader>f", "<cmd>Neoformat clangformat<cr>", { desc = "Format file" })
 
 -- save all buffer files
 keymap.set("n", "<leader>w", ":wall<CR>")
@@ -68,11 +63,6 @@ keymap.set("n", "<leader>sv", "<C-w>v") -- split window vertically
 keymap.set("n", "<leader>sh", "<C-w>s") -- split window horizontally
 keymap.set("n", "<leader>se", "<C-w>=") -- make split windows equal width & height
 keymap.set("n", "<leader>sx", ":close<CR>") -- close current split window
-
--- keymap.set("n", "<leader>to", ":tabnew<CR>") -- open new tab
--- keymap.set("n", "<leader>tx", ":tabclose<CR>") -- close current tab
--- keymap.set("n", "<leader>tn", ":tabn<CR>") --  go to next tab
--- keymap.set("n", "<leader>tp", ":tabp<CR>") --  go to previous tab
 
 -- Split window
 keymap.set("n", "ss", ":split<Return><C-w>w")

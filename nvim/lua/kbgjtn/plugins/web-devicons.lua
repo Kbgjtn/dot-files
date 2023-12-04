@@ -1,6 +1,4 @@
-local devicon = require("nvim-web-devicons")
-devicon.set_default_icon("", "#6d8086", 65)
-devicon.setup({
+require("nvim-web-devicons").setup({
 	-- your personnal icons can go here (to override)
 	-- you can specify color or cterm_color instead of specifying both of them
 	-- DevIcon will be appended to `name`

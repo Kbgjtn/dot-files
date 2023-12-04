@@ -12,7 +12,7 @@ if not actions_setup then
 	return
 end
 
-vim.keymap.set("n", "<leader>b", require("telescope.builtin").oldfiles, { desc = "[?] Find recently opened files" })
+vim.keymap.set("n", "<leader>?", require("telescope.builtin").oldfiles, { desc = "[?] Find recently opened files" })
 vim.keymap.set("n", "<leader>/", function()
 	-- You can pass additional configuration to telescope to change theme, layout, etc.
 	require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
@@ -23,13 +23,18 @@ end, { desc = "[/] Fuzzily search in current buffer" })
 
 -- configure telescope
 telescope.setup({
-	extentions = {},
+    extensions = {
+        fuzzy = true,
+        override_generic_sorter = true,
+        override_file_sorter = true,
+        case_mode = "smart_case",
+    },
 	defaults = {
 		mappings = {
 			i = {
-				["<C-k>"] = actions.move_selection_previous,
-				["<C-j>"] = actions.move_selection_next,
-				["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+				["<C-k>"] = actions.move_selection_previous, -- move to prev result
+				["<C-j>"] = actions.move_selection_next, -- move to next result
+				["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist, -- send selected to quickfixlist
 				["<esc>"] = actions.close,
 				["<c-t>"] = trouble.open_with_trouble,
 			},
@@ -39,3 +44,4 @@ telescope.setup({
 		},
 	},
 })
+

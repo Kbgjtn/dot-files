@@ -13,7 +13,7 @@ local packer_bootstrap = ensure_packer() -- true if packer was just installed
 
 -- autocommand that reloads neovim and installs/updates/removes plugins
 -- when file is saved
-vim.cmd([[ 
+vim.cmd([[
   augroup packer_user_config
     autocmd!
     autocmd BufWritePost plugins-setup.lua source <afile> | PackerSync
@@ -30,7 +30,6 @@ end
 return packer.startup(function(use)
 	-- oil vim buffer filesystem
 	use("stevearc/oil.nvim")
-	use("sbdchd/neoformat")
 
 	-- undo tree
 	use("mbbill/undotree")
@@ -38,8 +37,22 @@ return packer.startup(function(use)
 	-- copilot
 	use("github/copilot.vim")
 
+	-- packer can manage itself
+	use("wbthomason/packer.nvim")
+
+	-- notify
+	use({
+		"rcarriga/nvim-notify",
+		config = function()
+			require("notify").setup({
+				background_colour = "#000000",
+			})
+		end,
+	})
+
 	-- trouble nvim
 	use("folke/trouble.nvim")
+
 	-- bufferline
 	use({ "akinsho/bufferline.nvim", tag = "*", requires = "nvim-tree/nvim-web-devicons" })
 
@@ -47,7 +60,7 @@ return packer.startup(function(use)
 	-- use("bluz71/vim-nightfly-guicolors") -- preferred colorscheme
 	-- use("EdenEast/nightfox.nvim") -- nightfox colorscheme
 	use("rebelot/kanagawa.nvim")
-	use("https://github.com/rktjmp/lush.nvim")
+	-- use("https://github.com/rktjmp/lush.nvim")
 	-- use("https://github.com/nocksock/bloop.nvim")
 	-- use("rose-pine/neovim") -- rose pine colorscheme
 	-- use("akinsho/horizon.nvim")
@@ -58,8 +71,6 @@ return packer.startup(function(use)
 		"svrana/neosolarized.nvim",
 		requires = { "tjdevries/colorbuddy.nvim" },
 	})
-
-	use("koalhack/koalight.nvim")
 
 	use("christoomey/vim-tmux-navigator") -- tmux & split window navigation
 
@@ -73,8 +84,6 @@ return packer.startup(function(use)
 	use("numToStr/Comment.nvim")
 	-- use("preservim/nerdcommenter")
 
-	use("mfussenegger/nvim-jdtls")
-
 	-- file explorer
 	use("nvim-tree/nvim-tree.lua")
 
@@ -86,9 +95,12 @@ return packer.startup(function(use)
 
 	-- fuzzy finding w/ telescope
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" }) -- dependency for better sorting performance
-	use({ "nvim-telescope/telescope.nvim", tag = "0.1.1", requires = {
-		"nvim-lua/plenary.nvim",
-	} }) -- fuzzy finder
+	use({
+		"nvim-telescope/telescope.nvim",
+		requires = {
+			"nvim-lua/plenary.nvim",
+		},
+	}) -- fuzzy finder
 
 	-- autocompletion
 	use("hrsh7th/nvim-cmp") -- completion plugin
@@ -126,9 +138,6 @@ return packer.startup(function(use)
 			local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
 			ts_update()
 		end,
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter-textobjects",
-		},
 	})
 
 	-- auto closing
@@ -138,29 +147,26 @@ return packer.startup(function(use)
 	-- git integration
 	use("lewis6991/gitsigns.nvim") -- show line modifications on left hand side
 
-	use({
-		"kylechui/nvim-surround",
-		tag = "*", -- Use for stability; omit to use `main` branch for the latest features
-		config = function()
-			require("nvim-surround").setup({
-				-- Configuration here, or leave empty to use defaults
-			})
-		end,
-	})
+	use("kylechui/nvim-surround")
 
 	use("nvim-treesitter/nvim-treesitter-textobjects") -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 	use("rhysd/vim-clang-format") -- https://github.com/rhysd/vim-clang-format
-	use("fatih/vim-go") -- https://github.com/fatih/vim-go
+
+	-- golang stuff
+	use({
+		"ray-x/go.nvim",
+		event = { "CmdlineEnter" },
+		ft = { "go", "gomod" },
+		build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
+	})
+	use("ray-x/guihua.lua")
 
 	-- java plugin stuff
-	use("wbthomason/packer.nvim")
 	use("mfussenegger/nvim-dap")
+	use("mfussenegger/nvim-jdtls")
+
 	use("nvim-lua/plenary.nvim")
 	use("rafamadriz/friendly-snippets")
-	use("nvim-lua/lsp-status.nvim")
-
-	-- notify nvim
-	use("rcarriga/nvim-notify")
 
 	-- python
 	use("hkupty/iron.nvim")

@@ -1,15 +1,21 @@
+-- import nvim-treesitter plugin safely
 local status, treesitter = pcall(require, "nvim-treesitter.configs")
 if not status then
 	return
 end
 
+-- configure treesitter
 treesitter.setup({
+	-- enable syntax highlighting
 	highlight = {
 		enable = true,
 		disable = { "help" },
 		additional_vim_regex_highlighting = { "php" },
 	},
+	-- enable indentation
 	indent = { enable = true },
+
+	-- incremental selection
 	incremental_selection = {
 		enable = true,
 		keymap = {
@@ -19,7 +25,9 @@ treesitter.setup({
 			node_decremental = "<M-space",
 		},
 	},
+	-- enable autotagging (w/ nvim-ts-autotag plugin)
 	autotag = { enable = true },
+	-- ensure these language parsers are installed
 	ensure_installed = {
 		"json",
 		"javascript",
@@ -44,10 +52,11 @@ treesitter.setup({
 		"vimdoc",
 		"markdown_inline",
 	},
+
 	textobjects = {
 		select = {
 			enable = true,
-			lookahead = true,
+			lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
 			keymaps = {
 				-- You can use the capture groups defined in textobjects.scm
 				["aa"] = "@parameter.outer",
@@ -56,11 +65,6 @@ treesitter.setup({
 				["if"] = "@function.inner",
 				["ac"] = "@class.outer",
 				["ic"] = "@class.inner",
-				["ii"] = "@conditional.inner",
-				["ai"] = "@conditional.outer",
-				["il"] = "@loop.inner",
-				["al"] = "@loop.outer",
-				["at"] = "@comment.outer",
 			},
 		},
 		move = {

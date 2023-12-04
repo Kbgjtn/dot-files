@@ -39,6 +39,14 @@ o.cursorcolumn = false
 o.isfname:append("@-@")
 o.updatetime = 50
 o.startofline = true
+o.guicursor = {
+	"i-ci-ve:ver85-Cursor/lCursor",
+	"n-v-c:block-Cursor/lCursor",
+	"i-ci-ve:ver25-Cursor/lCursor",
+	"r-cr:hor20-Cursor/lCursor",
+	"o:hor50-Cursor/lCursor",
+	"a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor",
+}
 
 -- wait time
 -- opt.timeout = false
@@ -83,7 +91,7 @@ o.tabstop = 4 -- 2 spaces for tabs (prettier default)
 o.shiftwidth = 4 -- 2 spaces for indent width
 o.expandtab = true -- expand tab to spaces
 o.autoindent = true -- copy indent from current line when starting new one
-o.textwidth = 50 -- wrap lines at 80 characters
+o.textwidth = 60 -- wrap lines at 80 characters
 
 -- line wrapping
 o.wrap = false -- disable line wrapping
@@ -105,12 +113,7 @@ o.ignorecase = true -- ignore case when searching
 o.smartcase = true -- if you include mixed case in your search, assumes you want case-sensitive
 
 -- cursor line
-o.cursorline = true -- highlight the current cursor line
-
-o.termguicolors = true
-o.winblend = 1
-o.wildoptions = "pum"
-o.background = "dark"
+o.cursorline = false -- highlight the current cursor line
 
 -- appearance
 

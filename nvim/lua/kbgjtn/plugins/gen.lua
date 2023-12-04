@@ -12,4 +12,4 @@ require("gen").prompts["Fix_Code"] = {
 	extract = "```$filetype\n(.-)```",
 }
 
-require("gen").model = "llama2"
+require("gen").model = "mistral"

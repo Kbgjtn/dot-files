@@ -1,38 +1,22 @@
-local utils = require("utils")
-local autocmd = utils.autocmd
-local nmap = utils.nmap
-
 vim.api.nvim_create_autocmd("BufEnter", {
-	command = "colorscheme gruvbox",
+	command = "colorscheme kanagawa",
 })
 
-autocmd("VimResized", {
+--[[ local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {}) ]]
+--[[ vim.api.nvim_create_autocmd("BufWritePre", {
+	pattern = "*.go",
+	callback = function()
+		local status, go = pcall(require, "go")
+		if status then
+			go.gofmt()
+		end
+		go.format.goimport()
+	end,
+	group = format_sync_grp,
+}) ]]
+
+vim.api.nvim_create_autocmd("VimResized", {
 	callback = function()
 		vim.cmd("tabdo wincmd =")
-	end,
-})
-
--- Close some filetypes with <q>
-autocmd("FileType", {
-	pattern = {
-		"qf",
-		"help",
-		"checkhealth",
-	},
-	callback = function(event)
-		vim.bo[event.buf].buflisted = false
-		nmap("q", "<cmd>close<cr>", { buffer = event.buf })
-	end,
-})
-
--- Autoclose lsp quickfix list when select item with <e>
-autocmd("FileType", {
-	pattern = "qf",
-	callback = function()
-		local bufnr = vim.fn.bufnr("%")
-		nmap("e", function()
-			vim.api.nvim_command([[execute "normal! \<CR>"]])
-			vim.api.nvim_command(bufnr .. "bd")
-		end, { buffer = bufnr })
 	end,
 })

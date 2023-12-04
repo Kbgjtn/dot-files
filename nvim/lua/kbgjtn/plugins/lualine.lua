@@ -1,5 +1,4 @@
 local status, lualine = pcall(require, "lualine")
-
 if not status then
 	return
 end
@@ -17,13 +16,13 @@ local colors = {
 
 local bubbles_theme = {
 	normal = {
-		a = { fg = colors.black, bg = colors.yellow },
-		b = { fg = colors.white, bg = colors.grey },
+		a = { fg = colors.white, bg = colors.none },
+		b = { fg = colors.white, bg = colors.none },
 		c = { fg = colors.white, bg = colors.none },
 	},
-	insert = { a = { fg = colors.black, bg = colors.blue } },
-	visual = { a = { fg = colors.black, bg = colors.cyan } },
-	replace = { a = { fg = colors.black, bg = colors.red } },
+	insert = { a = { fg = colors.black, bg = colors.none } },
+	visual = { a = { fg = colors.black, bg = colors.none } },
+	replace = { a = { fg = colors.black, bg = colors.none } },
 	inactive = {
 		a = { fg = colors.white, bg = colors.none },
 		b = { fg = colors.white, bg = colors.none },
@@ -34,7 +33,7 @@ local bubbles_theme = {
 lualine.setup({
 	options = {
 		component_separators = "|",
-		-- section_separators = { left = "", right = "" },
+		section_separators = { left = "", right = "" },
 		theme = bubbles_theme,
 		icons_enabled = true,
 	},
@@ -59,11 +58,5 @@ lualine.setup({
 		lualine_z = { "location" },
 	},
 	tabline = {},
-	extensions = {
-		"nvim-tree",
-		"toggleterm",
-		"quickfix",
-		"fzf",
-		"nvim-dap-ui",
-	},
+	extensions = {},
 })
