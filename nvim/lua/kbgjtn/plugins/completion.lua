@@ -3,7 +3,6 @@ local cmp = require("cmp")
 local cm = cmp.mapping
 
 cmp.setup({
-
 	mapping = cm.preset.insert({
 		-- <Tab> and <S-Tab> to navigate through popup menu
 		-- "<Tab>": cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
@@ -40,13 +39,12 @@ cmp.setup({
 		["<C-f>"] = cm.scroll_docs(4),
 		["<C-o>"] = cm.complete(),
 		["<C-e>"] = cm.abort(),
-		["<CR>"] = cm.confirm({ select = true }),
+		["<CR>"] = cm.confirm({ select = false }),
 	}),
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" },
 	}, {
-
 		{ name = "buffer" },
 	}),
 })

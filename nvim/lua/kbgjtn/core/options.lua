@@ -18,17 +18,19 @@ g.loaded_matchit = 1 -- use vim-matchup
 g.loaded_matchparen = 1 -- use vim-matchup
 g.completeopt = { "menuone", "noinsert", "noselect" }
 
+o.conceallevel = 0
+o.mouse = "a"
 o.encoding = "utf-8"
 o.fileencoding = "utf-8"
-o.title = true
 o.hlsearch = true
 o.incsearch = true
 o.smartindent = true
-o.showcmd = true
+o.showcmd = false
 o.laststatus = 2
 o.cmdheight = 1
-o.scrolloff = 10
-o.shell = "bash"
+o.scrolloff = 0
+o.sidescrolloff = 8
+o.shell = "zsh"
 o.backupskip = { "/tmp/*", "/private/tmp/*" }
 o.inccommand = "split"
 o.smarttab = true
@@ -39,6 +41,13 @@ o.cursorcolumn = false
 o.isfname:append("@-@")
 o.updatetime = 50
 o.startofline = true
+o.fillchars = vim.opt.fillchars + "eob: "
+vim.opt.fillchars:append({
+	stl = " ",
+})
+vim.opt.shortmess:append("c")
+vim.cmd("set whichwrap+=<,>,[,],h,l")
+vim.cmd([[set iskeyword+=-]])
 o.guicursor = {
 	"i-ci-ve:ver85-Cursor/lCursor",
 	"n-v-c:block-Cursor/lCursor",
@@ -61,9 +70,11 @@ o.synmaxcol = 300 -- stop syntax highlight after x lines for performance
 o.laststatus = 2 -- always show status line
 
 o.list = false -- do not display white characters
-o.foldenable = false -- do not enable folding by default
-o.foldlevel = 4
-o.foldmethod = "syntax" -- fold based on syntax level
+o.foldenable = true -- do not enable folding by default
+o.foldlevel = 99
+o.foldmethod = "expr" -- fold based on syntax level
+o.foldlevelstart = 99
+o.foldcolumn = "1" -- show fold column when there are folds
 o.eol = false -- show if there's no eol char
 o.showbreak = "↳ " -- show this when line is broken
 o.modelines = 0
@@ -92,6 +103,8 @@ o.shiftwidth = 4 -- 2 spaces for indent width
 o.expandtab = true -- expand tab to spaces
 o.autoindent = true -- copy indent from current line when starting new one
 o.textwidth = 60 -- wrap lines at 80 characters
+o.splitbelow = true
+o.splitright = true
 
 -- line wrapping
 o.wrap = false -- disable line wrapping
@@ -134,3 +147,7 @@ o.splitright = true -- split vertical window to the right
 o.splitbelow = true -- split horizontal window to the bottom
 
 o.iskeyword:append("-") -- consider string-string as whole word
+
+o.title = false
+o.guifont = "monospace:h17"
+o.ruler = false

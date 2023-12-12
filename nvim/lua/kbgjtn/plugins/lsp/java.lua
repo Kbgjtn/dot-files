@@ -47,6 +47,7 @@ local config = {
 		jdtls_path .. "/config_linux",
 
 		"-data",
+		workspace_dir,
 	},
 	root_dir = require("jdtls.setup").find_root({ ".git", "mvnw", "gradlew" }),
 	settings = {

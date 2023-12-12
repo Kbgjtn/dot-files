@@ -47,8 +47,15 @@ theme.setup({
 			BufferLineIndicator = { bg = "#FFC436" },
 			BufferLineTabSelected = { bg = "#1c1c1c" },
 			BufferLineTab = { bg = "#1c1c1c", fg = "#DED0B6" },
+
+			-- ufo fold
+
+			-- cmp lua
+			CmpNormal = { bg = "#101010" },
+			CmpDocNormal = { bg = "#101010" },
 		}
 	end,
+
 	theme = "dragon",
 	background = {
 		dark = "dragon",

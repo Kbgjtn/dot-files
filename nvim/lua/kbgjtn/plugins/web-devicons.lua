@@ -1,11 +1,17 @@
-require("nvim-web-devicons").set_default_icon("", "#6d8086", 65)
-require("nvim-web-devicons").setup({
+local status, webdev_icons = pcall(require, "nvim-web-devicons")
+
+if not status then
+	return
+end
+
+webdev_icons.set_default_icon("", "#6d8086", 65)
+webdev_icons.setup({
 	color_icons = true,
 	default = true,
 	strict = true,
 	override = {
 		file = {
-			icon = "",
+			icon = "",
 		},
 	},
 	override_by_filename = {
@@ -34,7 +40,7 @@ require("nvim-web-devicons").setup({
 
 	override_by_extension = {
 		["txt"] = {
-			icon = "",
+			icon = "",
 		},
 		["yml"] = {
 			icon = "Y",
@@ -78,7 +84,7 @@ require("nvim-web-devicons").setup({
 		},
 
 		["log"] = {
-			icon = "",
+			icon = "",
 		},
 		["prisma"] = {
 			icon = "◮",

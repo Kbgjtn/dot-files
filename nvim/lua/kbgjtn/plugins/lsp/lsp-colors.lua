@@ -1,4 +1,5 @@
 local colors_status, lsp_colors = pcall(require, "lsp-colors")
+
 if not colors_status then
 	return
 end

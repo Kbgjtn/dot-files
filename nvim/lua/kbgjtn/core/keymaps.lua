@@ -129,6 +129,10 @@ keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic 
 keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
 keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
 
+-- Ufo keymaps
+vim.keymap.set("n", "zR", require("ufo").openAllFolds)
+vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+
 -- trouble keymaps
 vim.api.nvim_set_keymap("n", "<leader>xx", "<cmd>Trouble<cr>", opts)
 vim.api.nvim_set_keymap("n", "<leader>xw", "<cmd>Trouble workspace_diagnostics<cr>", opts)
@@ -156,7 +160,7 @@ function P.map_lsp_keys()
 end
 
 -- java
-function P.map_java_keys(bufnr)
+function P.map_java_keys()
 	P.map_lsp_keys()
 	key_map("n", "<leader>oi", ':lua require("jdtls").organize_imports()<CR>')
 	key_map("n", "<leader>jc", ':lua require("jdtls).compile("incremental")')

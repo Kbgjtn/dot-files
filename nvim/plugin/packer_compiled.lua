@@ -94,6 +94,11 @@ _G.packer_plugins = {
     path = "/home/bono/.local/share/nvim/site/pack/packer/start/cmp-buffer",
     url = "https://github.com/hrsh7th/cmp-buffer"
   },
+  ["cmp-cmdline"] = {
+    loaded = true,
+    path = "/home/bono/.local/share/nvim/site/pack/packer/start/cmp-cmdline",
+    url = "https://github.com/hrsh7th/cmp-cmdline"
+  },
   ["cmp-nvim-lsp"] = {
     loaded = true,
     path = "/home/bono/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
@@ -151,6 +156,13 @@ _G.packer_plugins = {
     path = "/home/bono/.local/share/nvim/site/pack/packer/start/guihua.lua",
     url = "https://github.com/ray-x/guihua.lua"
   },
+  ["headlines.nvim"] = {
+    load_after = {},
+    loaded = true,
+    needs_bufread = false,
+    path = "/home/bono/.local/share/nvim/site/pack/packer/opt/headlines.nvim",
+    url = "https://github.com/lukas-reineke/headlines.nvim"
+  },
   ["iron.nvim"] = {
     loaded = true,
     path = "/home/bono/.local/share/nvim/site/pack/packer/start/iron.nvim",
@@ -160,6 +172,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/bono/.local/share/nvim/site/pack/packer/start/kanagawa.nvim",
     url = "https://github.com/rebelot/kanagawa.nvim"
+  },
+  ["lf.nvim"] = {
+    loaded = true,
+    path = "/home/bono/.local/share/nvim/site/pack/packer/start/lf.nvim",
+    url = "https://github.com/lmburns/lf.nvim"
   },
   ["lsp_lines.nvim"] = {
     loaded = true,
@@ -269,6 +286,11 @@ _G.packer_plugins = {
     path = "/home/bono/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag",
     url = "https://github.com/windwp/nvim-ts-autotag"
   },
+  ["nvim-ufo"] = {
+    loaded = true,
+    path = "/home/bono/.local/share/nvim/site/pack/packer/start/nvim-ufo",
+    url = "https://github.com/kevinhwang91/nvim-ufo"
+  },
   ["nvim-web-devicons"] = {
     loaded = true,
     path = "/home/bono/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
@@ -289,6 +311,16 @@ _G.packer_plugins = {
     path = "/home/bono/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
+  ["promise-async"] = {
+    loaded = true,
+    path = "/home/bono/.local/share/nvim/site/pack/packer/start/promise-async",
+    url = "https://github.com/kevinhwang91/promise-async"
+  },
+  ["tailwindcss-colorizer-cmp.nvim"] = {
+    loaded = true,
+    path = "/home/bono/.local/share/nvim/site/pack/packer/start/tailwindcss-colorizer-cmp.nvim",
+    url = "https://github.com/roobert/tailwindcss-colorizer-cmp.nvim"
+  },
   ["telescope-fzf-native.nvim"] = {
     loaded = true,
     path = "/home/bono/.local/share/nvim/site/pack/packer/start/telescope-fzf-native.nvim",
@@ -298,6 +330,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/bono/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
+  },
+  ["toggleterm.nvim"] = {
+    loaded = true,
+    path = "/home/bono/.local/share/nvim/site/pack/packer/start/toggleterm.nvim",
+    url = "https://github.com/akinsho/toggleterm.nvim"
   },
   ["trouble.nvim"] = {
     loaded = true,
@@ -350,6 +387,7 @@ time([[Config for nvim-notify]], false)
 time([[Sequenced loading]], true)
 vim.cmd [[ packadd nvim-treesitter ]]
 vim.cmd [[ packadd nvim-ts-autotag ]]
+vim.cmd [[ packadd headlines.nvim ]]
 time([[Sequenced loading]], false)
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]

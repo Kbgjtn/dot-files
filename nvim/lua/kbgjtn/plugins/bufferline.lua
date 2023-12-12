@@ -1,4 +1,5 @@
 local bufferline_setup, bufferline = pcall(require, "bufferline")
+
 if not bufferline_setup then
 	return
 end
@@ -10,7 +11,7 @@ bufferline.setup({
 			bufferline.style_preset.no_italic,
 			bufferline.style_preset.no_bold,
 		},
-		separator_style = "|",
+		enabled = false,
 		themeable = true,
 		numbers = "none",
 		close_command = "bdelete! %d", -- can be a string | function, | false see "Mouse actions"
@@ -22,7 +23,8 @@ bufferline.setup({
 		left_trunc_marker = "",
 		max_name_length = 18,
 		tab_size = 10,
-		color_icons = true,
+		seperator_style = { "", "" },
+		color_icons = false,
 		diagnostics = "nvim_lsp",
 		diagnostics_update_in_insert = false,
 		offsets = {
@@ -30,7 +32,7 @@ bufferline.setup({
 				filetype = "NvimTree",
 				text = "",
 				text_align = "center",
-				separator = true,
+				separator = false,
 				padding = 1,
 			},
 		},

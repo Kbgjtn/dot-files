@@ -1,6 +1,5 @@
 -- import nvim-tree plugin safely
 local setup, nvimtree = pcall(require, "nvim-tree")
-
 if not setup then
 	return
 end
@@ -26,8 +25,14 @@ vim.cmd([[ highlight NvimTreeFileName guifg=#DED0B6]])
 nvimtree.setup({
 	renderer = {
 		icons = {
+			git_placement = "before",
+			padding = " ",
 			symlink_arrow = "",
-			web_devicons = {},
+			web_devicons = {
+				file = {
+					enable = true,
+				},
+			},
 			glyphs = {
 				folder = {
 					arrow_closed = "",
@@ -41,7 +46,8 @@ nvimtree.setup({
 				},
 			},
 		},
-		special_files = {},
+		special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md" },
+		symlink_destination = true,
 		highlight_opened_files = "icon",
 		indent_markers = {
 			icons = {
@@ -52,6 +58,18 @@ nvimtree.setup({
 				none = " ",
 			},
 		},
+		add_trailing = false,
+		group_empty = false,
+		highlight_git = false,
+		full_name = false,
+		indent_width = 2,
+		root_folder_label = ":t",
+	},
+	update_focused_file = {
+		enable = true,
+		debounce_delay = 15,
+		update_root = true,
+		ignore_list = {},
 	},
 	-- disable window_picker for
 	-- explorer to work well with
@@ -65,5 +83,15 @@ nvimtree.setup({
 	},
 	git = {
 		ignore = false,
+	},
+	diagnostics = {
+		enable = false,
+		show_on_dirs = false,
+		show_on_open_dirs = false,
+		debounce_delay = 50,
+		severity = {
+			min = vim.diagnostic.severity.HINT,
+			max = vim.diagnostic.severity.ERROR,
+		},
 	},
 })

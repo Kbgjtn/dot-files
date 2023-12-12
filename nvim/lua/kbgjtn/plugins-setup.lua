@@ -106,10 +106,14 @@ return packer.startup(function(use)
 	use("hrsh7th/nvim-cmp") -- completion plugin
 	use("hrsh7th/cmp-buffer") -- source for text in buffer
 	use("hrsh7th/cmp-path") -- source for file system paths
+	use("hrsh7th/cmp-cmdline")
 
 	-- snippets
 	use("L3MON4D3/LuaSnip") -- snippet engine
 	use("saadparwaiz1/cmp_luasnip") -- for autocompletion
+
+	-- tailwindcss
+	use("roobert/tailwindcss-colorizer-cmp.nvim")
 
 	-- lsp-zero
 	use("https://git.sr.ht/~whynothugo/lsp_lines.nvim")
@@ -173,6 +177,24 @@ return packer.startup(function(use)
 
 	-- ollama gen.nvim
 	use("david-kunz/gen.nvim")
+
+	-- ufo
+	use({ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" })
+
+	-- headlines
+	use({
+		"lukas-reineke/headlines.nvim",
+		after = "nvim-treesitter",
+	})
+
+	-- lf
+	-- Sample configuration is supplied
+	use({
+		"lmburns/lf.nvim",
+		requires = { "toggleterm.nvim" },
+	})
+
+	use({ "akinsho/toggleterm.nvim", tag = "*" })
 
 	if packer_bootstrap then
 		require("packer").sync()

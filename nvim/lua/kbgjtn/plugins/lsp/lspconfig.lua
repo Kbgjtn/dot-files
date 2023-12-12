@@ -11,10 +11,14 @@ local lsp_lines = require("lsp_lines")
 
 lsp_lines.setup({
 	icons = {
-		Error = "",
+		--[[ Error = "",
 		Warning = "",
 		Information = "",
-		Hint = "",
+		Hint = "", ]]
+		Error = " ",
+		Warning = " ",
+		Information = " ",
+		Hint = " ",
 	},
 })
 
@@ -57,10 +61,14 @@ end
 -- used to enable autocompletion (assign to every lsp server config)
 local capabilities = cmp_nvim_lsp.default_capabilities()
 capabilities.offsetEncoding = "utf-16"
+capabilities.textDocument.foldingRange = {
+	dynamicRegistration = false,
+	lineFoldingOnly = true,
+}
 
 -- Change the Diagnostic symbols in the sign column (gutter)
 -- (not in youtube nvim video)
-local signs = { Error = " ", Warn = " ", Hint = "ﴞ ", Info = " " }
+local signs = { Error = " ", Warn = " ", Hint = "", Info = " " }
 
 for type, icon in pairs(signs) do
 	local hl = "DiagnosticSign" .. type
@@ -73,6 +81,23 @@ lspconfig["html"].setup({
 	on_attach = on_attach,
 })
 
+lspconfig["intelephense"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
+lspconfig.phpactor.setup({
+	root_dir = function(_)
+		return vim.loop.cwd()
+	end,
+	init_options = {
+		["language_server.diagnostics_on_update"] = false,
+		["language_server.diagnostics_on_open"] = false,
+		["language_server.diagnostics_on_save"] = false,
+		["language_server_phpstan.enabled"] = false,
+		["language_server_psalm.enabled"] = false,
+	},
+})
 -- configure typescript server with plugin
 typescript.setup({
 	server = {
@@ -114,7 +139,7 @@ lspconfig.gopls.setup({
 	on_attach = on_attach,
 	capabilities = capabilities,
 	cmd = { "gopls" },
-	filetypes = { "go", "gomod", "gowork", "gotmpl" },
+	filetypes = { "go", "gomod" },
 	root_dir = util.root_pattern("go.mod", "go.work", ".git"),
 })
 
@@ -148,3 +173,13 @@ lspconfig.lua_ls.setup({
 		},
 	},
 })
+
+local language_servers = lspconfig.util.available_servers()
+for _, server in pairs(language_servers) do
+	if server ~= "lua_ls" then
+		lspconfig[server].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+	end
+end
