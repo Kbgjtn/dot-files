@@ -20,6 +20,7 @@ null_ls.setup({
 		formatting.google_java_format,
 		formatting.prettierd,
 		formatting.shfmt,
+		formatting.google_java_format,
 		formatting.clang_format.with({
 			diagnostics_format = "#{m} [#{c}]",
 			extra_args = { "-style=google" },
@@ -29,7 +30,6 @@ null_ls.setup({
 		}),
 		formatting.prettier,
 		formatting.stylua,
-
 		diagnostics.eslint_d.with({
 			condition = function(utils)
 				return utils.root_has_file(".eslintrc" or ".eslintrc.json") -- change file extension if you use something else
@@ -46,7 +46,6 @@ null_ls.setup({
 				callback = function()
 					vim.lsp.buf.format({
 						filter = function(client)
-							--  only use null-ls for formatting instead of lsp server
 							return client.name == "null-ls"
 						end,
 						bufnr = bufnr,

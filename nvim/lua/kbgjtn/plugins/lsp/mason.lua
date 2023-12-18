@@ -38,7 +38,8 @@ mason_lspconfig.setup({
 		"bashls",
 		"marksman",
 		"clangd",
-		"rust_analyzer",
+		"pyright",
+		"jdtls",
 	},
 	-- auto-install configured servers (with lspconfig)
 	automatic_installation = true, -- not the same as ensure_installed

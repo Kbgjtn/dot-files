@@ -40,6 +40,9 @@ return packer.startup(function(use)
 	-- packer can manage itself
 	use("wbthomason/packer.nvim")
 
+	-- marks
+	use("chentoast/marks.nvim")
+
 	-- notify
 	use({
 		"rcarriga/nvim-notify",
@@ -156,17 +159,13 @@ return packer.startup(function(use)
 	use("nvim-treesitter/nvim-treesitter-textobjects") -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 	use("rhysd/vim-clang-format") -- https://github.com/rhysd/vim-clang-format
 
-	-- golang stuff
-	use({
-		"ray-x/go.nvim",
-		event = { "CmdlineEnter" },
-		ft = { "go", "gomod" },
-		build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
-	})
+	use("ray-x/go.nvim")
 	use("ray-x/guihua.lua")
 
 	-- java plugin stuff
 	use("mfussenegger/nvim-dap")
+	use("theHamsta/nvim-dap-virtual-text")
+	use("rcarriga/nvim-dap-ui")
 	use("mfussenegger/nvim-jdtls")
 
 	use("nvim-lua/plenary.nvim")
@@ -193,8 +192,41 @@ return packer.startup(function(use)
 		"lmburns/lf.nvim",
 		requires = { "toggleterm.nvim" },
 	})
+	use("leoluz/nvim-dap-go")
 
 	use({ "akinsho/toggleterm.nvim", tag = "*" })
+
+	-- java-nvim
+
+	use({
+		"nvim-java/nvim-java",
+		requires = {
+			"nvim-java/lua-async-await",
+			"nvim-java/nvim-java-core",
+			"nvim-java/nvim-java-test",
+			"nvim-java/nvim-java-dap",
+			"MunifTanjim/nui.nvim",
+			"mfussenegger/nvim-dap",
+		},
+	})
+
+	use("hrsh7th/vim-vsnip")
+	use("hrsh7th/vim-vsnip-integ")
+	use("hrsh7th/cmp-vsnip")
+	use("williamboman/nvim-lsp-installer")
+
+	use({
+		"folke/which-key.nvim",
+		config = function()
+			vim.o.timeout = true
+			vim.o.timeoutlen = 300
+			require("which-key").setup({
+				-- your configuration comes here
+				-- or leave it empty to use the default settings
+				-- refer to the configuration section below
+			})
+		end,
+	})
 
 	if packer_bootstrap then
 		require("packer").sync()

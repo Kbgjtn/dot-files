@@ -11,13 +11,13 @@ bufferline.setup({
 			bufferline.style_preset.no_italic,
 			bufferline.style_preset.no_bold,
 		},
-		enabled = false,
+		enabled = true,
 		themeable = true,
 		numbers = "none",
-		close_command = "bdelete! %d", -- can be a string | function, | false see "Mouse actions"
-		right_mouse_command = "bdelete! %d", -- can be a string | function | false, see "Mouse actions"
-		middle_mouse_command = nil, -- can be a string | function, | false see "Mouse actions"
-		left_mouse_command = "buffer %d", -- can be a string | function, | false see "Mouse actions"
+		close_command = "bdelete! %d",
+		right_mouse_command = "bdelete! %d",
+		middle_mouse_command = nil,
+		left_mouse_command = "buffer %d",
 		close_icon = "",
 		right_trunc_marker = "",
 		left_trunc_marker = "",
@@ -27,14 +27,5 @@ bufferline.setup({
 		color_icons = false,
 		diagnostics = "nvim_lsp",
 		diagnostics_update_in_insert = false,
-		offsets = {
-			{
-				filetype = "NvimTree",
-				text = "",
-				text_align = "center",
-				separator = false,
-				padding = 1,
-			},
-		},
 	},
 })

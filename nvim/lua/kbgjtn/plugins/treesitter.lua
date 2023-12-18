@@ -10,12 +10,8 @@ treesitter.setup({
 	highlight = {
 		enable = true,
 		disable = { "help" },
-		additional_vim_regex_highlighting = { "php" },
 	},
-	-- enable indentation
 	indent = { enable = true },
-
-	-- incremental selection
 	incremental_selection = {
 		enable = true,
 		keymap = {
@@ -25,9 +21,7 @@ treesitter.setup({
 			node_decremental = "<M-space",
 		},
 	},
-	-- enable autotagging (w/ nvim-ts-autotag plugin)
 	autotag = { enable = true },
-	-- ensure these language parsers are installed
 	ensure_installed = {
 		"json",
 		"javascript",
@@ -51,14 +45,13 @@ treesitter.setup({
 		"python",
 		"vimdoc",
 		"markdown_inline",
+		"java",
 	},
-
 	textobjects = {
 		select = {
 			enable = true,
-			lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+			lookahead = true,
 			keymaps = {
-				-- You can use the capture groups defined in textobjects.scm
 				["aa"] = "@parameter.outer",
 				["ia"] = "@parameter.inner",
 				["af"] = "@function.outer",
@@ -69,7 +62,7 @@ treesitter.setup({
 		},
 		move = {
 			enable = true,
-			set_jumps = true, -- whether to set jumps in the jumplist
+			set_jumps = true,
 			goto_next_start = {
 				["]m"] = "@function.outer",
 				["]]"] = "@class.outer",
@@ -99,7 +92,6 @@ treesitter.setup({
 	},
 	sync_install = false,
 	sync_installed = true,
-	-- auto install above language parsers
 	auto_install = true,
 	additional_vim_regex_highlighting = false,
 })

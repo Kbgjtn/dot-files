@@ -1,45 +1,39 @@
--- import nvim-cmp plugin safely
 local cmp_status, cmp = pcall(require, "cmp")
+
 if not cmp_status then
 	return
 end
 
--- import luasnip plugin safely
 local luasnip_status, luasnip = pcall(require, "luasnip")
+
 if not luasnip_status then
 	return
 end
 
 luasnip.filetype_extend("typescriptreact", { "html" })
 
--- import lspkind plugin safely
 local lspkind_status, lspkind = pcall(require, "lspkind")
 if not lspkind_status then
 	return
 end
 
--- load vs-code like snippets from plugins (e.g. friendly-snippets)
 require("luasnip/loaders/from_vscode").lazy_load()
 
 require("tailwindcss-colorizer-cmp").setup({
 	color_square_width = 2,
 })
 
-vim.opt.completeopt = "menu,menuone,noselect"
+--[[ vim.opt.completeopt = "menu,menuone,noselect"
 vim.api.nvim_set_hl(0, "CmpNormal", { bg = "NONE" })
 vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#303030" })
 vim.api.nvim_set_hl(0, "CmpItemKindTabnine", { fg = "#303030" })
 vim.api.nvim_set_hl(0, "CmpItemKindCrate", { fg = "#303030" })
-vim.api.nvim_set_hl(0, "CmpItemKindEmoji", { fg = "#303030" })
-
-local check_backspace = function()
-	local col = vim.fn.col(".") - 1
-	return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
-end
+vim.api.nvim_set_hl(0, "CmpItemKindEmoji", { fg = "#303030" }) ]]
 
 cmp.setup({
 	snippet = {
 		expand = function(args)
+			vim.fn["vsnip#anonymous"](args.body)
 			luasnip.lsp_expand(args.body)
 		end,
 	},
@@ -48,11 +42,11 @@ cmp.setup({
 			border = "rounded",
 			winhighlight = "Normal:CmpNormal",
 			scrollbar = false,
-			max_width = 80,
+			max_width = 40,
 		},
 		documentation = {
 			winhighlight = "Normal:CmpDocNormal",
-			minwidth = 40,
+			max_width = 40,
 		},
 	},
 	mapping = cmp.mapping.preset.insert({
@@ -62,7 +56,7 @@ cmp.setup({
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
 		["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
 		["<C-e>"] = cmp.mapping.abort(), -- close completion window
-		["<CR>"] = cmp.mapping.confirm({ select = true }),
+		["<CR>"] = cmp.mapping.confirm({ select = false }),
 		["<C-h>"] = function()
 			if cmp.visible_docs() then
 				cmp.close_docs()
@@ -70,35 +64,6 @@ cmp.setup({
 				cmp.open_docs()
 			end
 		end,
-		["<Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_next_item()
-			elseif luasnip.expandable() then
-				luasnip.expand()
-			elseif luasnip.expand_or_jumpable() then
-				luasnip.expand_or_jump()
-			elseif check_backspace() then
-				fallback()
-			else
-				fallback()
-			end
-		end, {
-			"i",
-			"s",
-		}),
-
-		["<S-Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_prev_item()
-			elseif luasnip.jumpable(-1) then
-				luasnip.jump(-1)
-			else
-				fallback()
-			end
-		end, {
-			"i",
-			"s",
-		}),
 	}),
 
 	-- sources for autocompletion
@@ -135,6 +100,8 @@ cmp.setup({
 		{ name = "crates" },
 		{ name = "tmux" },
 		{ name = "cmdline" },
+		{ name = "nvim_lsp_signature_help" },
+		{ name = "vsnip" },
 		confirm_opts = {
 			behavior = cmp.ConfirmBehavior.Replace,
 			select = false,
@@ -155,17 +122,17 @@ cmp.setup({
 					side_padding = 1,
 					scrollbar = false,
 					scrolloff = 8,
-					max_width = 60,
+					max_width = 40,
 				},
 				documentation = {
 					border = "rounded",
 					winhighlight = "Normal:Pmenu,FloatBorder:FloatBorder,Search:None",
+					max_width = 40,
 				},
 			},
 		},
 	}),
 
-	-- configure lspkind for vs-code like icons
 	formatting = {
 		fields = { "kind", "abbr" },
 		format = lspkind.cmp_format({
@@ -173,9 +140,12 @@ cmp.setup({
 			nvim_lsp = "[LSP]",
 			luasnip = "[LuaSnip]",
 			nvim_lua = "[Lua]",
-			max_width = 80,
+			max_width = 40,
 			ellipsis_char = "...",
 			latex_symbols = "[Latex]",
+			before = function(_, vim_item)
+				return vim_item
+			end,
 			menu = {
 				nvim_lsp = "[LSP]",
 				ultisnips = "[US]",
@@ -187,4 +157,14 @@ cmp.setup({
 			},
 		}),
 	},
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "sh",
+	callback = function()
+		vim.lsp.start({
+			name = "bash-language-server",
+			cmd = { "bash-language-server", "start" },
+		})
+	end,
 })

@@ -8,6 +8,7 @@ if not status then
 end
 
 theme.load("dragon")
+
 theme.setup({
 	compile = false,
 	undercurl = true,
@@ -40,8 +41,8 @@ theme.setup({
 			Highlight = { bg = "#252525", fg = "" },
 			MatchParen = { bg = "#252525", fg = "" },
 
-			BufferLineBackground = { bg = "NONE" },
-			BufferLineFill = { bg = "NONE" },
+			BufferLineBackground = { bg = "#1c1c1c" },
+			BufferLineFill = { bg = "#1c1c1c" },
 			BufferLineSeparator = { bg = "NONE" },
 			BufferLineIndicatorSelected = { bg = "#1c1c1c" },
 			BufferLineIndicator = { bg = "#FFC436" },
@@ -49,10 +50,19 @@ theme.setup({
 			BufferLineTab = { bg = "#1c1c1c", fg = "#DED0B6" },
 
 			-- ufo fold
+			Folded = { bg = "NONE" },
 
 			-- cmp lua
 			CmpNormal = { bg = "#101010" },
 			CmpDocNormal = { bg = "#101010" },
+
+			-- marks
+			MarkSignHL = { bg = "#1c1c1c", fg = "#D0F288" },
+			MarkSignNumHL = { bg = "#1c1c1c", fg = "#D0F288" },
+
+			-- Error and warning color groups for LSP diagnostics
+			LspDiagnosticsDefaultError = { bg = "#1c1c1c", fg = "#FF0000" },
+			LspDiagnosticsDefaultWarning = { bg = "#1c1c1c", fg = "#FFA500" },
 		}
 	end,
 

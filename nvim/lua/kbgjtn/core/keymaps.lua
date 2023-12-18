@@ -1,12 +1,7 @@
--- set leader key to space
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 local keymap = vim.keymap
-
----------------------
--- General Keymaps
----------------------
 
 -- greatest vim keymap ever
 keymap.set("n", "Q", "<Nop>")
@@ -19,8 +14,8 @@ keymap.set("n", "N", "Nzzzv")
 
 keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
-keymap.set("n", "W", "0") -- first word
-keymap.set("n", "E", "$") -- last word
+keymap.set("n", "H", "0") -- first word
+keymap.set("n", "L", "$") -- last word
 
 keymap.set("n", "Q", "<nop>")
 keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
@@ -101,9 +96,6 @@ keymap.set("x", "J", ":move '>+1<CR>gv=gv", opts)
 keymap.set("x", "K", ":move '<-2<CR>gv=gv", opts)
 keymap.set("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 keymap.set("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
-
--- nvim-tree or file explorer
-keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>") -- toggle file explorer
 
 -- telescope
 keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>") -- find files within current working directory, respects .gitignore

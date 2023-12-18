@@ -10,12 +10,12 @@ autopairs.setup({
 	ts_config = {
 		lua = { "string", "source" }, -- don't add pairs in lua string treesitter nodes
 		javascript = { "string", "template_string" }, -- don't add pairs in javscript template_string treesitter nodes
-		java = false, -- don't check treesitter on java
+		php = { "string", "template_string" }, -- don't add pairs in php template_string treesitter nodes
 	},
 	disable__filetype = { "TelescopePrompt", "spectre_panel" }, -- don't add pairs in TelescopePrompt
 	fast_wrap = {
 		map = "<M-e",
-		chars = { "{", "[", "(", '"', "'" },
+		chars = { "{", "[", "(", '"', "'", "`", "```" },
 		offset = 0, -- Offset from pattern match
 		end_key = "$",
 		keys = "qwertyuiopzxcvbnmasdfghjkl",

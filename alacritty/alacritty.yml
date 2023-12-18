@@ -1,0 +1,90 @@
+#
+#  █████╗ ██╗      █████╗  ██████╗██████╗ ██╗████████╗████████╗██╗   ██╗
+# ██╔══██╗██║     ██╔══██╗██╔════╝██╔══██╗██║╚══██╔══╝╚══██╔══╝╚██╗ ██╔╝
+# ███████║██║     ███████║██║     ██████╔╝██║   ██║      ██║    ╚████╔╝
+# ██╔══██║██║     ██╔══██║██║     ██╔══██╗██║   ██║      ██║     ╚██╔╝
+# ██║  ██║███████╗██║  ██║╚██████╗██║  ██║██║   ██║      ██║      ██║
+# ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝   ╚═╝      ╚═╝      ╚═╝
+# A cross-platform, OpenGL terminal emulator.
+# https://alacritty.org
+
+live_config_reload: true
+
+env:
+  TERM: xterm-256color
+
+cursor:
+  style:
+    shape: Beam
+    blinking: always
+    thickness: 0.10
+
+mouse:
+  hide_when_typing: true
+
+window:
+  decorations: none
+  dynamic_padding: false
+  dynamic_title: true
+  opacity: 0.9
+  padding:
+    x: 0
+    y: 0
+  title: "coocobolo"
+
+font:
+  normal:
+    family: "SFMono Nerd Font"
+    style: Semibold
+  italic:
+    family: "SFMono Nerd Font"
+    style: Medium Italic
+  bold:
+    family: "SFMono Nerd Font"
+    style: Heavy
+  bold_italic:
+    family: "SFMono Nerd Font"
+    style: Heavy Italic
+  size: 19.0
+
+# NOTE: helpful hex codes
+# \x1b = escape (useful for vim-related keybindings)
+# \x02 = control-b (the default tmux prefix)
+key_bindings:
+  - { key: Return, mods: control|shift, action: SpawnNewInstance }
+
+shell:
+  program: /usr/bin/zsh
+
+import:
+  - ~/.config/alacritty/theme.yml
+
+colors:
+  name: Grayscale (dark)
+  author: Chris Kempson
+  primary:
+    background: "#101010"
+    foreground: "#b9b9b9"
+  cursor:
+    text: "#101010"
+    cursor: "#b9b9b9"
+  normal:
+    black: "#101010"
+    red: "#7c7c7c"
+    green: "#8e8e8e"
+    yellow: "#a0a0a0"
+    blue: "#686868"
+    magenta: "#747474"
+    cyan: "#868686"
+    white: "#b9b9b9"
+  bright:
+    black: "#525252"
+    red: "#7c7c7c"
+    green: "#8e8e8e"
+    yellow: "#a0a0a0"
+    blue: "#686868"
+    magenta: "#747474"
+    cyan: "#868686"
+    white: "#f7f7f7"
+
+theme: Grayscale.dark
