@@ -23,17 +23,9 @@ require("tailwindcss-colorizer-cmp").setup({
 	color_square_width = 2,
 })
 
---[[ vim.opt.completeopt = "menu,menuone,noselect"
-vim.api.nvim_set_hl(0, "CmpNormal", { bg = "NONE" })
-vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#303030" })
-vim.api.nvim_set_hl(0, "CmpItemKindTabnine", { fg = "#303030" })
-vim.api.nvim_set_hl(0, "CmpItemKindCrate", { fg = "#303030" })
-vim.api.nvim_set_hl(0, "CmpItemKindEmoji", { fg = "#303030" }) ]]
-
 cmp.setup({
 	snippet = {
 		expand = function(args)
-			vim.fn["vsnip#anonymous"](args.body)
 			luasnip.lsp_expand(args.body)
 		end,
 	},
@@ -42,11 +34,11 @@ cmp.setup({
 			border = "rounded",
 			winhighlight = "Normal:CmpNormal",
 			scrollbar = false,
-			max_width = 40,
 		},
 		documentation = {
 			winhighlight = "Normal:CmpDocNormal",
-			max_width = 40,
+			border = "rounded",
+			scrollbar = true,
 		},
 	},
 	mapping = cmp.mapping.preset.insert({
@@ -90,18 +82,6 @@ cmp.setup({
 		{ name = "luasnip" }, -- snippets
 		{ name = "buffer" }, -- text within current buffer
 		{ name = "path" }, -- file system paths
-		{ name = "copilot" },
-		{ name = "cmp_tabnine" },
-		{ name = "nvim_lua" },
-		{ name = "path" },
-		{ name = "calc" },
-		{ name = "emoji" },
-		{ name = "treesitter" },
-		{ name = "crates" },
-		{ name = "tmux" },
-		{ name = "cmdline" },
-		{ name = "nvim_lsp_signature_help" },
-		{ name = "vsnip" },
 		confirm_opts = {
 			behavior = cmp.ConfirmBehavior.Replace,
 			select = false,
@@ -113,21 +93,20 @@ cmp.setup({
 			},
 			docs = {
 				auto_open = false,
+				border = "rounded",
 			},
 			window = {
 				completion = {
 					border = "rounded",
 					winhighlight = "Normal:Pmenu,CursorLine:PmenuSel,FloatBorder:FloatBorder,Search:None",
 					col_offset = -3,
-					side_padding = 1,
+					side_padding = 2,
 					scrollbar = false,
 					scrolloff = 8,
-					max_width = 40,
 				},
 				documentation = {
 					border = "rounded",
 					winhighlight = "Normal:Pmenu,FloatBorder:FloatBorder,Search:None",
-					max_width = 40,
 				},
 			},
 		},

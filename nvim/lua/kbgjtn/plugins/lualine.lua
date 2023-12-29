@@ -1,32 +1,23 @@
 local status, lualine = pcall(require, "lualine")
+local colors = require("kbgjtn.utils.color")
+
 if not status then
 	return
 end
 
-local colors = {
-	blue = "#73ab84",
-	cyan = "#3dccc7",
-	black = "#101010",
-	white = "#c6c6c6",
-	red = "#ff5189",
-	yellow = "#fdc500",
-	grey = "#212121",
-	none = "",
-}
-
 local bubbles_theme = {
 	normal = {
-		a = { fg = colors.white, bg = colors.none },
-		b = { fg = colors.white, bg = colors.none },
-		c = { fg = colors.white, bg = colors.none },
+		a = { fg = colors.grey.tints, bg = colors.none },
+		b = { fg = colors.grey.tints, bg = colors.none },
+		c = { fg = colors.grey.tints, bg = colors.none },
 	},
-	insert = { a = { fg = colors.black, bg = colors.none } },
-	visual = { a = { fg = colors.black, bg = colors.none } },
-	replace = { a = { fg = colors.black, bg = colors.none } },
+	insert = { a = { fg = colors.dark.chinese, bg = colors.none } },
+	visual = { a = { fg = colors.dark.chinese, bg = colors.none } },
+	replace = { a = { fg = colors.dark.chinese, bg = colors.none } },
 	inactive = {
-		a = { fg = colors.white, bg = colors.none },
-		b = { fg = colors.white, bg = colors.none },
-		c = { fg = colors.black, bg = colors.none },
+		a = { fg = colors.grey.tints, bg = colors.none },
+		b = { fg = colors.grey.tints, bg = colors.none },
+		c = { fg = colors.dark.chinese, bg = colors.none },
 	},
 }
 

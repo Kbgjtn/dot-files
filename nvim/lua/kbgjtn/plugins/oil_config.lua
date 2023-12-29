@@ -4,7 +4,7 @@ require("oil").setup({
 	},
 	buf_options = {
 		buflisted = false,
-		bufhidden = "hide",
+		bufhidden = "",
 	},
 	win_options = {
 		wrap = false,
@@ -12,7 +12,7 @@ require("oil").setup({
 		cursorcolumn = false,
 		foldcolumn = "0",
 		spell = false,
-		list = false,
+		list = true,
 		conceallevel = 3,
 		concealcursor = "n",
 	},
@@ -21,11 +21,12 @@ require("oil").setup({
 	skip_confirm_for_simple_edits = false,
 	delete_to_trash = false,
 	trash_command = "trash-put",
-	prompt_save_on_select_new_entry = true,
+	prompt_save_on_select_new_entry = false,
+	prompt_delete_on_select_new_entry = false,
 	keymaps = {
 		["g?"] = "actions.show_help",
 		["<CR>"] = "actions.select",
-		["<C-s>"] = "actions.select_vsplit",
+		["<C-v>"] = "actions.select_vsplit",
 		["<C-h>"] = "actions.select_split",
 		["<C-t>"] = "actions.select_tab",
 		["<C-p>"] = "actions.preview",
@@ -35,20 +36,14 @@ require("oil").setup({
 		["_"] = "actions.open_cwd",
 		["`"] = "actions.cd",
 		["~"] = "actions.tcd",
+		["gs"] = "actions.change_sort",
+		["gx"] = "actions.open_external",
 		["g."] = "actions.toggle_hidden",
+		["g\\"] = "actions.toggle_trash",
 	},
 	use_default_keymaps = true,
-	view_options = {
-		show_hidden = false,
-		is_hidden_file = function(name, _)
-			return vim.startswith(name, ".")
-		end,
-		is_always_hidden = function(_, __)
-			return false
-		end,
-	},
 	float = {
-		padding = 2,
+		padding = 0,
 		max_width = 0,
 		max_height = 0,
 		border = "rounded",
@@ -79,6 +74,22 @@ require("oil").setup({
 		minimized_border = "none",
 		win_options = {
 			winblend = 0,
+		},
+	},
+	view_options = {
+		-- Show files and directories that start with "."
+		show_hidden = true,
+		-- This function defines what is considered a "hidden" file
+		is_hidden_file = function(name, _)
+			return vim.startswith(name, ".")
+		end,
+		-- This function defines what will never be shown, even when `show_hidden` is set
+		is_always_hidden = function(_, _)
+			return false
+		end,
+		sort = {
+			{ "type", "asc" },
+			{ "name", "asc" },
 		},
 	},
 })

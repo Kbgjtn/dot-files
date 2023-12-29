@@ -71,12 +71,12 @@ for type, icon in pairs(signs) do
 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
 
-lspconfig["html"].setup({
+lspconfig.html.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
 
-lspconfig["intelephense"].setup({
+lspconfig.intelephense.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
@@ -330,6 +330,11 @@ vim.diagnostic.config({
 vim.keymap.set("", "<leader>l", require("lsp_lines").toggle, { desc = "toggle lsp_lines" })
 
 lspconfig.intelephense.setup({
+	on_attach = on_attach,
+	capabilities = capabilities,
+})
+
+lspconfig.htmx.setup({
 	on_attach = on_attach,
 	capabilities = capabilities,
 })

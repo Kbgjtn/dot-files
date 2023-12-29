@@ -66,8 +66,6 @@ end
 
 vim.list_extend(bundles, vim.split(vim.fn.glob("/home/bono/.local/share/vscode-java-test/server/*.jar", 1), "\n")) ]]
 
-local system = vim.fn.has("mac") == 1 and "mac" or "linux"
-
 local config = {
 	flags = {
 		debounce_text_changes = 80,
@@ -91,7 +89,7 @@ local config = {
 		"-jar",
 		vim.fn.glob(jdtls_path .. "plugins/org.eclipse.equinox.launcher_1.6.600.v20231106-1826.jar", 1),
 		"-configuration",
-		(jdtls_path .. "config_" .. system),
+		(jdtls_path .. "config_linux"),
 
 		-- directory where jdtls stores project related data
 		"-data",

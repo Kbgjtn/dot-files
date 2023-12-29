@@ -75,7 +75,7 @@ return packer.startup(function(use)
 		requires = { "tjdevries/colorbuddy.nvim" },
 	})
 
-	use("christoomey/vim-tmux-navigator") -- tmux & split window navigation
+	use({ "christoomey/vim-tmux-navigator" }) -- tmux & split window navigation
 
 	use("szw/vim-maximizer") -- maximizes and restores current window
 
@@ -109,7 +109,6 @@ return packer.startup(function(use)
 	use("hrsh7th/nvim-cmp") -- completion plugin
 	use("hrsh7th/cmp-buffer") -- source for text in buffer
 	use("hrsh7th/cmp-path") -- source for file system paths
-	use("hrsh7th/cmp-cmdline")
 
 	-- snippets
 	use("L3MON4D3/LuaSnip") -- snippet engine
@@ -186,12 +185,6 @@ return packer.startup(function(use)
 		after = "nvim-treesitter",
 	})
 
-	-- lf
-	-- Sample configuration is supplied
-	use({
-		"lmburns/lf.nvim",
-		requires = { "toggleterm.nvim" },
-	})
 	use("leoluz/nvim-dap-go")
 
 	use({ "akinsho/toggleterm.nvim", tag = "*" })

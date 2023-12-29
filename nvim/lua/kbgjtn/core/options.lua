@@ -18,7 +18,13 @@ g.loaded_2html_plugin = 1
 g.loaded_tutor_mode_plugin = 1
 g.loaded_matchit = 1 -- use vim-matchup
 g.loaded_matchparen = 1 -- use vim-matchup
+g.netrw_list_hide = 0
+g.netrw_hide = 0
 g.completeopt = { "menuone", "noinsert", "noselect" }
+g.netrw_keepdir = 0
+g.netrw_banner = 0
+
+o.hidden = false
 
 o.conceallevel = 0
 o.mouse = "a"
@@ -37,7 +43,7 @@ o.backupskip = { "/tmp/*", "/private/tmp/*" }
 o.inccommand = "split"
 o.smarttab = true
 o.backspace = { "start", "eol", "indent" }
-o.path:append({ "**" }) -- Finding files - Search down into subfolders
+o.path:append({ "*.*" }) -- Finding files - Search down into subfolders
 o.wildignore:append({ "*/node_modules/*" })
 o.cursorcolumn = false
 o.isfname:append("@-@")
@@ -100,8 +106,8 @@ o.number = true -- shows absolute line number on cursor line (when relative numb
 vim.wo.number = true
 
 -- tabs & indentation
-o.tabstop = 4 -- 2 spaces for tabs (prettier default)
-o.shiftwidth = 4 -- 2 spaces for indent width
+o.tabstop = 2 -- 2 spaces for tabs (prettier default)
+o.shiftwidth = 2 -- 2 spaces for indent width
 o.expandtab = true -- expand tab to spaces
 o.autoindent = true -- copy indent from current line when starting new one
 o.textwidth = 60 -- wrap lines at 80 characters
