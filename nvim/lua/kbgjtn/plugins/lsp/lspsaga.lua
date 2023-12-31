@@ -1,10 +1,19 @@
--- import lspsaga safely
 local saga_status, saga = pcall(require, "lspsaga")
 if not saga_status then
 	return
 end
 
-saga.setup({})
+saga.setup({
+	ui = {
+		code_action = "⬛",
+		action_fix = "",
+	},
+	diagnostic = {
+		show_code_action = false,
+		text_hl_follow = false,
+		diagnostic_only_current = true,
+	},
+})
 
 local keymap = vim.keymap.set
 -- Lsp finder find the symbol definition implement reference
@@ -12,7 +21,6 @@ local keymap = vim.keymap.set
 -- when you use action in finder like open vsplit then you can
 -- use <C-t> to jump back
 keymap("n", "gh", "<cmd>Lspsaga lsp_finder<CR>")
-
 -- Code action
 keymap({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<CR>")
 

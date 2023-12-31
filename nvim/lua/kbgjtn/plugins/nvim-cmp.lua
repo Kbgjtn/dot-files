@@ -31,13 +31,14 @@ cmp.setup({
 	},
 	window = {
 		completion = {
-			border = "rounded",
+			border = "",
 			winhighlight = "Normal:CmpNormal",
 			scrollbar = false,
 		},
 		documentation = {
 			winhighlight = "Normal:CmpDocNormal",
-			border = "rounded",
+			border = "",
+			min_width = 40,
 			scrollbar = true,
 		},
 	},
@@ -64,9 +65,6 @@ cmp.setup({
 			name = "nvim_lsp",
 			entry_filter = function(entry, ctx)
 				local kind = require("cmp.types.lsp").CompletionItemKind[entry:get_kind()]
-				if kind == "Snippet" and ctx.prev_context.filetype == "java" then
-					return false
-				end
 
 				if ctx.prev_context.filetype == "markdown" then
 					return true
@@ -93,10 +91,12 @@ cmp.setup({
 			},
 			docs = {
 				auto_open = false,
+				min_width = 40,
 				border = "rounded",
 			},
 			window = {
 				completion = {
+					max_width = 30,
 					border = "rounded",
 					winhighlight = "Normal:Pmenu,CursorLine:PmenuSel,FloatBorder:FloatBorder,Search:None",
 					col_offset = -3,

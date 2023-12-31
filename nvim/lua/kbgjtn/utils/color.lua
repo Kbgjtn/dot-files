@@ -1,12 +1,13 @@
 Colors = {
 	dark = {
 		chinese = "#101010",
-		eerie = "#1a1a1a",
+		eerie = "#1A1A1A",
 		raisin = "#222222",
 		charcoal = "#303030",
 		liver = "#323232",
 		other = "#606060",
 	},
+
 	grey = {
 		tints = "#989898",
 		argent = "#C1C1C1",
@@ -24,6 +25,7 @@ Colors = {
 		chinese = "#FFB000",
 	},
 	green = {
+		funky = "#E9EDC9",
 		pear = "#D2DE32",
 	},
 	none = "NONE",
