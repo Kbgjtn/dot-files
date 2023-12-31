@@ -16,4 +16,8 @@ marks.setup({
 		virt_text = "",
 		annotate = false,
 	},
+	mappings = {
+		next = "fj",
+		prev = "fk",
+	},
 })

@@ -27,16 +27,13 @@ keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>")
 
+keymap.set("n", "<leader>e", "<cmd>Oil<CR>")
+
 -- save all buffer files
 keymap.set("n", "<leader>w", ":wall<CR>")
 
 -- undo tree
 keymap.set("n", "<leader>u", ":UndotreeToggle<CR>")
-
--- tab buffer
-keymap.set("n", "<A-K>", ":BufferLineCycleNext<CR>")
-keymap.set("n", "<A-J>", ":BufferLineCyclePrev<CR>")
-keymap.set("n", "<A-X>", ":BufferLinePickClose<CR>")
 
 -- use jk to exit insert mode
 keymap.set("i", "jk", "<ESC>")
@@ -60,9 +57,19 @@ keymap.set("n", "<leader>sh", "<C-w>s") -- split window horizontally
 keymap.set("n", "<leader>se", "<C-w>=") -- make split windows equal width & height
 keymap.set("n", "<leader>sx", ":close<CR>") -- close current split window
 
+keymap.set("n", "<M-l>", ":vertical resize +2<CR>")
+keymap.set("n", "<M-h>", ":vertical resize -2<CR>")
+keymap.set("n", "<M-K>", ":resize +2<CR>")
+keymap.set("n", "<M-J>", ":resize -2<CR>")
+
+--[[ nmap <M-Right> :vertical resize +1<CR>
+nmap <M-Left> :vertical resize -1<CR>
+nmap <M-Down> :resize +1<CR>
+nmap <M-Up> :resize -1<CR> ]]
+
 -- Split window
-keymap.set("n", "ss", ":split<Return><C-w>w")
-keymap.set("n", "sv", ":vsplit<Return><C-w>w")
+-- keymap.set("n", "ss", ":split<Return><C-w>w")
+-- keymap.set("n", "sv", ":vsplit<Return><C-w>w")
 
 -- Move window
 keymap.set("n", "<Space>", "<C-w>w")
@@ -80,8 +87,13 @@ keymap.set("n", "<leader>sm", ":MaximizerToggle<CR>") -- toggle split window max
 
 local opts = { noremap = true, silent = true }
 
-keymap.set("n", "<C-j>", "<Cmd>bn<CR>", opts)
-keymap.set("n", "<C-k>", "<Cmd>bp<CR>", opts)
+-- bufferline
+keymap.set("n", "<A-k>", ":BufferLineCycleNext<CR>", opts)
+keymap.set("n", "<A-j>", ":BufferLineCyclePrev<CR>", opts)
+keymap.set("n", "<A-x>", ":BufferLinePickClose<CR>", opts)
+keymap.set("n", "<A-.>", ":BufferLineMoveNext<CR>", opts)
+keymap.set("n", "<A-,>", ":BufferLineMovePrev<CR>", opts)
+keymap.set("n", "<C-q>", ":bp <BAR> bd #<CR>", opts)
 
 -- stay in indent mode
 keymap.set("v", "<", "<gv", opts)
@@ -99,6 +111,22 @@ keymap.set("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 keymap.set("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
 -- telescope
+local telescope_builtin = require("telescope.builtin")
+
+vim.keymap.set("n", "<leader>?", telescope_builtin.oldfiles, { desc = "[?] Find recently opened files" })
+vim.keymap.set("n", "<leader>/", function()
+	telescope_builtin.current_buffer_fuzzy_find(
+		require("telescope.themes").get_dropdown({ winblend = 10, previewer = false })
+	)
+end, { desc = "[/] Fuzzily search in current buffer" })
+
+vim.keymap.set("n", "<leader>m", function()
+	telescope_builtin.marks(require("telescope.themes").get_dropdown({
+		winblend = 10,
+		previewer = false,
+	}))
+end, { desc = "[/] Fuzzily search in current marks" })
+
 keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>") -- find files within current working directory, respects .gitignore
 keymap.set("n", "<C-p>", "<cmd>Telescope git_files<cr>") -- find git files within current working directory
 keymap.set("n", "<C-p>", "<cmd>Telescope git_files<cr>")

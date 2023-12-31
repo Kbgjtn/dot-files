@@ -1,4 +1,3 @@
--- import telescope plugin safely
 local telescope_setup, telescope = pcall(require, "telescope")
 local trouble = require("trouble.providers.telescope")
 
@@ -11,15 +10,6 @@ if not actions_setup then
 	return
 end
 
-vim.keymap.set("n", "<leader>?", require("telescope.builtin").oldfiles, { desc = "[?] Find recently opened files" })
-vim.keymap.set("n", "<leader>/", function()
-	require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
-		winblend = 10,
-		previewer = false,
-	}))
-end, { desc = "[/] Fuzzily search in current buffer" })
-
--- configure telescope
 telescope.setup({
 	extensions = {
 		fuzzy = true,
@@ -30,11 +20,10 @@ telescope.setup({
 	defaults = {
 		mappings = {
 			i = {
-				["<C-k>"] = actions.move_selection_previous, -- move to prev result
-				["<C-j>"] = actions.move_selection_next, -- move to next result
-				["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist, -- send selected to quickfixlist
 				["<esc>"] = actions.close,
-				["<c-t>"] = trouble.open_with_trouble,
+				["<C-j>"] = actions.move_selection_next, -- move to next result
+				["<C-k>"] = actions.move_selection_previous, -- move to prev result
+				["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist, -- send selected to quickfixlist
 			},
 			n = {
 				["<c-t>"] = trouble.open_with_trouble,

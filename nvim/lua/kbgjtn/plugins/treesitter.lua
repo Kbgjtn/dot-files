@@ -6,11 +6,11 @@ end
 
 -- configure treesitter
 treesitter.setup({
-	-- enable syntax highlighting
 	highlight = {
 		enable = true,
 		disable = { "help" },
 	},
+	build = ":TSUpdate",
 	indent = { enable = true },
 	incremental_selection = {
 		enable = true,

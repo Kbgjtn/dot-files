@@ -10,10 +10,10 @@ local lsp_lines = require("lsp_lines")
 
 lsp_lines.setup({
 	icons = {
-		--[[ Error = "",
+		Error = "",
 		Warning = "",
 		Information = "",
-		Hint = "", ]]
+		Hint = "",
 	},
 })
 
@@ -50,7 +50,6 @@ end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
-
 capabilities.offsetEncoding = "utf-16"
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -77,6 +76,11 @@ lspconfig.html.setup({
 })
 
 lspconfig.intelephense.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
+lspconfig.templ.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
@@ -150,7 +154,7 @@ require("go").setup({
 		underline = false,
 		-- virtual text setup
 		virtual_text = { spacing = 0, prefix = "■" },
-		signs = true,
+		signs = false,
 		update_in_insert = false,
 	},
 	lsp_document_formatting = true,

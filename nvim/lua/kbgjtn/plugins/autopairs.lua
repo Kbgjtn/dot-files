@@ -14,7 +14,7 @@ autopairs.setup({
 	disable__filetype = { "TelescopePrompt", "spectre_panel" }, -- don't add pairs in TelescopePrompt
 	fast_wrap = {
 		map = "<M-e>",
-		chars = { "{", "[", "(", '"', "'" },
+		chars = { "{", "[", "(", '"', "'", "`", "```" },
 		offset = 0, -- Offset from pattern match
 		end_key = "$",
 		keys = "qwertyuiopzxcvbnmasdfghjkl",
