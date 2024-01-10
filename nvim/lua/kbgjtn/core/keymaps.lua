@@ -11,6 +11,7 @@ keymap.set("n", "<S-d>", "<C-d>zz")
 keymap.set("n", "<c-u>", "<C-u>zz")
 keymap.set("n", "n", "nzzzv")
 keymap.set("n", "N", "Nzzzv")
+keymap.set("n", "<C-/>", "<cmd>Inspect<cr>")
 
 keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
@@ -32,8 +33,8 @@ keymap.set("n", "<leader>e", "<cmd>Oil<CR>")
 -- save all buffer files
 keymap.set("n", "<leader>w", ":wall<CR>")
 
--- undo tree
-keymap.set("n", "<leader>u", ":UndotreeToggle<CR>")
+-- cloack togle
+keymap.set("n", "<leader>c", ":CloakToggle<CR>")
 
 -- use jk to exit insert mode
 keymap.set("i", "jk", "<ESC>")
@@ -62,15 +63,6 @@ keymap.set("n", "<M-h>", ":vertical resize -2<CR>")
 keymap.set("n", "<M-K>", ":resize +2<CR>")
 keymap.set("n", "<M-J>", ":resize -2<CR>")
 
---[[ nmap <M-Right> :vertical resize +1<CR>
-nmap <M-Left> :vertical resize -1<CR>
-nmap <M-Down> :resize +1<CR>
-nmap <M-Up> :resize -1<CR> ]]
-
--- Split window
--- keymap.set("n", "ss", ":split<Return><C-w>w")
--- keymap.set("n", "sv", ":vsplit<Return><C-w>w")
-
 -- Move window
 keymap.set("n", "<Space>", "<C-w>w")
 keymap.set("", "sh", "<C-w>h")
@@ -78,22 +70,16 @@ keymap.set("", "sk", "<C-w>k")
 keymap.set("", "sj", "<C-w>j")
 keymap.set("", "sl", "<C-w>l")
 
-----------------------
--- Plugin Keybinds
-----------------------
-
 -- vim-maximizer
 keymap.set("n", "<leader>sm", ":MaximizerToggle<CR>") -- toggle split window maximization
 
 local opts = { noremap = true, silent = true }
 
 -- bufferline
-keymap.set("n", "<A-k>", ":BufferLineCycleNext<CR>", opts)
-keymap.set("n", "<A-j>", ":BufferLineCyclePrev<CR>", opts)
+keymap.set("n", "<A-k>", ":bn<CR>", opts)
+keymap.set("n", "<A-j>", ":bp<CR>", opts)
 keymap.set("n", "<A-x>", ":BufferLinePickClose<CR>", opts)
-keymap.set("n", "<A-.>", ":BufferLineMoveNext<CR>", opts)
-keymap.set("n", "<A-,>", ":BufferLineMovePrev<CR>", opts)
-keymap.set("n", "<C-q>", ":bp <BAR> bd #<CR>", opts)
+keymap.set("n", "<C-q>", ":bdelete<CR>", opts)
 
 -- stay in indent mode
 keymap.set("v", "<", "<gv", opts)
@@ -110,22 +96,22 @@ keymap.set("x", "K", ":move '<-2<CR>gv=gv", opts)
 keymap.set("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 keymap.set("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
--- telescope
 local telescope_builtin = require("telescope.builtin")
 
+-- telescope
 vim.keymap.set("n", "<leader>?", telescope_builtin.oldfiles, { desc = "[?] Find recently opened files" })
 vim.keymap.set("n", "<leader>/", function()
-	telescope_builtin.current_buffer_fuzzy_find(
-		require("telescope.themes").get_dropdown({ winblend = 10, previewer = false })
-	)
-end, { desc = "[/] Fuzzily search in current buffer" })
+   telescope_builtin.current_buffer_fuzzy_find(
+      require("telescope.themes").get_dropdown({ winblend = 10, previewer = false })
+   )
+end)
 
-vim.keymap.set("n", "<leader>m", function()
-	telescope_builtin.marks(require("telescope.themes").get_dropdown({
-		winblend = 10,
-		previewer = false,
-	}))
-end, { desc = "[/] Fuzzily search in current marks" })
+vim.keymap.set("n", "<leader>fm", function()
+   telescope_builtin.marks(require("telescope.themes").get_dropdown({
+      winblend = 10,
+      previewer = false,
+   }))
+end)
 
 keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>") -- find files within current working directory, respects .gitignore
 keymap.set("n", "<C-p>", "<cmd>Telescope git_files<cr>") -- find git files within current working directory
@@ -147,7 +133,6 @@ keymap.set("n", "<leader>rs", ":LspRestart<CR>") -- mapping to restart lsp if ne
 -- Diagnostic keymaps
 keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })
 keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
-keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
 keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
 
 keymap.set("n", "<c-j>", "<cmd>TmuxNavigateDown<cr>", opts)
@@ -155,41 +140,21 @@ keymap.set("n", "<c-k>", "<cmd>TmuxNavigateUp<cr>", opts)
 keymap.set("n", "<c-h>", "<cmd>TmuxNavigateLeft<cr>", opts)
 keymap.set("n", "<c-l>", "<cmd>TmuxNavigateRight<cr>", opts)
 
--- Ufo keymaps
-vim.keymap.set("n", "zR", require("ufo").openAllFolds)
-vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
-
--- trouble keymaps
-vim.api.nvim_set_keymap("n", "<leader>xx", "<cmd>Trouble<cr>", opts)
-vim.api.nvim_set_keymap("n", "<leader>xw", "<cmd>Trouble workspace_diagnostics<cr>", opts)
-vim.api.nvim_set_keymap("n", "<leader>xd", "<cmd>Trouble document_diagnostics<cr>", opts)
-vim.api.nvim_set_keymap("n", "<leader>xl", "<cmd>Trouble loclist<cr>", opts)
-vim.api.nvim_set_keymap("n", "<leader>xq", "<cmd>Trouble quickfix<cr>", opts)
-vim.api.nvim_set_keymap("n", "gR", "<cmd>Trouble lsp_references<cr>", opts)
-
-local P = {}
-
--- key_mapping --
-local key_map = function(mode, key, result)
-	vim.api.nvim_set_keymap(mode, key, result, { noremap = true, silent = true })
-end
-
---LSP
-function P.map_lsp_keys()
-	key_map("n", "<C-]>", ":lua vim.lsp.buf.definition()<CR>")
-	key_map("n", "<C-k>", ":lua vim.lsp.buf.signature_help()<CR>")
-	key_map("n", "<S-R>", ":lua vim.lsp.buf.references()<CR>")
-	key_map("n", "<S-H>", ":lua vim.lsp.buf.hover()<CR>")
-	key_map("n", "<leader>ca", ":lua vim.lsp.buf.code_action()<CR>")
-	key_map("n", "<leader>nc", ":lua vim.lsp.buf.rename()<CR>")
-	key_map("n", "<leader>fr", ':lua require"telescope.builtin".lsp_references()')
-end
-
--- java
-function P.map_java_keys()
-	P.map_lsp_keys()
-	key_map("n", "<leader>oi", ':lua require("jdtls").organize_imports()<CR>')
-	key_map("n", "<leader>jc", ':lua require("jdtls).compile("incremental")')
-end
-
-return P
+-- dap
+keymap.set("n", "<F5>", "<cmd>lua require'dap'.continue()<CR>", opts)
+keymap.set("n", "<F2>", "<cmd>lua require'dap'.step_over()<CR>", opts)
+keymap.set("n", "<F1>", "<cmd>lua require'dap'.step_into()<CR>", opts)
+keymap.set("n", "<F12>", "<cmd>lua require'dap'.step_out()<CR>", opts)
+keymap.set("n", "<leader>B", "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", opts)
+keymap.set("n", "<leader>b", "<cmd>lua require'dap'.toggle_breakpoint()<CR>", opts)
+keymap.set(
+   "n",
+   "<leader>lp",
+   "<cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>",
+   opts
+)
+keymap.set("n", "<leader>dr", "<cmd>lua require'dap'.repl.open()<CR>", opts)
+-- dap-ui
+keymap.set("n", "<leader>dt", "<cmd>lua require'dapui'.toggle()<CR>", opts)
+-- dap-go
+--keymap.set("n", "<leader>dt", "<cmd>lua require'dap-go'.debug_test()<CR>", opts)

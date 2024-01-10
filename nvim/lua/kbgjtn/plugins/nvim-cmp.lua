@@ -1,149 +1,138 @@
-local cmp_status, cmp = pcall(require, "cmp")
+return {
+   "hrsh7th/nvim-cmp",
+   event = "InsertEnter",
+   dependencies = {
+      "hrsh7th/cmp-buffer", -- source for text in buffer
+      "hrsh7th/cmp-path", -- source for file system paths
+      "L3MON4D3/LuaSnip", -- snippet engine
+      "saadparwaiz1/cmp_luasnip", -- for autocompletion
+      "rafamadriz/friendly-snippets", -- useful snippets
+      "onsails/lspkind.nvim", -- vs-code like pictograms
+   },
+   config = function()
+      local cmp = require("cmp")
 
-if not cmp_status then
-	return
-end
+      local luasnip = require("luasnip")
 
-local luasnip_status, luasnip = pcall(require, "luasnip")
+      local lspkind = require("lspkind")
 
-if not luasnip_status then
-	return
-end
+      require("luasnip.loaders.from_vscode").lazy_load()
+      luasnip.filetype_extend("typescriptreact", { "html" })
+      cmp.setup({
+         completion = {
+            completeopt = "menu,menuone,preview,noselect",
+         },
+         snippet = { -- configure how nvim-cmp interacts with snippet engine
+            expand = function(args)
+               luasnip.lsp_expand(args.body)
+            end,
+         },
+         mapping = cmp.mapping.preset.insert({
+            ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
+            ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
+            ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+            ["<C-f>"] = cmp.mapping.scroll_docs(4),
+            ["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
+            ["<C-e>"] = cmp.mapping.abort(), -- close completion window
+            ["<CR>"] = cmp.mapping.confirm({ select = false }),
+         }),
+         sources = cmp.config.sources({
+            { name = "nvim_lsp" },
+            { name = "treesitter" },
+            { name = "vsnip" },
+            { name = "path" },
+            {
+               name = "buffer",
+               option = {
+                  get_bufnrs = function()
+                     return vim.api.nvim_list_bufs()
+                  end,
+               },
+            },
+            { name = "spell" },
+            view = {
+               entries = {
+                  name = "custom",
+                  selection_order = "top_down",
+               },
+               docs = {
+                  auto_open = false,
+                  max_width = 30,
+                  border = "rounded",
+               },
+               window = {
+                  completion = {
+                     max_width = 20,
+                     border = "rounded",
+                     winhighlight = "Normal:Pmenu,CursorLine:PmenuSel,FloatBorder:FloatBorder,Search:None",
+                     col_offset = -3,
+                     side_padding = 2,
+                     scrollbar = false,
+                     scrolloff = 8,
+                  },
+                  documentation = {
+                     border = "rounded",
+                     winhighlight = "Normal:Pmenu,FloatBorder:FloatBorder,Search:None",
+                     max_width = 24,
+                  },
+               },
+            },
+         }),
+         experimental = {
+            native_menu = false,
+            ghost_text = false,
+         },
+         formatting = {
+            fields = { cmp.ItemField.Abbr, cmp.ItemField.Kind, cmp.ItemField.Menu },
+            format = lspkind.cmp_format({
+               mode = "symbol_text",
+               max_width = 28,
+               before = function(entry, vim_item)
+                  local str = require("cmp.utils.str")
+                  local types = require("cmp.types")
+                  vim_item.menu = ({
+                     nvim_lsp = "ﲳ",
+                     nvim_lua = "",
+                     treesitter = "",
+                     path = "ﱮ",
+                     buffer = "﬘",
+                     zsh = "",
+                     vsnip = "",
+                     spell = "暈",
+                  })[entry.source.name]
 
-luasnip.filetype_extend("typescriptreact", { "html" })
-
-local lspkind_status, lspkind = pcall(require, "lspkind")
-if not lspkind_status then
-	return
-end
-
-require("luasnip/loaders/from_vscode").lazy_load()
-
-require("tailwindcss-colorizer-cmp").setup({
-	color_square_width = 2,
-})
-
-cmp.setup({
-	snippet = {
-		expand = function(args)
-			luasnip.lsp_expand(args.body)
-		end,
-	},
-	window = {
-		completion = {
-			border = "",
-			winhighlight = "Normal:CmpNormal",
-			scrollbar = false,
-		},
-		documentation = {
-			winhighlight = "Normal:CmpDocNormal",
-			border = "",
-			min_width = 40,
-			scrollbar = true,
-		},
-	},
-	mapping = cmp.mapping.preset.insert({
-		["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
-		["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
-		["<C-b>"] = cmp.mapping.scroll_docs(-4),
-		["<C-f>"] = cmp.mapping.scroll_docs(4),
-		["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
-		["<C-e>"] = cmp.mapping.abort(), -- close completion window
-		["<CR>"] = cmp.mapping.confirm({ select = false }),
-		["<C-h>"] = function()
-			if cmp.visible_docs() then
-				cmp.close_docs()
-			else
-				cmp.open_docs()
-			end
-		end,
-	}),
-
-	-- sources for autocompletion
-	sources = cmp.config.sources({
-		{
-			name = "nvim_lsp",
-			entry_filter = function(entry, ctx)
-				local kind = require("cmp.types.lsp").CompletionItemKind[entry:get_kind()]
-
-				if ctx.prev_context.filetype == "markdown" then
-					return true
-				end
-
-				if kind == "Text" then
-					return false
-				end
-
-				return true
-			end,
-		},
-		{ name = "luasnip" }, -- snippets
-		{ name = "buffer" }, -- text within current buffer
-		{ name = "path" }, -- file system paths
-		confirm_opts = {
-			behavior = cmp.ConfirmBehavior.Replace,
-			select = false,
-		},
-		view = {
-			entries = {
-				name = "custom",
-				selection_order = "top_down",
-			},
-			docs = {
-				auto_open = false,
-				min_width = 40,
-				border = "rounded",
-			},
-			window = {
-				completion = {
-					max_width = 30,
-					border = "rounded",
-					winhighlight = "Normal:Pmenu,CursorLine:PmenuSel,FloatBorder:FloatBorder,Search:None",
-					col_offset = -3,
-					side_padding = 2,
-					scrollbar = false,
-					scrolloff = 8,
-				},
-				documentation = {
-					border = "rounded",
-					winhighlight = "Normal:Pmenu,FloatBorder:FloatBorder,Search:None",
-				},
-			},
-		},
-	}),
-
-	formatting = {
-		fields = { "kind", "abbr" },
-		format = lspkind.cmp_format({
-			mode = "symbol_text",
-			nvim_lsp = "[LSP]",
-			luasnip = "[LuaSnip]",
-			nvim_lua = "[Lua]",
-			max_width = 40,
-			ellipsis_char = "...",
-			latex_symbols = "[Latex]",
-			before = function(_, vim_item)
-				return vim_item
-			end,
-			menu = {
-				nvim_lsp = "[LSP]",
-				ultisnips = "[US]",
-				nvim_lua = "[Lua]",
-				path = "[Path]",
-				buffer = "[Buffer]",
-				emoji = "[Emoji]",
-				omni = "[Omni]",
-			},
-		}),
-	},
-})
-
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "sh",
-	callback = function()
-		vim.lsp.start({
-			name = "bash-language-server",
-			cmd = { "bash-language-server", "start" },
-		})
-	end,
-})
+                  local word = entry:get_insert_text()
+                  if entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet then
+                     word = vim.lsp.util.parse_snippet(word)
+                  end
+                  word = str.oneline(word)
+                  if
+                     entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet
+                     and string.sub(vim_item.abbr, -1, -1) == "~"
+                  then
+                     word = word .. "~"
+                  end
+                  vim_item.abbr = word
+                  return vim_item
+               end,
+            }),
+         },
+         window = {
+            completion = {
+               border = "rounded",
+               winhighlight = "Normal:CmpNormal",
+               scrollbar = false,
+               max_width = 18,
+               min_width = 15,
+            },
+            documentation = {
+               winhighlight = "Normal:CmpDocNormal",
+               border = "rounded",
+               min_width = 20,
+               max_height = 20,
+               scrollbar = false,
+            },
+         },
+      })
+   end,
+}

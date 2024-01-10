@@ -1,4 +1,3 @@
-vim.cmd("autocmd!")
 vim.scriptencoding = "utf-8"
 
 local home = os.getenv("HOME")
@@ -8,7 +7,14 @@ local g = vim.g
 g.loaded_perl_provider = 0
 g.loaded_ruby_provider = 0
 
+g.go_def_mode = "gopls"
+g.go_info_mode = "gopls"
+
 g.copilot_assume_mapped = true
+g.copilot_filetypes = {
+   markdown = true,
+   markdownx = true,
+}
 
 -- disable unused stuff
 g.loaded = 1
@@ -20,9 +26,12 @@ g.loaded_matchit = 1 -- use vim-matchup
 g.loaded_matchparen = 1 -- use vim-matchup
 g.netrw_list_hide = 0
 g.netrw_hide = 0
-g.completeopt = { "menuone", "noinsert", "noselect" }
-g.netrw_keepdir = 0
+g.completeopt = { "menu", "menuone", "noselect" }
+g.netrw_keepdir = 1
+g.netrw_liststyle = 0
 g.netrw_banner = 0
+g.netrw_altv = 1
+o.syntax = "on"
 
 o.hidden = false
 
@@ -33,9 +42,10 @@ o.fileencoding = "utf-8"
 o.hlsearch = true
 o.incsearch = true
 o.smartindent = true
-o.showcmd = false
-o.laststatus = 2
+o.showcmd = true
 o.cmdheight = 1
+
+o.laststatus = 0
 o.scrolloff = 0
 o.sidescrolloff = 8
 o.shell = "zsh"
@@ -43,26 +53,34 @@ o.backupskip = { "/tmp/*", "/private/tmp/*" }
 o.inccommand = "split"
 o.smarttab = true
 o.backspace = { "start", "eol", "indent" }
-o.path:append({ "*.*" }) -- Finding files - Search down into subfolders
+o.path:append({ "*.*" })
+o.wildoptions:append({ "pum", "tagfile" })
+o.pumheight = 7
+o.pumwidth = 2
 o.wildignore:append({ "*/node_modules/*" })
 o.cursorcolumn = false
 o.isfname:append("@-@")
 o.updatetime = 50
 o.startofline = true
-o.fillchars = vim.opt.fillchars + "eob: "
-vim.opt.fillchars:append({
-	stl = " ",
-})
-vim.opt.shortmess:append("c")
+o.fillchars = {
+   horiz = "━",
+   horizup = "┻",
+   horizdown = "┳",
+   vert = "┃",
+   vertleft = "┫",
+   vertright = "┣",
+   verthoriz = "╋",
+}
+o.shortmess:append("c")
 vim.cmd("set whichwrap+=<,>,[,],h,l")
 vim.cmd([[set iskeyword+=-]])
 o.guicursor = {
-	"i-ci-ve:ver85-Cursor/lCursor",
-	"n-v-c:block-Cursor/lCursor",
-	"i-ci-ve:ver25-Cursor/lCursor",
-	"r-cr:hor20-Cursor/lCursor",
-	"o:hor50-Cursor/lCursor",
-	"a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor",
+   "i-ci-ve:ver85-Cursor/lCursor",
+   "n-v-c:block-Cursor/lCursor",
+   "i-ci-ve:ver25-Cursor/lCursor",
+   "r-cr:hor20-Cursor/lCursor",
+   "o:hor50-Cursor/lCursor",
+   "a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor",
 }
 
 -- wait time
@@ -71,11 +89,12 @@ o.timeoutlen = 300
 o.ttimeout = true
 o.ttimeoutlen = 100
 
+o.syntax = "on" -- syntax highlighting
+
 -- display
 o.showmatch = true -- show matching brackets
 o.scrolloff = 3 -- always show 3 rows from edge of the screen
 o.synmaxcol = 300 -- stop syntax highlight after x lines for performance
-o.laststatus = 2 -- always show status line
 
 o.list = false -- do not display white characters
 o.foldenable = true -- do not enable folding by default
@@ -86,6 +105,7 @@ o.foldcolumn = "1" -- show fold column when there are folds
 o.eol = false -- show if there's no eol char
 o.showbreak = "↳ " -- show this when line is broken
 o.modelines = 0
+o.foldexpr = "nvim_treesitter#foldexpr()"
 
 -- Undercurl
 vim.cmd([[let &t_Cs = "\e[4:3m"]])
@@ -93,8 +113,8 @@ vim.cmd([[let &t_Ce = "\e[4:0m"]])
 
 -- Turn off paste mode when leaving insert
 vim.api.nvim_create_autocmd("InsertLeave", {
-	pattern = "*",
-	command = "set nopaste",
+   pattern = "*",
+   command = "set nopaste",
 })
 
 -- Add asterisks in block comments
@@ -106,21 +126,23 @@ o.number = true -- shows absolute line number on cursor line (when relative numb
 vim.wo.number = true
 
 -- tabs & indentation
-o.tabstop = 2 -- 2 spaces for tabs (prettier default)
-o.shiftwidth = 2 -- 2 spaces for indent width
+o.tabstop = 3 -- 3 spaces for tabs (prettier default)
+o.shiftwidth = 3 -- 3 spaces for indent width
 o.expandtab = true -- expand tab to spaces
 o.autoindent = true -- copy indent from current line when starting new one
-o.textwidth = 60 -- wrap lines at 80 characters
+o.textwidth = 80 -- wrap lines at 80 characters
 o.splitbelow = true
 o.splitright = true
+
+o.compatible = false -- required for syntax highlighting to work properly
 
 -- line wrapping
 o.wrap = false -- disable line wrapping
 o.linebreak = true
 
-o.backup = true
+o.showtabline = 0
+o.backup = false
 o.swapfile = false
-o.backupdir = home .. "/.config/nvim/.backup/"
 o.directory = home .. "/.config/nvim/.swp/"
 o.undodir = home .. "/.config/nvim/.undo/"
 o.undofile = true -- enable undo file
@@ -134,7 +156,7 @@ o.ignorecase = true -- ignore case when searching
 o.smartcase = true -- if you include mixed case in your search, assumes you want case-sensitive
 
 -- cursor line
-o.cursorline = false -- highlight the current cursor line
+o.cursorline = true -- highlight the current cursor line
 
 -- appearance
 
@@ -157,5 +179,5 @@ o.splitbelow = true -- split horizontal window to the bottom
 o.iskeyword:append("-") -- consider string-string as whole word
 
 o.title = false
-o.guifont = "monospace:h17"
+o.guifont = "monospace:h8"
 o.ruler = false

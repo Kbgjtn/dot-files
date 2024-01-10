@@ -1,33 +1,36 @@
-local telescope_setup, telescope = pcall(require, "telescope")
-local trouble = require("trouble.providers.telescope")
+return {
+  "nvim-telescope/telescope.nvim",
+  branch = "0.1.x",
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    "nvim-tree/nvim-web-devicons",
+  },
+  config = function()
+    local telescope = require("telescope")
+    local actions = require("telescope.actions")
 
-if not telescope_setup then
-	return
-end
+    telescope.setup({
+      defaults = {
+        path_display = { "truncate " },
+        mappings = {
+          i = {
+            ["<C-k>"] = actions.move_selection_previous, -- move to prev result
+            ["<C-j>"] = actions.move_selection_next, -- move to next result
+            ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+          },
+        },
+      },
+    })
 
-local actions_setup, actions = pcall(require, "telescope.actions")
-if not actions_setup then
-	return
-end
+    telescope.load_extension("fzf")
 
-telescope.setup({
-	extensions = {
-		fuzzy = true,
-		override_generic_sorter = true,
-		override_file_sorter = true,
-		case_mode = "smart_case",
-	},
-	defaults = {
-		mappings = {
-			i = {
-				["<esc>"] = actions.close,
-				["<C-j>"] = actions.move_selection_next, -- move to next result
-				["<C-k>"] = actions.move_selection_previous, -- move to prev result
-				["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist, -- send selected to quickfixlist
-			},
-			n = {
-				["<c-t>"] = trouble.open_with_trouble,
-			},
-		},
-	},
-})
+    -- set keymaps
+    local keymap = vim.keymap -- for conciseness
+
+    keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
+    keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", { desc = "Fuzzy find recent files" })
+    keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
+    keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
+  end,
+}
