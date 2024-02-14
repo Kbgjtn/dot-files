@@ -33,7 +33,9 @@ return {
             formatting.prettier.with({
                extra_filetypes = { "svelte" },
             }),
+            formatting.shfmt, -- shfmt formatter
             formatting.stylua,
+            formatting.markdownlint, -- markdown linter
             diagnostics.eslint,
             diagnostics.eslint_d.with({ -- js/ts linter
                condition = function(utils)

@@ -18,7 +18,7 @@ return {
             foldcolumn = "0",
             spell = false,
             list = false,
-            conceallevel = 3,
+            conceallevel = 2,
             concealcursor = "nvic",
          },
          default_file_explorer = true,
@@ -27,6 +27,7 @@ return {
          delete_to_trash = true,
          prompt_save_on_select_new_entry = false,
          prompt_delete_on_select_new_entry = false,
+
          keymaps = {
             ["g?"] = "actions.show_help",
             ["<CR>"] = "actions.select",

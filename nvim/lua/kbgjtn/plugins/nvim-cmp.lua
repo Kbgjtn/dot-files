@@ -11,13 +11,13 @@ return {
    },
    config = function()
       local cmp = require("cmp")
-
       local luasnip = require("luasnip")
-
       local lspkind = require("lspkind")
 
       require("luasnip.loaders.from_vscode").lazy_load()
       luasnip.filetype_extend("typescriptreact", { "html" })
+      luasnip.filetype_extend("templ", { "htmx" })
+
       cmp.setup({
          completion = {
             completeopt = "menu,menuone,preview,noselect",
@@ -38,8 +38,7 @@ return {
          }),
          sources = cmp.config.sources({
             { name = "nvim_lsp" },
-            { name = "treesitter" },
-            { name = "vsnip" },
+            { name = "luasnip" },
             { name = "path" },
             {
                name = "buffer",
@@ -49,7 +48,6 @@ return {
                   end,
                },
             },
-            { name = "spell" },
             view = {
                entries = {
                   name = "custom",
@@ -99,6 +97,7 @@ return {
                      zsh = "",
                      vsnip = "",
                      spell = "暈",
+                     luasnip = "♠",
                   })[entry.source.name]
 
                   local word = entry:get_insert_text()

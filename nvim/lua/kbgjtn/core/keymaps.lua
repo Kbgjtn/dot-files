@@ -15,15 +15,15 @@ keymap.set("n", "<C-/>", "<cmd>Inspect<cr>")
 
 keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
-keymap.set("n", "H", "0") -- first word
-keymap.set("n", "L", "$") -- last word
+keymap.set({ "n", "v" }, "H", "0") -- first word
+keymap.set({ "n", "v" }, "L", "$") -- last word
 
 keymap.set("n", "Q", "<nop>")
 keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 --  keymap.set("n", "<leader>f", vim.lsp.buf.format)
 keymap.set("n", "<leader>e", ":LfCurrentFile<CR>")
 
-keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gc<Left><Left><Left>]])
+keymap.set({ "v", "n" }, "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gc<Left><Left><Left>]])
 keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>")

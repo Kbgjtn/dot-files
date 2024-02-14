@@ -49,7 +49,7 @@ return {
          keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
 
          opts.desc = "Show buffer diagnostics"
-         keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
+         keymap.set("n", "<leader>dd", "<cmd>Telescope diagnostics<CR>", opts) -- show  diagnostics for file
 
          opts.desc = "Show line diagnostics"
          keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
@@ -71,9 +71,10 @@ return {
       local capabilities = cmp_nvim_lsp.default_capabilities()
 
       vim.diagnostic.config({
+
          underline = true,
          virtual_text = false,
-         signs = true,
+         signs = false,
          update_in_insert = false,
       })
 
@@ -109,9 +110,22 @@ return {
       })
 
       -- configure html server
+
+      lspconfig["cmake"].setup({
+         capabilities = capabilities,
+         on_attach = on_attach,
+      })
+
       lspconfig["html"].setup({
          capabilities = capabilities,
          on_attach = on_attach,
+         filetypes = { "html", "typescriptreact", "javascriptreact", "templ" },
+      })
+
+      lspconfig["htmx"].setup({
+         capabilities = capabilities,
+         on_attach = on_attach,
+         filetypes = { "html", "templ" },
       })
 
       -- configure typescript server with plugin
@@ -130,36 +144,18 @@ return {
       lspconfig["tailwindcss"].setup({
          capabilities = capabilities,
          on_attach = on_attach,
-      })
-
-      -- configure svelte server
-      lspconfig["svelte"].setup({
-         capabilities = capabilities,
-         on_attach = function(client, bufnr)
-            on_attach(client, bufnr)
-
-            vim.api.nvim_create_autocmd("BufWritePost", {
-               pattern = { "*.js", "*.ts" },
-               callback = function(ctx)
-                  if client.name == "svelte" then
-                     client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.file })
-                  end
-               end,
-            })
-         end,
+         filetypes = { "templ", "markdown", "javascript", "react", "typescript" },
+         init_options = {
+            userLanguages = {
+               templ = "html",
+            },
+         },
       })
 
       -- configure prisma orm server
       lspconfig["prismals"].setup({
          capabilities = capabilities,
          on_attach = on_attach,
-      })
-
-      -- configure graphql language server
-      lspconfig["graphql"].setup({
-         capabilities = capabilities,
-         on_attach = on_attach,
-         filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
       })
 
       -- configure emmet language server
@@ -169,10 +165,41 @@ return {
          filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
       })
 
-      -- configure python server
-      lspconfig["pyright"].setup({
+      lspconfig["grammarly"].setup({
          capabilities = capabilities,
          on_attach = on_attach,
+         filetypes = { "markdown", "md", "mdx" },
+         init_options = {
+            userLanguages = {
+               markdown = "markdown",
+               md = "markdown",
+               mdx = "markdown",
+            },
+         },
+      })
+
+      lspconfig["bashls"].setup({
+         capabilities = capabilities,
+         on_attach = on_attach,
+         filetypes = { "bash", "zsh" },
+      })
+
+      lspconfig["bufls"].setup({
+         capabilities = capabilities,
+         on_attach = on_attach,
+      })
+
+      lspconfig["templ"].setup({
+         capabilities = capabilities,
+         on_attach = on_attach,
+         filetypes = { "templ" },
+      })
+
+      lspconfig["phpactor"].setup({
+         capabilities = capabilities,
+         on_attach = on_attach,
+         filetypes = { "php" },
+         root_dir = lspconfig.util.root_pattern("composer.json", ".git"),
       })
 
       -- configure lua server (with special settings)

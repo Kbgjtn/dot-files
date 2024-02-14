@@ -4,6 +4,14 @@ local home = os.getenv("HOME")
 local o = vim.opt
 local g = vim.g
 
+vim.filetype.add({ extension = {
+   templ = "templ",
+   md = "markdown",
+   mdx = "markdown",
+   env = "env",
+} })
+g.vim_markdown_math = 1
+
 g.loaded_perl_provider = 0
 g.loaded_ruby_provider = 0
 
@@ -13,7 +21,10 @@ g.go_info_mode = "gopls"
 g.copilot_assume_mapped = true
 g.copilot_filetypes = {
    markdown = true,
-   markdownx = true,
+   yaml = true,
+   json = true,
+   gitcommit = true,
+   templ = true,
 }
 
 -- disable unused stuff
@@ -101,7 +112,7 @@ o.foldenable = true -- do not enable folding by default
 o.foldlevel = 99
 o.foldmethod = "expr" -- fold based on syntax level
 o.foldlevelstart = 99
-o.foldcolumn = "1" -- show fold column when there are folds
+o.foldcolumn = "0" -- show fold column when there are folds
 o.eol = false -- show if there's no eol char
 o.showbreak = "↳ " -- show this when line is broken
 o.modelines = 0

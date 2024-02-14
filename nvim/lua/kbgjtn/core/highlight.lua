@@ -39,7 +39,7 @@ local colors = {
    },
    none = "NONE",
 }
-
+--[[ 
 vim.api.nvim_set_hl(0, "Normal", { bg = colors.dark.elitle, fg = colors.dark.softest })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = colors.dark.eerie, fg = colors.dark.other })
 vim.api.nvim_set_hl(0, "NormalNC", { bg = colors.dark.eerie, fg = colors.grey.tones })
@@ -170,6 +170,7 @@ vim.api.nvim_set_hl(0, "@text.reference.vimdoc", { fg = colors.grey.tints, bold 
 		["@tag.attribute"] = { fg = C.teal, style = { "italic" } }, -- Tags like html tag names.
 		["@tag.delimiter"] = { fg = C.sky }, -- Tag delimiter like < > / ]]
 
+--[[
 vim.api.nvim_set_hl(0, "@tag", { fg = colors.dark.other, bold = false })
 vim.api.nvim_set_hl(0, "@tag.attribute", { fg = colors.dark.other, bold = false })
 vim.api.nvim_set_hl(0, "@tag.delimiter", { fg = colors.dark.other, bold = false })
@@ -208,7 +209,7 @@ vim.api.nvim_set_hl(0, "CmpItemKindFunction", { fg = colors.yellow.sunglow_dim }
 vim.api.nvim_set_hl(0, "CmpItemKindVariable", { fg = colors.red.soft })
 
 -- window separator split
-vim.api.nvim_set_hl(0, "VertSplit", { bg = colors.dark.eerie, fg = colors.dark.liver })
+vim.api.nvim_set_hl(0, "VertSplit", { bg = colors.dark.eerie, fg = colors.dark.eerie })
 vim.api.nvim_set_hl(0, "StatusLine", { bg = colors.dark.eerie, fg = colors.dark.liver, bold = true })
 vim.api.nvim_set_hl(0, "StatusLineNC", { bg = colors.dark.eerie, fg = colors.none, bold = true })
 vim.api.nvim_set_hl(0, "StatusLineTerm", { bg = colors.dark.eerie, fg = colors.dark.liver, bold = true })
@@ -242,6 +243,7 @@ vim.api.nvim_set_hl(0, "ErrorMsg", { bg = colors.dark.eerie, fg = colors.red.sof
 -- WarningMsg
 vim.api.nvim_set_hl(0, "WarningMsg", { bg = colors.dark.eerie, fg = colors.orange.chinese, bold = true })
 
+
 -- WildMenu
 --[[ vim.api.nvim_set_hl(0, "WildMenu", { bg = colors.dark.eerie, fg = colors.yellow.sunglow_dim })
 vim.api.nvim_set_hl(0, "WildMenuSelected", { bg = colors.dark.eerie, fg = colors.yellow.sunglow_dim }) ]]
@@ -251,11 +253,11 @@ vim.api.nvim_set_hl(0, "WildMenuSelected", { bg = colors.dark.eerie, fg = colors
 -- PmenuSel	selected item  |hl-PmenuSel|
 -- PmenuSbar	scrollbar  |hl-PmenuSbar|
 -- PmenuThumb	thumb of the scrollbar  |hl-PmenuThumb|
-vim.api.nvim_set_hl(0, "Pmenu", { bg = colors.dark.eerie, fg = colors.dark.soft })
+--[[ vim.api.nvim_set_hl(0, "Pmenu", { bg = colors.dark.eerie, fg = colors.dark.soft })
 vim.api.nvim_set_hl(0, "PmenuSel", { bg = colors.dark.eerie, fg = colors.red.soft })
 vim.api.nvim_set_hl(0, "PmenuSbar", { bg = colors.dark.eerie, fg = colors.yellow.sunglow_dim })
 vim.api.nvim_set_hl(0, "PmenuThumb", { bg = colors.dark.eerie, fg = colors.yellow.sunglow_dim })
-vim.api.nvim_set_hl(0, "PopupWindowBorder", { bg = colors.dark.eerie, fg = colors.dark.softest })
+vim.api.nvim_set_hl(0, "PopupWindowBorder", { bg = colors.dark.eerie, fg = colors.dark.softest }) ]]
 
 -- TODO:
 -- 1. FLOATING WINDOW HIGHLIGHT COLORS
@@ -263,5 +265,6 @@ vim.api.nvim_set_hl(0, "PopupWindowBorder", { bg = colors.dark.eerie, fg = color
 -- 3. LSP HIGHLIGHT COLORS
 -- 4. GIT HIGHLIGHT COLORS
 -- 5. INACTIVE BUFFER TABLINE COLORS
+--]]
 
 return colors

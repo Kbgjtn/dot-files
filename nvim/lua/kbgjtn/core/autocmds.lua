@@ -6,8 +6,18 @@ vim.lsp.start({
 
 local keymap = vim.keymap -- for conciseness
 
-local opts = { noremap = true, silent = true }
-local on_attach = function(_, bufnr)
+for i = 1, 10, 1 do
+   if i == 1 then
+      i = i + 1
+   end
+end
+
+local opts = {
+   noremap = true,
+   silent = true,
+}
+
+local function on_attach(_, bufnr)
    opts.buffer = bufnr
 
    -- set keybinds
@@ -24,7 +34,7 @@ local on_attach = function(_, bufnr)
    keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations
 
    opts.desc = "Show LSP type definitions"
-   keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
+   keymap.set("n", "gt", vim.lsp.buf.type_definition, opts) -- show lsp type definitions
 
    opts.desc = "See available code actions"
    keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
@@ -53,8 +63,8 @@ end
 local autocmd = vim.api.nvim_create_autocmd
 
 -- GOLPS
-autocmd("FileType", {
-   pattern = "go",
+autocmd({ "FileType", "BufWritePre" }, {
+   pattern = "*.go",
    callback = function()
       local cmp_nvim_lsp = require("cmp_nvim_lsp")
       local filetypes = { "go.mod", "go.work", ".git" }
@@ -116,5 +126,14 @@ autocmd("FileType", {
       })
 
       vim.lsp.buf_attach_client(0, client)
+   end,
+})
+
+-- templ
+autocmd({ "BufWritePre" }, {
+   pattern = "*.templ",
+   callback = function()
+      vim.cmd("TSBufEnable highlight")
+      vim.cmd("TSBufEnable indent")
    end,
 })
