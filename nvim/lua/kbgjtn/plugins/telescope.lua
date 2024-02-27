@@ -45,10 +45,25 @@ return {
 
       -- set keymaps
       local keymap = vim.keymap -- for conciseness
+      local telescope_builtin = require("telescope.builtin")
 
-      keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
-      keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", { desc = "Fuzzy find recent files" })
-      keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
-      keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
+      keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>")
+      keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>")
+      keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>")
+      keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>")
+      keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>")
+
+      keymap.set("n", "<leader>gc", "<cmd>Telescope git_commits<cr>") -- list all git commits (use <cr> to checkout) ["gc" for git commits]
+      keymap.set("n", "<leader>gfc", "<cmd>Telescope git_bcommits<cr>") -- list git commits for current file/buffer (use <cr> to checkout) ["gfc" for git file commits]
+      keymap.set("n", "<leader>gb", "<cmd>Telescope git_branches<cr>") -- list git branches (use <cr> to checkout) ["gb" for git branch]
+      keymap.set("n", "<leader>gs", "<cmd>Telescope git_status<cr>") -- list current changes per file with diff preview ["gs" for git status]
+      keymap.set("n", "<C-p>", "<cmd>Telescope git_files<cr>")
+
+      keymap.set("n", "<leader>fm", function()
+         telescope_builtin.marks(require("telescope.themes").get_dropdown({ previewer = false }))
+      end)
+      keymap.set("n", "<leader>/", function()
+         telescope_builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ previewer = false }))
+      end)
    end,
 }

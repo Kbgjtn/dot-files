@@ -14,8 +14,8 @@ return {
          -- configure treesitter
          treesitter.setup({ -- enable syntax highlighting
             highlight = {
-               enable = true,
-               additional_vim_regex_highlighting = { "markdown" },
+               enable = false,
+               additional_vim_regex_highlighting = {},
             },
             -- enable indentation
             indent = { enable = true },
@@ -32,7 +32,6 @@ return {
                "css",
                "prisma",
                "markdown",
-               "markdown_inline",
                "bash",
                "lua",
                "vim",

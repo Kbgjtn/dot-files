@@ -16,8 +16,7 @@ return {
             json = { "prettier" },
             yaml = { "prettier" },
             lua = { "stylua" },
-            bash = { "shfmt" },
-            zsh = { "shfmt" },
+            sql = { "sqlfmt" },
             java = { "google_java_format" },
             templ = { "html" },
             proto = { "buf" },
@@ -30,8 +29,6 @@ return {
       })
 
       vim.keymap.set({ "n", "v" }, "<leader>p", function()
-         print("try to make this file pretty for you ....")
-
          conform.format({
             lsp_fallback = true,
             async = false,

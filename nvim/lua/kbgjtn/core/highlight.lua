@@ -39,8 +39,8 @@ local colors = {
    },
    none = "NONE",
 }
---[[ 
-vim.api.nvim_set_hl(0, "Normal", { bg = colors.dark.elitle, fg = colors.dark.softest })
+
+--[[ vim.api.nvim_set_hl(0, "Normal", { bg = colors.dark.elitle, fg = colors.dark.softest })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = colors.dark.eerie, fg = colors.dark.other })
 vim.api.nvim_set_hl(0, "NormalNC", { bg = colors.dark.eerie, fg = colors.grey.tones })
 vim.api.nvim_set_hl(0, "NormalSB", { bg = colors.dark.eerie, fg = colors.grey.tones })
@@ -147,7 +147,7 @@ vim.api.nvim_set_hl(0, "Bold", { fg = colors.dark.softest, bold = true })
 vim.api.nvim_set_hl(0, "Underlined", { fg = colors.dark.softest, underline = true })
 vim.api.nvim_set_hl(0, "Italic", { fg = colors.dark.softest, italic = true })
 vim.api.nvim_set_hl(0, "Error", { fg = colors.red.softest, bold = true })
-vim.api.nvim_set_hl(0, "Todo", { fg = colors.green.funky, bold = true })
+vim.api.nvim_set_hl(0, "Todo", { bg = colors.none, fg = colors.green.funky, bold = true })
 
 -- MDX stuff
 vim.api.nvim_set_hl(0, "Title", { fg = colors.dark.softest, bold = true })
@@ -164,14 +164,12 @@ vim.api.nvim_set_hl(0, "@label.vimdoc", { fg = colors.dark.softest, bold = false
 vim.api.nvim_set_hl(0, "@conceal.vimdoc", { fg = colors.dark.soft, bold = false })
 vim.api.nvim_set_hl(0, "@parameter.vimdoc", { fg = colors.red.softest, bold = false })
 vim.api.nvim_set_hl(0, "@text.literal.block.vimdoc", { fg = colors.grey.light, bold = false })
-vim.api.nvim_set_hl(0, "@text.reference.vimdoc", { fg = colors.grey.tints, bold = false })
---[[ -- Tags
-		["@tag"] = { fg = C.mauve }, -- Tags like html tag names.
-		["@tag.attribute"] = { fg = C.teal, style = { "italic" } }, -- Tags like html tag names.
-		["@tag.delimiter"] = { fg = C.sky }, -- Tag delimiter like < > / ]]
+vim.api.nvim_set_hl(0, "@text.reference.vimdoc", { fg = colors.grey.tints, bold = false }) ]]
+--[[ ["@tag"] = { fg = C.mauve }, -- Tags like html tag names.
+["@tag.attribute"] = { fg = C.teal, style = { "italic" } }, -- Tags like html tag names.
+["@tag.delimiter"] = { fg = C.sky },  ]]
 
---[[
-vim.api.nvim_set_hl(0, "@tag", { fg = colors.dark.other, bold = false })
+--[[ vim.api.nvim_set_hl(0, "@tag", { fg = colors.dark.other, bold = false })
 vim.api.nvim_set_hl(0, "@tag.attribute", { fg = colors.dark.other, bold = false })
 vim.api.nvim_set_hl(0, "@tag.delimiter", { fg = colors.dark.other, bold = false })
 
@@ -243,9 +241,8 @@ vim.api.nvim_set_hl(0, "ErrorMsg", { bg = colors.dark.eerie, fg = colors.red.sof
 -- WarningMsg
 vim.api.nvim_set_hl(0, "WarningMsg", { bg = colors.dark.eerie, fg = colors.orange.chinese, bold = true })
 
-
 -- WildMenu
---[[ vim.api.nvim_set_hl(0, "WildMenu", { bg = colors.dark.eerie, fg = colors.yellow.sunglow_dim })
+vim.api.nvim_set_hl(0, "WildMenu", { bg = colors.dark.eerie, fg = colors.yellow.sunglow_dim })
 vim.api.nvim_set_hl(0, "WildMenuSelected", { bg = colors.dark.eerie, fg = colors.yellow.sunglow_dim }) ]]
 
 -- winbar
@@ -265,6 +262,5 @@ vim.api.nvim_set_hl(0, "PopupWindowBorder", { bg = colors.dark.eerie, fg = color
 -- 3. LSP HIGHLIGHT COLORS
 -- 4. GIT HIGHLIGHT COLORS
 -- 5. INACTIVE BUFFER TABLINE COLORS
---]]
 
 return colors

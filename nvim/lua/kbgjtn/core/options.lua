@@ -10,11 +10,11 @@ vim.filetype.add({ extension = {
    mdx = "markdown",
    env = "env",
 } })
+
 g.vim_markdown_math = 1
-
 g.loaded_perl_provider = 0
+g.loaded_node_provider = 0
 g.loaded_ruby_provider = 0
-
 g.go_def_mode = "gopls"
 g.go_info_mode = "gopls"
 
