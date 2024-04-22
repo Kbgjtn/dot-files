@@ -1,31 +1,34 @@
 return {
    "stevearc/conform.nvim",
    lazy = true,
-   event = { "BufReadPre", "BufNewFile" }, -- to disable, comment this out
+   event = { "BufReadPre", "BufNewFile" },
    config = function()
       local conform = require("conform")
       conform.setup({
          formatters_by_ft = {
-            javascript = { "prettier" },
-            typescript = { "prettier" },
-            javascriptreact = { "prettier" },
-            typescriptreact = { "prettier" },
-            go = { "gofumpt", "goimports", "goimports-reviser", "golines", "gomodifytags", "gotests" },
+            proto = { "buf" },
+            lua = { "stylua" },
+            sql = { "sqlfmt" },
+            templ = { "templ" },
             css = { "prettier" },
             html = { "prettier" },
             json = { "prettier" },
             yaml = { "prettier" },
-            lua = { "stylua" },
-            sql = { "sqlfmt" },
-            java = { "google_java_format" },
-            templ = { "html" },
-            proto = { "buf" },
+            javascript = { "prettier" },
+            typescript = { "prettier" },
+            javascriptreact = { "prettier" },
+            typescriptreact = { "prettier" },
+            go = { "goimports" },
+            sh = { "shfmt" },
+            shell = { "shfmt" },
          },
          format_on_save = {
             lsp_fallback = true,
             async = false,
             timeout_ms = 1000,
          },
+         log_level = vim.log.levels.ERROR,
+         notify_on_error = true,
       })
 
       vim.keymap.set({ "n", "v" }, "<leader>p", function()

@@ -2,14 +2,12 @@ return {
    "nvim-tree/nvim-web-devicons",
    config = function()
       local icons = require("nvim-web-devicons")
-      local colors = require("kbgjtn.core.highlight")
-      icons.set_default_icon("", colors.dark.soft, 65)
-
+      local colors = require("kbgjtn.config.highlight")
+      icons.set_default_icon("󰈔", colors.dark.soft, 65)
       icons.setup({
          color_icons = false,
          default = true,
       })
-
       icons.set_icon({
          gql = {
             icon = "",

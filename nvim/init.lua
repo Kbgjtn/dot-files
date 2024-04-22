@@ -1,2 +1,2 @@
-require("kbgjtn.core")
+require("kbgjtn.config.init")
 require("kbgjtn.lazy")

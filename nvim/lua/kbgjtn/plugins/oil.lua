@@ -1,6 +1,5 @@
 return {
    "stevearc/oil.nvim",
-   dependencies = { "nvim-tree/nvim-web-devicons" },
    config = function()
       require("oil").setup({
          columns = {
@@ -18,7 +17,7 @@ return {
             foldcolumn = "0",
             spell = false,
             list = false,
-            conceallevel = 2,
+            conceallevel = 3,
             concealcursor = "nvic",
          },
          default_file_explorer = true,
@@ -27,7 +26,6 @@ return {
          delete_to_trash = true,
          prompt_save_on_select_new_entry = false,
          prompt_delete_on_select_new_entry = false,
-
          keymaps = {
             ["g?"] = "actions.show_help",
             ["<CR>"] = "actions.select",
