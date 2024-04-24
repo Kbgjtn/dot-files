@@ -154,7 +154,7 @@ o.formatoptions = o.formatoptions
    - "2" -- I'm not in gradeschool anymore
 
 -- line numbers
-o.relativenumber = false -- show relative line numbers
+o.relativenumber = true -- show relative line numbers
 o.number = true -- shows absolute line number on cursor line (when relative number is on)
 vim.wo.number = true
 
