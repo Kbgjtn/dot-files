@@ -10,9 +10,12 @@ return {
             executable = {
                command = "dlv",
                args = { "dap", "-l", "127.0.0.1:${port}" },
+               -- add this if on windows, otherwise server won't open successfully
+               -- detached = false
             },
          }
 
+         -- https://github.com/go-delve/delve/blob/master/Documentation/usage/dlv_dap.md
          dap.configurations.go = {
             {
                type = "delve",
@@ -37,7 +40,7 @@ return {
             },
          }
 
-         vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "", linehl = "", numhl = "" })
+         --[[          vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "", linehl = "", numhl = "" }) ]]
          vim.fn.sign_define("DapStopped", { text = "▢", texthl = "", linehl = "", numhl = "" })
 
          require("dap.ext.vscode").load_launchjs(nil, {})
@@ -150,6 +153,10 @@ return {
       "leoluz/nvim-dap-go",
       config = function()
          require("dap-go").setup({
+            -- Additional dap configurations can be added.
+            -- dap_configurations accepts a list of tables where each entry
+            -- represents a dap configuration. For more details do:
+            -- :help dap-configuration
             dap_configurations = {
                {
                   -- Must be "go" or it will be ignored by the plugin
@@ -159,7 +166,6 @@ return {
                   request = "attach",
                },
             },
-
             -- delve configurations
             delve = {
                -- the path to the executable dlv which will be used for debugging.
@@ -181,6 +187,13 @@ return {
                -- passing build flags using args is ineffective, as those are
                -- ignored by delve in dap mode.
                build_flags = "",
+               -- whether the dlv process to be created detached or not. there is
+               -- an issue on Windows where this needs to be set to false
+               -- otherwise the dlv server creation will fail.
+               detached = true,
+               -- the current working directory to run dlv from, if other than
+               -- the current working directory.
+               cwd = nil,
             },
          })
       end,
