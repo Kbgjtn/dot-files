@@ -1,5 +1,6 @@
 return {
    "j-hui/fidget.nvim",
+   event = "VeryLazy",
    config = function()
       local fidget = require("fidget")
       fidget.setup({
@@ -16,31 +17,29 @@ return {
                return msg.lsp_client.name
             end,
             display = {
-               render_limit = 16, -- How many LSP messages to show at once
-               done_ttl = 5, -- How long a message should persist after completion
-               done_icon = "✔", -- Icon shown when all LSP progress tasks are complete
-               done_style = "Constant", -- Highlight group for completed LSP tasks
-               progress_ttl = math.huge, -- How long a message should persist when in progress
+               done_icon = "✔",
+               done_style = "Constant",
+               done_ttl = 5,
+               format_message = require("fidget.progress.display").default_format_message,
+               group_style = "Title",
+               icon_style = "Question",
+               priority = 30,
                progress_icon = { pattern = "dots", period = 1 },
                progress_style = "WarningMsg",
-               group_style = "Title", -- Highlight group for group name (LSP server name)
-               icon_style = "Question", -- Highlight group for group icons
-               priority = 30,
+               progress_ttl = math.huge,
+               render_limit = 16,
                skip_history = true,
-               format_message = require("fidget.progress.display").default_format_message,
                format_annote = function(msg)
                   return msg.title
                end,
                format_group_name = function(group)
                   return tostring(group)
                end,
-               overrides = { -- Override options from the default notification config
+               overrides = {
                   rust_analyzer = { name = "rust-analyzer" },
                },
             },
-            lsp = {
-               progress_ringbuf_size = 0,
-            },
+            lsp = { progress_ringbuf_size = 0 },
          },
          notification = {
             poll_rate = 10,
@@ -67,11 +66,11 @@ return {
                winblend = 99,
                border = "none",
                zindex = 100,
-               max_width = 0, -- Maximum width of the notification window
-               max_height = 0, -- Maximum height of the notification window
-               x_padding = 1, -- Padding from right edge of window boundary
-               y_padding = 0, -- Padding from bottom edge of window boundary
-               align = "bottom", -- How to align the notification window
+               max_width = 40,
+               max_height = 40,
+               x_padding = 1,
+               y_padding = 0,
+               align = "bottom",
                relative = "editor",
             },
          },

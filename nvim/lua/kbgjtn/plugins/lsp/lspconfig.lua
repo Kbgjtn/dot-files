@@ -241,7 +241,7 @@ return {
          capabilities = capabilities,
          on_attach = on_attach,
          filetypes = { "proto" },
-         root_dir = lspconfig.util.root_pattern(".proto"),
+         root_dir = lspconfig.util.root_pattern("*.proto"),
       })
 
       lspconfig["templ"].setup({

@@ -16,7 +16,6 @@ vim.lsp.set_log_level("off")
 vim.g.vim_markdown_math = 1
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_node_provider = 0
-vim.g.loaded_ruby_provider = 0
 
 vim.g.go_def_mode = "gopls"
 vim.g.go_info_mode = "gopls"
@@ -117,7 +116,7 @@ vim.opt.guicursor = {
    "a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor",
 }
 
-vim.opt.syntax = "on"
+vim.opt.syntax = "off"
 vim.opt.ttimeout = true
 vim.opt.timeoutlen = 300
 vim.opt.ttimeoutlen = 100
@@ -132,10 +131,13 @@ vim.opt.foldlevel = 99
 vim.opt.foldmethod = "expr"
 vim.opt.foldlevelstart = 99
 vim.opt.foldcolumn = "0"
+vim.opt.foldnestmax = 4
+vim.opt.foldtext = ""
 vim.opt.eol = false
 vim.opt.showbreak = "↳ "
 vim.opt.modelines = 0
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+--vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 
 -- Undercurl
 vim.cmd([[let &t_Cs = "\e[4:3m"]])
@@ -206,6 +208,7 @@ local set_cursorline = function(event, value, pattern)
       end,
    })
 end
+
 set_cursorline("WinLeave", false)
 set_cursorline("WinEnter", true)
 set_cursorline("FileType", false, "TelescopePrompt")

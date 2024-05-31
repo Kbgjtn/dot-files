@@ -3,7 +3,6 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 local keymap = vim.keymap
-
 local opts = {
    noremap = true,
    silent = true,
@@ -14,7 +13,7 @@ function K.on_attach(_, bufnr)
 
    -- set keybinds
    opts.desc = "Show LSP references"
-   keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
+   -- keymap.set("n", "gr", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
 
    opts.desc = "Go to declaration"
    keymap.set("n", "gD", vim.lsp.buf.declaration, opts) -- go to declaration
@@ -60,39 +59,27 @@ end
 
 -- greatest vim keymap ever
 keymap.set("n", "Q", "<Nop>")
-keymap.set("n", "J", "mzJ`z")
-keymap.set("n", "<S-d>", "<C-d>zz")
-keymap.set("n", "<c-u>", "<C-u>zz")
 keymap.set("n", "n", "nzzzv")
 keymap.set("n", "N", "Nzzzv")
-keymap.set("n", "<C-/>", "<cmd>Inspect<cr>")
-
+keymap.set("n", "<S-j>", "mzJ`z")
+keymap.set("n", "<S-d>", "<C-d>zz")
+keymap.set("n", "<S-u>", "<C-u>zz")
+keymap.set("n", "<C-/>", "<cmd>Inspect<cr>", { desc = "inspect treesitter semantic tokens" })
 keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
-
---[[ 
--- keymap.set({ "n", "v" }, "H", "0") -- first word
--- keymap.set({ "n", "v" }, "L", "$") -- last word 
---]]
 
 keymap.set("n", "Q", "<nop>")
-keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
-keymap.set("n", "<leader>e", ":LfCurrentFile<CR>")
 
 keymap.set({ "v", "n" }, "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gc<Left><Left><Left>]])
-keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
-
-keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>")
-
-keymap.set("n", "<leader>e", "<cmd>Oil<CR>")
 
 -- save all buffer files
 keymap.set("n", "<leader>w", ":wall<CR>")
 
 -- cloack togle
-keymap.set("n", "<leader>c", ":CloakToggle<CR>")
+keymap.set("n", "<leader>cl", ":CloakToggle<CR>")
 
 -- use jk to exit insert mode
-keymap.set("i", "jk", "<ESC>")
+-- keymap.set("i", "jk", "<ESC>")
+vim.keymap.set("t", "<C-d>", [[<C-\><C-n>]], { noremap = true })
 
 -- clear search highlights
 keymap.set("n", "<leader>n", ":nohl<CR>")
@@ -101,11 +88,11 @@ keymap.set("n", "<leader>n", ":nohl<CR>")
 keymap.set("n", "x", '"_x')
 
 -- Select all
-keymap.set("n", "<C-a>", "gg<S-v>G")
+-- keymap.set("n", "<C-a>", "gg<S-v>G", opts)
 
 -- increment/decrement numbers
-keymap.set("n", "<C-i>", "<C-a>")
-keymap.set("n", "<C-d>", "<C-x>")
+-- keymap.set("n", "<C-i>", "<C-a>")
+-- keymap.set("n", "<C-d>", "<C-x>")
 
 -- window management
 keymap.set("n", "<leader>sv", "<C-w>v")
@@ -132,7 +119,7 @@ keymap.set("n", "<leader>sm", ":MaximizerToggle<CR>")
 -- bufferline
 keymap.set("n", "<A-k>", ":bn<CR>", opts)
 keymap.set("n", "<A-j>", ":bp<CR>", opts)
-keymap.set("n", "<C-q>", ":bdelete<CR>", opts)
+keymap.set("n", "<A-q>", ":bdelete<CR>", opts)
 
 -- stay in indent mode
 keymap.set("v", "<", "<gv", opts)
@@ -146,12 +133,11 @@ keymap.set("v", "<A-k>", ":m .-2<CR>==", opts)
 -- Move text up and down
 keymap.set("x", "J", ":move '>+1<CR>gv=gv", opts)
 keymap.set("x", "K", ":move '<-2<CR>gv=gv", opts)
-
 keymap.set("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 keymap.set("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
 -- restart lsp server (not on youtube nvim video)
-keymap.set("n", "<leader>rs", ":LspRestart<CR>")
+keymap.set("n", "<leader>lr", ":LspRestart<CR>")
 
 -- Diagnostic keymaps
 keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })

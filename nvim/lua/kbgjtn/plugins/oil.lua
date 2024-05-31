@@ -2,9 +2,7 @@ return {
    "stevearc/oil.nvim",
    config = function()
       require("oil").setup({
-         columns = {
-            "icon",
-         },
+         columns = { "icon", "size" },
          buf_options = {
             buflisted = false,
             bufhidden = "",
@@ -21,11 +19,12 @@ return {
             concealcursor = "nvic",
          },
          default_file_explorer = true,
+         delete_to_trash = true,
+         prompt_delete_on_select_new_entry = false,
+         prompt_save_on_select_new_entry = false,
          restore_win_options = true,
          skip_confirm_for_simple_edits = true,
-         delete_to_trash = true,
-         prompt_save_on_select_new_entry = false,
-         prompt_delete_on_select_new_entry = false,
+         use_default_keymaps = true,
          keymaps = {
             ["g?"] = "actions.show_help",
             ["<CR>"] = "actions.select",
@@ -44,18 +43,13 @@ return {
             ["g."] = "actions.toggle_hidden",
             ["g\\"] = "actions.toggle_trash",
          },
-         use_default_keymaps = true,
          float = {
             padding = 0,
             max_width = 50,
             max_height = 20,
             border = "rounded",
-            win_options = {
-               winblend = 10,
-            },
-
+            win_options = { winblend = 10 },
             override = function(conf)
-               print(conf)
                return conf
             end,
          },
@@ -67,9 +61,7 @@ return {
             min_height = { 5, 0.1 },
             height = nil,
             border = "rounded",
-            win_options = {
-               winblend = 0,
-            },
+            win_options = { winblend = 0 },
          },
          progress = {
             max_width = 0.9,
@@ -80,9 +72,7 @@ return {
             height = nil,
             border = "rounded",
             minimized_border = "none",
-            win_options = {
-               winblend = 0,
-            },
+            win_options = { winblend = 0 },
          },
          view_options = {
             show_hidden = true,

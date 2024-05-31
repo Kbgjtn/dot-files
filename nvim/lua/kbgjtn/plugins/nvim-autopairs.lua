@@ -1,22 +1,18 @@
 return {
    "windwp/nvim-autopairs",
    event = { "InsertEnter" },
-   dependencies = {
-      "hrsh7th/nvim-cmp",
-   },
+   dependencies = "hrsh7th/nvim-cmp",
    config = function()
-      -- import nvim-autopairs
       local autopairs = require("nvim-autopairs")
 
-      -- configure autopairs
       autopairs.setup({
          check_ts = true,
          ts_config = {
-            lua = { "string" },
-            javascript = { "template_string" },
-            templ = { "template_string" },
+            lua = "string",
+            javascript = "template_string",
+            templ = "template_string",
             html = { "html", "javascript" },
-            java = false, -- don't check treesitter on java
+            java = false,
          },
       })
 

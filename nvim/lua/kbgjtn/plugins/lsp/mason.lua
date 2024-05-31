@@ -7,7 +7,6 @@ return {
    config = function()
       local mason = require("mason")
       local mason_lspconfig = require("mason-lspconfig")
-
       local mason_tool_installer = require("mason-tool-installer")
 
       mason.setup({
@@ -37,6 +36,7 @@ return {
       mason_tool_installer.setup({
          ensure_installed = {
             "prettier",
+            "delve",
             "stylua",
             "eslint",
             "eslint_d",
@@ -48,6 +48,10 @@ return {
             "golangci-lint",
             "luacheck",
             "markdownlint",
+            "goimports",
+            "gofumpt",
+            "gomodifytags",
+            "impl",
          },
       })
    end,

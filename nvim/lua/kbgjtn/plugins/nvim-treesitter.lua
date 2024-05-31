@@ -8,20 +8,17 @@ return {
          "windwp/nvim-ts-autotag",
       },
       config = function()
-         -- import nvim-treesitter plugin
          local treesitter = require("nvim-treesitter.configs")
 
-         -- configure treesitter
-         treesitter.setup({ -- enable syntax highlighting
-            highlight = {
-               enable = false,
-               additional_vim_regex_highlighting = {},
-            },
-            -- enable indentation
+         treesitter.setup({
+            highlight = { enable = false },
             indent = { enable = true },
-            -- enable autotagging (w/ nvim-ts-autotag plugin)
             autotag = { enable = true },
-            -- ensure these language parsers are installed
+            query_linter = {
+               enable = true,
+               use_virtual_text = true,
+               lint_events = { "BufWrite", "CursorHold" },
+            },
             ensure_installed = {
                "json",
                "javascript",
@@ -52,8 +49,8 @@ return {
             },
          })
 
-         -- enable nvim-ts-context-commentstring plugin for commenting tsx and jsx
          require("ts_context_commentstring").setup({})
+
          local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
          parser_config.gotmpl = {
             install_info = {

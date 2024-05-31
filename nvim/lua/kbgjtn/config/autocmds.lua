@@ -13,8 +13,8 @@ autocmd({ "BufWritePre" }, {
 autocmd({ "BufReadPre", "BufWritePre" }, {
    pattern = { "*.mdx", "*.md" },
    callback = function()
-      local textwidth = vim.api.nvim_get_option("textwidth")
-      local wrapmargin = vim.api.nvim_get_option("wrapmargin")
+      local textwidth = vim.api.nvim_get_option_value("textwidth", {})
+      local wrapmargin = vim.api.nvim_get_option_value("wrapmargin", {})
 
       if textwidth > 0 or wrapmargin > 0 then
          vim.cmd("set wrap")
@@ -26,8 +26,8 @@ autocmd({ "BufReadPre", "BufWritePre" }, {
 autocmd({ "BufReadPre" }, {
    pattern = { "*.go", "Makefile", "*.templ" },
    callback = function()
-      local textwidth = vim.api.nvim_get_option("textwidth")
-      local wrapmargin = vim.api.nvim_get_option("wrapmargin")
+      local textwidth = vim.api.nvim_get_option_value("textwidth", {})
+      local wrapmargin = vim.api.nvim_get_option_value("wrapmargin", {})
 
       if textwidth > 0 or wrapmargin > 0 then
          vim.cmd("set tabstop=5")

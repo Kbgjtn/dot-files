@@ -12,10 +12,11 @@ return {
    config = function()
       local telescope = require("telescope")
       local actions = require("telescope.actions")
+      local actions_layout = require("telescope.actions.layout")
 
       telescope.setup({
          defaults = {
-            path_display = { "truncate " },
+            path_display = { "truncate" },
             prompt_prefix = "→ ",
             selection_caret = "→ ",
             scroll_strategy = "limit",
@@ -31,6 +32,7 @@ return {
                   ["<C-k>"] = actions.move_selection_previous,
                   ["<C-j>"] = actions.move_selection_next,
                   ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+                  ["<C-?>"] = actions_layout.toggle_preview,
                },
             },
          },
@@ -53,6 +55,7 @@ return {
       keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<CR>")
       keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>")
 
+      -- keymap.set("n", "<leader>gr", "<cmd>Telescope lsp_references<CR>") -- list all git commits (use <cr> to checkout) ["gc" for git commits]
       keymap.set("n", "<leader>gc", "<cmd>Telescope git_commits<CR>") -- list all git commits (use <cr> to checkout) ["gc" for git commits]
       keymap.set("n", "<leader>gfc", "<cmd>Telescope git_bcommits<CR>") -- list git commits for current file/buffer (use <cr> to checkout) ["gfc" for git file commits]
       keymap.set("n", "<leader>gb", "<cmd>Telescope git_branches<CR>") -- list git branches (use <cr> to checkout) ["gb" for git branch]
