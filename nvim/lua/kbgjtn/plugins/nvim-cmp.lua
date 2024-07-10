@@ -80,6 +80,7 @@ return {
                         side_padding = 0,
                         scrollbar = false,
                         scrolloff = 8,
+                        winblend = 0,
                      },
                      documentation = {
                         border = "rounded",

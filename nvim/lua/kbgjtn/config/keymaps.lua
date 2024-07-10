@@ -77,9 +77,11 @@ keymap.set("n", "<leader>w", ":wall<CR>")
 -- cloack togle
 keymap.set("n", "<leader>cl", ":CloakToggle<CR>")
 
--- use jk to exit insert mode
--- keymap.set("i", "jk", "<ESC>")
 vim.keymap.set("t", "<C-d>", [[<C-\><C-n>]], { noremap = true })
+vim.keymap.set("t", "<A-h>", [[<C-\><C-n><C-w>h]], { noremap = true })
+vim.keymap.set("t", "<A-j>", [[<C-\><C-n><C-w>j]], { noremap = true })
+vim.keymap.set("t", "<A-k>", [[<C-\><C-n><C-w>k]], { noremap = true })
+vim.keymap.set("t", "<A-l>", [[<C-\><C-n><C-w>l]], { noremap = true })
 
 -- clear search highlights
 keymap.set("n", "<leader>n", ":nohl<CR>")
@@ -107,10 +109,6 @@ keymap.set("n", "<M-l>", ":vertical resize +2<CR>")
 keymap.set("n", "<M-h>", ":vertical resize -2<CR>")
 
 -- Move window
-keymap.set("", "sh", "<C-w>h")
-keymap.set("", "sk", "<C-w>k")
-keymap.set("", "sj", "<C-w>j")
-keymap.set("", "sl", "<C-w>l")
 keymap.set("n", "<Space>", "<C-w>w")
 
 -- vim-maximizer
@@ -150,13 +148,13 @@ keymap.set("n", "<c-h>", "<cmd>TmuxNavigateLeft<cr>", opts)
 keymap.set("n", "<c-l>", "<cmd>TmuxNavigateRight<cr>", opts)
 
 -- gitsigns
-vim.keymap.set("n", "<leader>gd", function()
+--[[ vim.keymap.set("n", "<leader>gd", function()
    require("gitsigns").preview_hunk()
 end, opts)
 
 vim.keymap.set("n", "<leader>gg", function()
    require("gitsigns").toggle_current_line_blame()
-end, opts)
+end, opts) ]]
 
 -- nvim-dap
 vim.keymap.set("n", "<leader>do", function()
