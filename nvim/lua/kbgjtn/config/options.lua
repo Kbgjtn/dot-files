@@ -1,5 +1,7 @@
 vim.scriptencoding = "utf-8"
 
+vim.lsp.set_log_level("off")
+
 local home = os.getenv("HOME")
 local o = vim.opt
 local g = vim.g
@@ -15,8 +17,11 @@ g.vim_markdown_math = 1
 g.loaded_perl_provider = 0
 g.loaded_node_provider = 0
 g.loaded_ruby_provider = 0
+
 g.go_def_mode = "gopls"
 g.go_info_mode = "gopls"
+g.go_fmt_command = "gopls"
+g.go_gopls_gofumpt = 1
 
 g.copilot_assume_mapped = true
 g.copilot_filetypes = {
@@ -42,9 +47,13 @@ g.netrw_keepdir = 1
 g.netrw_liststyle = 0
 g.netrw_banner = 0
 g.netrw_altv = 1
-o.syntax = "on"
+g.root_spec = { "cwd" }
 
-o.hidden = false
+o.syntax = "on"
+o.hidden = true
+
+-- Pmenusell to transparancy
+-- o.pumblend = 15
 
 o.conceallevel = 0
 o.mouse = "a"
@@ -54,8 +63,9 @@ o.hlsearch = true
 o.incsearch = true
 o.smartindent = true
 o.showcmd = true
-o.cmdheight = 1
+o.cmdheight = 0
 
+o.equalalways = false
 o.laststatus = 0
 o.scrolloff = 0
 o.sidescrolloff = 8
@@ -71,7 +81,7 @@ o.pumwidth = 2
 o.wildignore:append({ "*/node_modules/*" })
 o.cursorcolumn = false
 o.isfname:append("@-@")
-o.updatetime = 50
+o.updatetime = 1000
 o.startofline = true
 o.fillchars = {
    horiz = "━",
@@ -104,7 +114,7 @@ o.syntax = "on" -- syntax highlighting
 
 -- display
 o.showmatch = true -- show matching brackets
-o.scrolloff = 3 -- always show 3 rows from edge of the screen
+o.scrolloff = 10 -- always show 3 rows from edge of the screen
 o.synmaxcol = 300 -- stop syntax highlight after x lines for performance
 
 o.list = false -- do not display white characters
@@ -129,7 +139,9 @@ vim.api.nvim_create_autocmd("InsertLeave", {
 })
 
 -- Add asterisks in block comments
-o.formatoptions:append({ "r" })
+o.formatoptions:append({
+   "r",
+})
 
 -- line numbers
 o.relativenumber = true -- show relative line numbers
@@ -138,12 +150,16 @@ vim.wo.number = true
 
 -- tabs & indentation
 o.tabstop = 3 -- 3 spaces for tabs (prettier default)
+o.softtabstop = 3
 o.shiftwidth = 3 -- 3 spaces for indent width
 o.expandtab = true -- expand tab to spaces
 o.autoindent = true -- copy indent from current line when starting new one
-o.textwidth = 80 -- wrap lines at 80 characters
+o.cindent = true
+o.textwidth = 200 -- wrap lines at 80 characters
 o.splitbelow = true
 o.splitright = true
+o.breakindent = true
+o.showbreak = string.rep(" ", 3)
 
 o.compatible = false -- required for syntax highlighting to work properly
 
@@ -161,6 +177,7 @@ o.undolevels = 1000
 o.undoreload = 10000
 o.undodir = os.getenv("HOME") .. "/.vim/undodir" -- set undo file directory
 o.history = 1000
+o.shada = { "!", "'1000", "<50", "s10", "h" }
 
 -- search settings
 o.ignorecase = true -- ignore case when searching
@@ -168,6 +185,19 @@ o.smartcase = true -- if you include mixed case in your search, assumes you want
 
 -- cursor line
 o.cursorline = true -- highlight the current cursor line
+local group = vim.api.nvim_create_augroup("CursorLineControl", { clear = true })
+local set_cursorline = function(event, value, pattern)
+   vim.api.nvim_create_autocmd(event, {
+      group = group,
+      pattern = pattern,
+      callback = function()
+         vim.opt_local.cursorline = value
+      end,
+   })
+end
+set_cursorline("WinLeave", false)
+set_cursorline("WinEnter", true)
+set_cursorline("FileType", false, "TelescopePrompt")
 
 -- appearance
 
