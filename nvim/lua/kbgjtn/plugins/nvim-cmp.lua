@@ -5,7 +5,7 @@ return {
       dependencies = {
          "hrsh7th/cmp-buffer",
          "hrsh7th/cmp-path",
-         "L3MON4D3/LuaSnip",
+         { "L3MON4D3/LuaSnip", build = "make install_jsregexp" },
          "saadparwaiz1/cmp_luasnip",
          "rafamadriz/friendly-snippets",
          "onsails/lspkind.nvim",
@@ -22,7 +22,7 @@ return {
 
          cmp.setup({
             completion = {
-               completeopt = "menu,menuone,preview,noselect",
+               completeopt = "menu,menuone,noselect",
             },
             snippet = { -- configure how nvim-cmp interacts with snippet engine
                expand = function(args)
@@ -36,7 +36,7 @@ return {
                ["<C-f>"] = cmp.mapping.scroll_docs(),
                ["<C-Space>"] = cmp.mapping.complete({}),
                ["<C-e>"] = cmp.mapping.abort(),
-               ["<CR>"] = cmp.mapping.confirm({ select = false }),
+               ["<CR>"] = cmp.mapping.confirm({ select = true }),
                ["<Tab>"] = cmp.mapping.confirm({ select = false }),
                ["<C-q>"] = function()
                   if cmp.visible_docs() then
@@ -48,7 +48,12 @@ return {
             }),
             sources = cmp.config.sources({
                { name = "luasnip" },
-               { name = "nvim_lsp" },
+               {
+                  name = "nvim_lsp",
+                  entry_filter = function(entry, ctx)
+                     return require("cmp").lsp.CompletionItemKind.Text ~= entry:get_kind()
+                  end,
+               },
                { name = "lspkind" },
                { name = "path" },
                {
