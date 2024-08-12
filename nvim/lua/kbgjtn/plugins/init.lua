@@ -48,45 +48,7 @@ return {
       },
    },
 
-   {
-      "max397574/better-escape.nvim",
-      config = function()
-         require("better_escape").setup({
-            timeout = vim.o.timeoutlen,
-            mappings = {
-               i = {
-                  j = {
-                     -- These can all also be functions
-                     k = "<Esc>",
-                     j = "<Esc>",
-                  },
-               },
-               c = {
-                  j = {
-                     k = "<Esc>",
-                     j = "<Esc>",
-                  },
-               },
-               t = {
-                  j = {
-                     k = "<Esc>",
-                     j = "<Esc>",
-                  },
-               },
-               v = {
-                  j = {
-                     k = "<Esc>",
-                  },
-               },
-               s = {
-                  j = {
-                     k = "<Esc>",
-                  },
-               },
-            },
-         })
-      end,
-   },
+   { "jdhao/better-escape.vim", event = "InsertEnter" },
 
    {
       "folke/which-key.nvim",
@@ -107,6 +69,22 @@ return {
       },
       config = function()
          require("neotest").setup({ adapters = { require("neotest-go") } })
+      end,
+   },
+
+   {
+      "andythigpen/nvim-coverage",
+      event = "VeryLazy",
+      requires = "nvim-lua/plenary.nvim",
+      rocks = { "lua-xmlreader" },
+      config = function()
+         require("coverage").setup({
+            --[[ ✓ 󰤑 ⍛ ✔ 󰿼 󱙝   ]]
+            signs = {
+               covered = { hl = "CoverageCovered", text = "✔" },
+               uncovered = { hl = "CoverageUncovered", text = "󱙝" },
+            },
+         })
       end,
    },
 
