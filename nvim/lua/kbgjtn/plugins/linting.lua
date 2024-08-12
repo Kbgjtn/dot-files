@@ -16,8 +16,6 @@ return {
          typescript = { "eslint_d" },
          javascriptreact = { "eslint_d" },
          typescriptreact = { "eslint_d" },
-         md = { "markdownlint" },
-         mdx = { "markdownlint" },
          php = { "php" },
          java = { "checkstyle" },
          proto = { "buf_lint" },
