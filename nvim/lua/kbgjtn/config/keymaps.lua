@@ -142,6 +142,31 @@ keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnos
 keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
 keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
 
+local function toggle_numbering()
+   local is_relative = vim.api.nvim_get_option_value("relativenumber", { scope = "global" })
+
+   vim.opt.relativenumber = not is_relative
+   vim.opt.cursorline = not is_relative
+
+   if is_relative then
+      vim.api.nvim_set_hl(0, "LineNr", { fg = "#101010", bg = "#101010" })
+   else
+      vim.api.nvim_set_hl(0, "LineNr", { fg = "#202020", bg = "#101010" })
+   end
+
+   --[[    vim.api.nvim_set_option_value("number", not is_relative, { scope = "global" }) ]]
+end
+keymap.set("n", "<leader>nc", toggle_numbering, { desc = "toggle relative/absolute line numbering" })
+
+local function coverageToggle()
+   vim.cmd("CoverageLoad")
+   vim.cmd("CoverageToggle")
+end
+
+keymap.set("n", "<leader>cc", coverageToggle, { desc = "load test coverage" })
+keymap.set("n", "<leader>co", "<cmd>CoverageToggle<cr>", { desc = "toggle show coverage" })
+keymap.set("n", "<leader>cs", "<cmd>CoverageSummary<cr>", { desc = "toggle coverage summary" })
+
 keymap.set("n", "<c-j>", "<cmd>TmuxNavigateDown<cr>", opts)
 keymap.set("n", "<c-k>", "<cmd>TmuxNavigateUp<cr>", opts)
 keymap.set("n", "<c-h>", "<cmd>TmuxNavigateLeft<cr>", opts)
