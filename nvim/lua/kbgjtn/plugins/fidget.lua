@@ -19,7 +19,7 @@ return {
             display = {
                done_icon = "✔",
                done_style = "Constant",
-               done_ttl = 5,
+               done_ttl = 1.5,
                format_message = require("fidget.progress.display").default_format_message,
                group_style = "Title",
                icon_style = "Question",
@@ -27,7 +27,7 @@ return {
                progress_icon = { pattern = "dots", period = 1 },
                progress_style = "WarningMsg",
                progress_ttl = math.huge,
-               render_limit = 16,
+               render_limit = 4,
                skip_history = true,
                format_annote = function(msg)
                   return msg.title
