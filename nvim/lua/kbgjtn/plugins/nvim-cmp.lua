@@ -15,6 +15,32 @@ return {
          local luasnip = require("luasnip")
          local lspkind = require("lspkind")
 
+         local snip = luasnip.snippet
+         local text_node = luasnip.text_node
+
+         luasnip.add_snippets("go", {
+            snip("tsc", {
+               text_node({
+                  "tests := []struct{",
+                  "  name string",
+                  "  in any",
+                  "  exp any",
+                  "}{",
+                  "  {",
+                  '     name: "",',
+                  "     in: nil,",
+                  "     exp: nil,",
+                  "  },",
+                  "}",
+                  "",
+                  "for _, tc := range tests {",
+                  "  t.Run(tc.name, func(t *testing.T) {",
+                  "  })",
+                  "}",
+               }),
+            }),
+         })
+
          require("luasnip.loaders.from_vscode").lazy_load()
          luasnip.filetype_extend("typescriptreact", { "html" })
          luasnip.filetype_extend("templ", { "htmx" })
@@ -50,7 +76,7 @@ return {
                { name = "luasnip" },
                {
                   name = "nvim_lsp",
-                  entry_filter = function(entry, ctx)
+                  entry_filter = function(entry, _)
                      return require("cmp").lsp.CompletionItemKind.Text ~= entry:get_kind()
                   end,
                },
@@ -122,9 +148,6 @@ return {
                      })[entry.source.name]
 
                      local word = entry:get_insert_text()
-                     if entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet then
-                        word = vim.lsp.util.parse_snippet(word)
-                     end
                      word = str.oneline(word)
                      if
                         entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet
