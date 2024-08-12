@@ -9,9 +9,10 @@ return {
          },
          win_options = {
             wrap = false,
-            signcolumn = "no",
+            signcolumn = "yes",
             cursorcolumn = false,
             relativenumber = false,
+            number = false,
             foldcolumn = "0",
             spell = false,
             list = false,
