@@ -29,6 +29,7 @@ return {
             "prismals",
             "gopls",
             "templ",
+            "htmx",
          },
          automatic_installation = true,
       })
@@ -47,7 +48,6 @@ return {
             "eslint_d",
             "golangci-lint",
             "luacheck",
-            "markdownlint",
             "goimports",
             "gofumpt",
             "gomodifytags",
