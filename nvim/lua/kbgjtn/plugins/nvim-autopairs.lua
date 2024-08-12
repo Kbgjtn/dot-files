@@ -8,9 +8,9 @@ return {
       autopairs.setup({
          check_ts = true,
          ts_config = {
-            lua = "string",
-            javascript = "template_string",
-            templ = "template_string",
+            lua = { "string" },
+            javascript = { "template_string" },
+            templ = { "template_string" },
             html = { "html", "javascript" },
             java = false,
          },
