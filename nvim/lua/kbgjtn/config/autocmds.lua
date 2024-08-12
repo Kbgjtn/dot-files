@@ -6,6 +6,8 @@ autocmd({ "BufWritePre" }, {
    callback = function()
       vim.cmd("TSBufEnable highlight")
       vim.cmd("TSBufEnable indent")
+      vim.cmd("set nowrap")
+      vim.lsp.buf.format()
    end,
 })
 
