@@ -13,6 +13,9 @@ vim.filetype.add({ extension = {
    env = "env",
 } })
 
+g.better_escape_shortcut = { "jk", "jj", "kj" }
+g.better_escape_interval = 200
+
 g.vim_markdown_math = 1
 g.loaded_perl_provider = 0
 g.loaded_node_provider = 0
