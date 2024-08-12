@@ -35,7 +35,6 @@ return {
             formatting.prettier.with({ extra_filetypes = { "svelte" } }),
             formatting.shfmt,
             formatting.stylua,
-            formatting.markdownlint,
             formatting.goimports,
             formatting.gofumpt,
             completion.spell,
