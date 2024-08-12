@@ -15,7 +15,7 @@ return {
       },
    },
    config = function()
-      vim.lsp.set_log_level("debug")
+      vim.lsp.set_log_level("off")
       local lspconfig = require("lspconfig")
       local cmp_nvim_lsp = require("cmp_nvim_lsp")
       local keymap = vim.keymap
@@ -139,6 +139,13 @@ return {
          init_options = {
             userLanguages = {
                templ = "html",
+            },
+         },
+         settings = {
+            tailwindCSS = {
+               includeLanguages = {
+                  templ = "html",
+               },
             },
          },
       })
