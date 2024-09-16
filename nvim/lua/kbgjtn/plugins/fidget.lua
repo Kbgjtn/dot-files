@@ -8,7 +8,7 @@ return {
             poll_rate = 0,
             suppress_on_insert = false, -- Suppress new messages while in insert mode
             ignore_done_already = true, -- Ignore new tasks that are already complete
-            ignore_empty_message = false, -- Ignore new tasks that don't contain a message
+            ignore_empty_message = true, -- Ignore new tasks that don't contain a message
             clear_on_detach = function(client_id)
                local client = vim.lsp.get_client_by_id(client_id)
                return client and client.name or nil

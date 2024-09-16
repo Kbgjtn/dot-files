@@ -14,7 +14,7 @@ vim.filetype.add({ extension = {
 } })
 
 g.better_escape_shortcut = { "jk", "jj", "kj" }
-g.better_escape_interval = 200
+g.better_escape_interval = 100
 
 g.vim_markdown_math = 1
 g.loaded_perl_provider = 0

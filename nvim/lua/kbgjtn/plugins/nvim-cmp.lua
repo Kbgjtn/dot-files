@@ -14,7 +14,6 @@ return {
          local cmp = require("cmp")
          local luasnip = require("luasnip")
          local lspkind = require("lspkind")
-
          local snip = luasnip.snippet
          local text_node = luasnip.text_node
 
@@ -48,9 +47,9 @@ return {
 
          cmp.setup({
             completion = {
-               completeopt = "menu,menuone,noselect",
+               completeopt = "menu,menuone,noinsert",
             },
-            snippet = { -- configure how nvim-cmp interacts with snippet engine
+            snippet = {
                expand = function(args)
                   luasnip.lsp_expand(args.body)
                end,
@@ -60,7 +59,7 @@ return {
                ["<C-j>"] = cmp.mapping.select_next_item(),
                ["<C-b>"] = cmp.mapping.scroll_docs(),
                ["<C-f>"] = cmp.mapping.scroll_docs(),
-               ["<C-Space>"] = cmp.mapping.complete({}),
+               ["<C-Space>"] = cmp.mapping.complete({ select = true }),
                ["<C-e>"] = cmp.mapping.abort(),
                ["<CR>"] = cmp.mapping.confirm({ select = true }),
                ["<Tab>"] = cmp.mapping.confirm({ select = false }),
@@ -107,7 +106,7 @@ return {
                         min_width = 8,
                         border = "rounded",
                         winhighlight = "Normal:Pmenu,CursorLine:PmenuSel,FloatBorder:FloatBorder,Search:None",
-                        col_offset = -3,
+                        col_offset = 0,
                         side_padding = 0,
                         scrollbar = false,
                         scrolloff = 8,

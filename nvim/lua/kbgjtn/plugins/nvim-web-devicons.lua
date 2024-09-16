@@ -9,9 +9,11 @@ return {
       icons.setup({ color_icons = false, default = true })
       icons.set_icon({
          yml = { icon = "ξ", name = "Yaml" },
+         out = { icon = "", name = "Yaml" },
          yaml = { icon = "ξ", name = "Yaml" },
          gql = { icon = "", name = "GraphQL" },
          xmodmap = { icon = "", name = "Xmodmap" },
+         desktop = { icon = "", name = "desktop" },
          favicon = { icon = "", name = "Favicon" },
 
          [".env"] = { icon = "", name = "Env" },

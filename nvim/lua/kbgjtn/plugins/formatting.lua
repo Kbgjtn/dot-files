@@ -21,6 +21,8 @@ return {
             go = { "goimports" },
             sh = { "shfmt" },
             shell = { "shfmt" },
+            c = { "clang-format" },
+            cpp = { "clang-format" },
          },
          format_on_save = {
             lsp_fallback = true,

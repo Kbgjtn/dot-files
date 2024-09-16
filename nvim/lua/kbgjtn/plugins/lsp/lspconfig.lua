@@ -18,6 +18,7 @@ return {
       vim.lsp.set_log_level("off")
       local lspconfig = require("lspconfig")
       local cmp_nvim_lsp = require("cmp_nvim_lsp")
+
       local keymap = vim.keymap
       local opts = { noremap = true, silent = true }
       local on_attach = function(_, bufnr)
@@ -121,7 +122,7 @@ return {
          filetypes = { "html", "templ" },
       })
 
-      lspconfig["tsserver"].setup({
+      lspconfig["ts_ls"].setup({
          capabilities = capabilities,
          on_attach = on_attach,
       })
@@ -136,23 +137,24 @@ return {
          on_attach = on_attach,
          filetypes = { "templ", "markdown", "javascript", "react", "typescript" },
          root_dir = lspconfig.util.root_pattern("*.md", ".md"),
-         init_options = {
-            userLanguages = {
-               templ = "html",
-            },
-         },
          settings = {
             tailwindCSS = {
+               classAttributes = { "class", "className", "class:list", "classList", "ngClass" },
                includeLanguages = {
                   templ = "html",
                },
+               lint = {
+                  cssConflict = "warning",
+                  invalidApply = "error",
+                  invalidConfigPath = "error",
+                  invalidScreen = "error",
+                  invalidTailwindDirective = "error",
+                  invalidVariant = "error",
+                  recommendedVariantOrder = "warning",
+               },
+               validate = true,
             },
          },
-      })
-
-      lspconfig["prismals"].setup({
-         capabilities = capabilities,
-         on_attach = on_attach,
       })
 
       lspconfig["emmet_ls"].setup({
@@ -214,11 +216,10 @@ return {
          },
       })
 
-      --NOTE: tetst
       lspconfig["marksman"].setup({
          capabilities = capabilities,
          on_attach = on_attach,
-         filetypes = { "markdown", "md", "mdx" },
+         filetypes = { "markdown", "markdown.mdx", "md", "mdx" },
          root_dir = lspconfig.util.root_pattern("*.md", ".md"),
       })
 
@@ -227,13 +228,6 @@ return {
          on_attach = on_attach,
          filetypes = { "markdown", "md", "mdx" },
          root_dir = lspconfig.util.root_pattern("*.md", ".md"),
-         init_options = {
-            userLanguages = {
-               markdown = "markdown",
-               md = "markdown",
-               mdx = "markdown",
-            },
-         },
       })
 
       lspconfig["bashls"].setup({
@@ -255,6 +249,11 @@ return {
          capabilities = capabilities,
          on_attach = on_attach,
          filetypes = { "templ" },
+      })
+
+      lspconfig["clangd"].setup({
+         capabilities = capabilities,
+         on_attach = on_attach,
       })
 
       lspconfig["phpactor"].setup({
