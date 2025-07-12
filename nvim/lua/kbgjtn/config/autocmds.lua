@@ -38,3 +38,11 @@ autocmd({ "BufReadPre" }, {
       end
    end,
 })
+
+-- auto refresh or recalculate folds when switching buffers
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+   pattern = "*",
+   callback = function()
+      vim.cmd("normal! zx")
+   end,
+})
