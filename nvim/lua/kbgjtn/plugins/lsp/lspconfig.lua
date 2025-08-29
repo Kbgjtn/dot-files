@@ -1,0 +1,379 @@
+return {
+    "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+        "hrsh7th/cmp-nvim-lsp",
+        "saghen/blink.cmp",
+        { "antosha417/nvim-lsp-file-operations", config = true },
+    },
+    opts = {
+        ui = {
+            windows = {
+                default_options = {
+                    border = "rounded",
+                },
+            },
+        },
+    },
+    config = function()
+        vim.lsp.set_log_level("OFF")
+        local lspconfig = require("lspconfig")
+        local cmp_nvim_lsp = require("cmp_nvim_lsp")
+
+        local keymap = vim.keymap
+        local opts = { noremap = true, silent = true }
+        local on_attach = function(_, bufnr)
+            opts.buffer = bufnr
+            opts.desc = "Show LSP references"
+            keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts)
+
+            opts.desc = "Go to declaration"
+            keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+
+            opts.desc = "Show LSP definitions"
+            keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
+
+            opts.desc = "Show LSP implementations"
+            -- keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
+            keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+
+            opts.desc = "Show LSP type definitions"
+            keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
+
+            opts.desc = "See available code actions"
+            keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
+
+            opts.desc = "Smart rename"
+            keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+
+            opts.desc = "Show buffer diagnostics"
+            keymap.set("n", "<leader>dd", "<cmd>Telescope diagnostics<CR>", opts)
+
+            opts.desc = "Show line diagnostics"
+            keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
+
+            opts.desc = "Go to previous diagnostic"
+            keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+
+            opts.desc = "Go to next diagnostic"
+            keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+
+            opts.desc = "Show documentation for what is under cursor"
+            keymap.set("n", "K", vim.lsp.buf.hover, opts)
+
+            opts.desc = "Restart LSP"
+            keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
+        end
+
+        local capabilities = cmp_nvim_lsp.default_capabilities()
+        -- local capabilities = require("blink.cmp").get_lsp_capabilities(original_capabilities)
+
+        capabilities.textDocument.completion.completionItem.snippetSupport = true
+        capabilities.offsetEncoding = { "utrf-8", "utf-16" }
+
+        vim.diagnostic.config({
+            underline = true,
+            virtual_text = false,
+            signs = false,
+            update_in_insert = true,
+            float = {
+                max_width = 56,
+                max_height = 30,
+                wrap = false,
+                border = "rounded",
+            },
+        })
+
+        vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+            border = "rounded",
+            title = "",
+            max_width = 50,
+            max_height = 24,
+            min_width = 20,
+            loadfile = true,
+        })
+
+        vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+            border = "rounded",
+            title = "",
+            max_width = 50,
+            min_width = 20,
+            loadfile = true,
+        })
+
+        local signs = { Error = "󰅚 ", Warn = " ", Hint = "󰘥 ", Info = "󰋽 " }
+        for type, icon in pairs(signs) do
+            local hl = "DiagnosticSign" .. type
+            vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+        end
+
+        lspconfig["jdtls"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+        })
+
+        lspconfig["cmake"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+        })
+
+        lspconfig["ts_ls"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+        })
+
+        lspconfig["html"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            filetypes = { "html", "typescriptreact", "javascriptreact" },
+            init_options = { userLanguages = { templ = "html" } },
+        })
+
+        lspconfig["htmx"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            filetypes = { "html", "templ" },
+            init_options = { userLanguages = { templ = "html" } },
+        })
+
+        lspconfig["cssls"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+        })
+
+        lspconfig["tailwindcss"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            filetypes = {
+                "templ",
+                "astro",
+                "markdown",
+                "javascript",
+                "react",
+                "typescript",
+                "aspnetcorerazor",
+                "astro",
+                "astro-markdown",
+                "blade",
+                "django-html",
+                "edge",
+                "eelixir",
+                "ejs",
+                "erb",
+                "eruby",
+                "gohtml",
+                "haml",
+                "handlebars",
+                "hbs",
+                "html",
+                "html-eex",
+                "jade",
+                "leaf",
+                "liquid",
+                "markdown",
+                "mdx",
+                "mustache",
+                "njk",
+                "nunjucks",
+                "php",
+                "razor",
+                "slim",
+                "twig",
+                "css",
+                "less",
+                "postcss",
+                "sass",
+                "scss",
+                "stylus",
+                "sugarss",
+                "javascript",
+                "javascriptreact",
+                "reason",
+                "rescript",
+                "typescript",
+                "typescriptreact",
+                "vue",
+                "svelte",
+            },
+            root_dir = function(fname)
+                return lspconfig.util.root_pattern("tailwind.config.js", "tailwind.config.ts")(fname)
+                    or lspconfig.util.root_pattern("*.md", ".md")(fname)
+                    or lspconfig.util.root_pattern("postcss.config.js", "postcss.config.ts")(fname)
+                    or lspconfig.util.find_package_json_ancestor(fname)
+                    or lspconfig.util.find_node_modules_ancestor(fname)
+                    or lspconfig.util.find_git_ancestor(fname)
+            end,
+            init_options = { userLanguages = { templ = "html" } },
+            settings = {
+                tailwindCSS = {
+                    classAttributes = { "class", "className", "class:list", "classList", "ngClass" },
+                    includeLanguages = {
+                        templ = "html",
+                    },
+                    lint = {
+                        cssConflict = "warning",
+                        invalidApply = "error",
+                        invalidConfigPath = "error",
+                        invalidScreen = "error",
+                        invalidTailwindDirective = "error",
+                        invalidVariant = "error",
+                        recommendedVariantOrder = "warning",
+                    },
+                    validate = true,
+                },
+            },
+        })
+
+        lspconfig["emmet_ls"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            filetypes = {
+                "html",
+                "astro",
+                "templ",
+                "typescriptreact",
+                "javascriptreact",
+                "css",
+                "sass",
+                "scss",
+                "less",
+                "svelte",
+            },
+            init_options = { userLanguages = { templ = "html" } },
+        })
+
+        lspconfig["gopls"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            filetypes = { "go" },
+            root_dir = lspconfig.util.root_pattern("go.sum", "go.mod", "*.go", "go.work", ".git"),
+            cmd = { "gopls" },
+            settings = {
+                gopls = {
+                    experimentalPostfixCompletions = true,
+                    analyses = {
+                        assign = true,
+                        atomic = true,
+                        bools = true,
+                        composites = true,
+                        copylocks = true,
+                        deepequalerrors = true,
+                        embed = true,
+                        errorsas = true,
+                        fieldalignment = false,
+                        httpresponse = true,
+                        ifaceassert = true,
+                        loopclosure = true,
+                        lostcancel = true,
+                        nilfunc = true,
+                        nilness = true,
+                        nonewvars = true,
+                        printf = true,
+                        shadow = true,
+                        shift = true,
+                        simplifycompositelit = true,
+                        simplifyrange = true,
+                        simplifyslice = true,
+                        sortslice = true,
+                        stdmethods = true,
+                        stringintconv = true,
+                        structtag = true,
+                        testinggoroutine = true,
+                        tests = true,
+                        timeformat = true,
+                        umarshal = true,
+                        unreachable = true,
+                        unsafeptr = true,
+                        unusedparams = true,
+                        unusedresult = true,
+                        unusedvariable = true,
+                        useany = true,
+                    },
+                    staticcheck = true,
+                    gofumpt = true,
+                },
+            },
+        })
+
+        lspconfig["marksman"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            filetypes = { "markdown", "markdown.mdx", "md", "mdx" },
+            root_dir = lspconfig.util.root_pattern("*.md", ".md"),
+        })
+
+        lspconfig["bashls"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            single_file_support = true,
+        })
+
+        lspconfig["buf_ls"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            -- filetypes = { "proto" },
+            -- root_dir = lspconfig.util.root_pattern("*.proto"),
+            -- cmd = { "buf", "beta", "lsp", "--timeout=0", "--log-format=text" },
+            filetypes = { "proto" },
+            root_dir = lspconfig.util.root_pattern("buf.yaml", "buf.work.yaml", ".git"),
+            single_file_support = true,
+        })
+
+        lspconfig["templ"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            filetypes = { "templ" },
+        })
+
+        lspconfig["clangd"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            filetypes = { "c", "c++", "h" },
+            root_dir = lspconfig.util.root_pattern("compile_commands.json", "CMakeLists.txt"),
+        })
+
+        lspconfig["yamlls"].setup({
+            format = {
+                enable = true,
+                singleQuote = true,
+                bracketSpacing = true,
+            },
+            filetypes = { "yml", "yaml" },
+            validate = true,
+            completion = true,
+        })
+
+        lspconfig["rust_analyzer"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+        })
+
+        lspconfig["phpactor"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            filetypes = { "php" },
+            root_dir = lspconfig.util.root_pattern("composer.json", ".git"),
+        })
+
+        lspconfig["lua_ls"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            settings = {
+                Lua = {
+                    telemetry = {
+                        enable = false,
+                    },
+                    diagnostics = {
+                        globals = { "vim" },
+                    },
+                    workspace = {
+                        library = {
+                            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+                            [vim.fn.stdpath("config") .. "/lua"] = true,
+                        },
+                    },
+                },
+            },
+        })
+    end,
+}
