@@ -3,7 +3,6 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
         "hrsh7th/cmp-nvim-lsp",
-        "saghen/blink.cmp",
         { "antosha417/nvim-lsp-file-operations", config = true },
     },
     opts = {
@@ -66,10 +65,9 @@ return {
         end
 
         local capabilities = cmp_nvim_lsp.default_capabilities()
-        -- local capabilities = require("blink.cmp").get_lsp_capabilities(original_capabilities)
 
         capabilities.textDocument.completion.completionItem.snippetSupport = true
-        capabilities.offsetEncoding = { "utrf-8", "utf-16" }
+        capabilities.offsetEncoding = { "utf-8", "utf-16" }
 
         vim.diagnostic.config({
             underline = true,
@@ -84,7 +82,16 @@ return {
             },
         })
 
-        vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+        vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
+            config = config or {}
+            config.border = "rounded"
+            config.max_width = 50
+            config.max_height = 20
+            config.min_width = 20
+            return vim.lsp.util.open_floating_preview(result.contents, "markdown", config)
+        end
+
+        vim.lsp.buf.hover({
             border = "rounded",
             title = "",
             max_width = 50,
@@ -93,7 +100,7 @@ return {
             loadfile = true,
         })
 
-        vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+        vim.lsp.buf.signature_help({
             border = "rounded",
             title = "",
             max_width = 50,
@@ -106,11 +113,6 @@ return {
             local hl = "DiagnosticSign" .. type
             vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
         end
-
-        lspconfig["jdtls"].setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-        })
 
         lspconfig["cmake"].setup({
             capabilities = capabilities,
@@ -289,7 +291,7 @@ return {
                         unusedvariable = true,
                         useany = true,
                     },
-                    staticcheck = true,
+                    staticcheck = false,
                     gofumpt = true,
                 },
             },

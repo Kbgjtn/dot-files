@@ -5,6 +5,7 @@ return {
         dependencies = {
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
+            "hrsh7th/cmp-nvim-lsp",
             "saadparwaiz1/cmp_luasnip",
             "rafamadriz/friendly-snippets",
             "onsails/lspkind.nvim",
@@ -72,36 +73,18 @@ return {
                     }),
                     luasnip.insert_node(0),
                 }),
-                --[[ snip("tsc", {
-                    text_node({
-                        "func Test(t *testing.T) {",
-                        "  tests := []struct{",
-                        "     name string",
-                        "     in any",
-                        "     exp any",
-                        "  }{",
-                        "     {",
-                        '        name: "",',
-                        "        in: nil,",
-                        "        exp: nil,",
-                        "     },",
-                        "  }",
-                        "",
-                        "  for _, tc := range tests {",
-                        "     t.Run(tc.name, func(t *testing.T) {",
-                        "     })",
-                        "  }",
-                        "}",
-                    }),
-                    luasnip.insert_node(1, ""),
-                }), ]]
                 snip("gorm", {
                     text_node({ '`gorm:"' }),
                     luasnip.insert_node(1, ""), -- Cursor will be placed here
                     text_node('"`'),
                 }),
                 snip("validate", {
-                    text_node({ '`gorm:"' }),
+                    text_node({ '`validate:"' }),
+                    luasnip.insert_node(1, ""), -- Cursor will be placed here
+                    text_node('"`'),
+                }),
+                snip("col", {
+                    text_node({ '`col:"' }),
                     luasnip.insert_node(1, ""), -- Cursor will be placed here
                     text_node('"`'),
                 }),
@@ -122,6 +105,10 @@ return {
                 preselect = cmp.PreselectMode.None,
                 completion = {
                     completeopt = "menu,menuone,noinsert",
+                },
+                window = {
+                    completion = cmp.config.window.bordered(),
+                    documentation = cmp.config.window.bordered(),
                 },
                 snippet = {
                     expand = function(args)
@@ -147,13 +134,13 @@ return {
                 }),
                 sources = cmp.config.sources({
                     { name = "luasnip" },
+                    { name = "nvim_lsp" },
                     {
                         name = "nvim_lsp",
                         entry_filter = function(entry, _)
                             return require("cmp").lsp.CompletionItemKind.Text ~= entry:get_kind()
                         end,
                     },
-                    { name = "lspkind" },
                     { name = "path" },
                     {
                         name = "buffer",
@@ -186,6 +173,7 @@ return {
                                 scrolloff = 8,
                                 winblend = 0,
                             },
+
                             documentation = {
                                 border = "rounded",
                                 winhighlight = "Normal:Pmenu,FloatBorder:FloatBorder,Search:None",
@@ -196,6 +184,28 @@ return {
                         },
                     },
                 }),
+                --[[ documentation = {
+                    window = {
+                        completion = {
+                            max_width = 28,
+                            min_width = 8,
+                            border = "rounded",
+                            winhighlight = "Normal:Pmenu,CursorLine:PmenuSel,FloatBorder:FloatBorder,Search:None",
+                            col_offset = 0,
+                            side_padding = 0,
+                            scrollbar = false,
+                            scrolloff = 8,
+                            winblend = 0,
+                        },
+                        documentation = {
+                            border = "rounded",
+                            winhighlight = "Normal:Pmenu,FloatBorder:FloatBorder,Search:None",
+                            max_width = 12,
+                            max_height = 12,
+                            min_width = 8,
+                        },
+                    },
+                }, ]]
                 experimental = {
                     native_menu = false,
                     ghost_text = false,
@@ -234,22 +244,31 @@ return {
                         end,
                     }),
                 },
-                window = {
-                    completion = {
-                        border = "rounded",
-                        winhighlight = "Normal:CmpNormal",
-                        scrollbar = false,
-                        max_width = 24,
-                        min_width = 4,
-                    },
+                --[[ window = {
+                    -- completion = {
+                    --     border = "rounded",
+                    --     winhighlight = "Normal:CmpNormal",
+                    --     scrollbar = false,
+                    --     max_width = 24,
+                    --     min_width = 4,
+                    -- },
                     documentation = {
                         winhighlight = "Normal:CmpDocNormal",
-                        border = "rounded",
+                        border = "shadow",
                         min_width = 4,
                         max_height = 12,
                         scrollbar = false,
                     },
-                },
+
+                    -- documentation = cmp.config.window.bordered(),
+                    completion = cmp.config.window.bordered(),
+                }, ]]
+            })
+
+            local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+            require("lspconfig").clangd.setup({
+                capabilities = capabilities,
             })
         end,
     },

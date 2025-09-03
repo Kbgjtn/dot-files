@@ -3,6 +3,7 @@ vim.scriptencoding = "utf-8"
 vim.loader.enable()
 vim.lsp.set_log_level("off")
 
+vim.o.winborder = "rounded"
 local home = os.getenv("HOME")
 local o = vim.opt
 local g = vim.g
