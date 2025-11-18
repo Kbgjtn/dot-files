@@ -1,0 +1,630 @@
+.quick-toggle-menu,
+.message,
+.events-button,
+.world-clocks-button,
+.weather-button {
+  box-shadow: none;
+  color: #ffffff;
+  background-color: #1a1a1a;
+}
+
+.quick-toggle-menu:hover,
+.message:hover,
+.events-button:hover,
+.world-clocks-button:hover,
+.weather-button:hover {
+  color: #ffffff;
+  background-color: #2a2a2a;
+}
+
+.quick-toggle-menu:active,
+.message:active,
+.events-button:active,
+.world-clocks-button:active,
+.weather-button:active {
+  color: #ffffff;
+  background-color: st-mix(st-lighten(#1a1a1a, 9%), #ffffff, 87%);
+}
+.quick-toggle-menu:active:hover,
+.message:active:hover,
+.events-button:active:hover,
+.world-clocks-button:active:hover,
+.weather-button:active:hover {
+  background-color: st-lighten(st-lighten(#1a1a1a, 9%), 4%);
+}
+.quick-toggle-menu:active:focus,
+.message:active:focus,
+.events-button:active:focus,
+.world-clocks-button:active:focus,
+.weather-button:active:focus {
+  background-color: st-mix(
+    st-mix(-st-accent-color, #ffffff, 60%),
+    st-mix(st-lighten(#1a1a1a, 9%), #ffffff, 87%),
+    5%
+  );
+}
+.quick-toggle-menu:focus,
+.message:focus,
+.events-button:focus,
+.world-clocks-button:focus,
+.weather-button:focus {
+  color: #ffffff;
+  background-color: st-mix(
+    st-mix(-st-accent-color, #ffffff, 60%),
+    st-mix(#1a1a1a, #ffffff, 87%),
+    5%
+  );
+}
+.quick-toggle-menu:focus:hover,
+.message:focus:hover,
+.events-button:focus:hover,
+.world-clocks-button:focus:hover,
+.weather-button:focus:hover {
+  background-color: st-mix(
+    st-mix(-st-accent-color, #ffffff, 60%),
+    st-mix(st-lighten(#1a1a1a, 4%), #ffffff, 87%),
+    5%
+  );
+}
+
+.quick-toggle-menu:insensitive,
+.message:insensitive,
+.events-button:insensitive,
+.world-clocks-button:insensitive,
+.weather-button:insensitive {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+  color: white;
+  background-color: st-darken(#1a1a1a, 3%);
+  box-shadow: none;
+  border: none;
+}
+
+.quick-toggle-has-menu .quick-toggle-separator {
+  background-color: #202020;
+  width: 1px;
+}
+#panel {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+#panel .panel-button {
+  background: transparent;
+}
+
+.modal-dialog {
+  background-color: #151515;
+}
+
+.run-dialog .run-dialog-entry {
+  background-color: #202020;
+}
+
+#overviewGroup {
+  background: black;
+}
+
+.popup-menu-item {
+  background-color: black;
+  border-color: transparent;
+}
+
+#calendarArea {
+  background-color: transparent;
+}
+.datemenu-popover {
+  background-color: #101010;
+}
+
+.datemenu-today-button {
+  background-color: #101010;
+}
+
+.prompt-dialog {
+  background-color: #101010;
+}
+
+.popup-menu-content,
+.candidate-popup-content {
+  background-color: #111111;
+  border-color: #181818;
+}
+
+.popup-menu-item {
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  border-radius: 12px;
+}
+
+.popup-menu-item:insensitive {
+  background-color: transparent !important;
+}
+
+.popup-menu-item:active {
+  color: #ffffff;
+  background-color: #151515;
+}
+
+.popup-menu-item:active:hover {
+  background-color: #2a2a2a;
+}
+
+.popup-menu-item:active:focus {
+  background-color: #2a2a2a;
+}
+.popup-menu-item:hover,
+.popup-menu-item:selected,
+.popup-menu-item:checked {
+  color: white;
+  background-color: #202020;
+}
+
+.popup-menu-item:insensitive {
+  color: st-transparentize(#ffffff, 0.5);
+  background-color: #424247;
+}
+
+.popup-menu-item:checked {
+  border-radius: 12px 12px 0 0 !important;
+}
+
+.icon-button,
+.login-dialog-button.cancel-button,
+.login-dialog-button.switch-user-button,
+.login-dialog-button.login-dialog-session-list-button,
+.screenshot-ui-show-pointer-button,
+.message .message-header .message-expand-button,
+.message .message-header .message-close-button,
+.message-notification-group .message-collapse-button,
+.calendar .calendar-month-header .pager-button,
+.button {
+  background-color: #1a1a1a;
+}
+
+.icon-button:focus,
+.login-dialog-button.cancel-button:focus,
+.login-dialog-button.switch-user-button:focus,
+.login-dialog-button.login-dialog-session-list-button:focus,
+.screenshot-ui-show-pointer-button:focus,
+.message .message-header .message-expand-button:focus,
+.message .message-header .message-close-button:focus,
+.message-notification-group .message-collapse-button:focus,
+.calendar .calendar-month-header .pager-button:focus,
+.button:focus {
+  background-color: #202020;
+}
+
+.icon-button:focus:hover,
+.login-dialog-button.cancel-button:focus:hover,
+.login-dialog-button.switch-user-button:focus:hover,
+.login-dialog-button.login-dialog-session-list-button:focus:hover,
+.screenshot-ui-show-pointer-button:focus:hover,
+.message .message-header .message-expand-button:focus:hover,
+.message .message-header .message-close-button:focus:hover,
+.message-notification-group .message-collapse-button:focus:hover,
+.calendar .calendar-month-header .pager-button:focus:hover,
+.button:focus:hover {
+  background-color: #202020;
+}
+
+.icon-button:hover,
+.login-dialog-button.cancel-button:hover,
+.login-dialog-button.switch-user-button:hover,
+.login-dialog-button.login-dialog-session-list-button:hover,
+.screenshot-ui-show-pointer-button:hover,
+.message .message-header .message-expand-button:hover,
+.message .message-header .message-close-button:hover,
+.message-notification-group .message-collapse-button:hover,
+.calendar .calendar-month-header .pager-button:hover,
+.button:hover {
+  background-color: #202020;
+}
+
+.icon-button:insensitive,
+.login-dialog-button.cancel-button:insensitive,
+.login-dialog-button.switch-user-button:insensitive,
+.login-dialog-button.login-dialog-session-list-button:insensitive,
+.screenshot-ui-show-pointer-button:insensitive,
+.message .message-header .message-expand-button:insensitive,
+.message .message-header .message-close-button:insensitive,
+.message-notification-group .message-collapse-button:insensitive,
+.calendar .calendar-month-header .pager-button:insensitive,
+.button:insensitive {
+}
+
+.icon-button:selected,
+.login-dialog-button.cancel-button:selected,
+.login-dialog-button.switch-user-button:selected,
+.login-dialog-button.login-dialog-session-list-button:selected,
+.screenshot-ui-show-pointer-button:selected,
+.message .message-header .message-expand-button:selected,
+.message .message-header .message-close-button:selected,
+.message-notification-group .message-collapse-button:selected,
+.calendar .calendar-month-header .pager-button:selected,
+.button:selected,
+.icon-button:active,
+.login-dialog-button.cancel-button:active,
+.login-dialog-button.switch-user-button:active,
+.login-dialog-button.login-dialog-session-list-button:active,
+.screenshot-ui-show-pointer-button:active,
+.message .message-header .message-expand-button:active,
+.message .message-header .message-close-button:active,
+.message-notification-group .message-collapse-button:active,
+.calendar .calendar-month-header .pager-button:active,
+.button:active {
+  background-color: #202020;
+}
+
+.icon-button:selected:hover,
+.login-dialog-button.cancel-button:selected:hover,
+.login-dialog-button.switch-user-button:selected:hover,
+.login-dialog-button.login-dialog-session-list-button:selected:hover,
+.screenshot-ui-show-pointer-button:selected:hover,
+.message .message-header .message-expand-button:selected:hover,
+.message .message-header .message-close-button:selected:hover,
+.message-notification-group .message-collapse-button:selected:hover,
+.calendar .calendar-month-header .pager-button:selected:hover,
+.button:selected:hover,
+.icon-button:active:hover,
+.login-dialog-button.cancel-button:active:hover,
+.login-dialog-button.switch-user-button:active:hover,
+.login-dialog-button.login-dialog-session-list-button:active:hover,
+.screenshot-ui-show-pointer-button:active:hover,
+.message .message-header .message-expand-button:active:hover,
+.message .message-header .message-close-button:active:hover,
+.message-notification-group .message-collapse-button:active:hover,
+.calendar .calendar-month-header .pager-button:active:hover,
+.button:active:hover {
+  background-color: #202020;
+}
+
+.icon-button:selected:focus,
+.login-dialog-button.cancel-button:selected:focus,
+.login-dialog-button.switch-user-button:selected:focus,
+.login-dialog-button.login-dialog-session-list-button:selected:focus,
+.screenshot-ui-show-pointer-button:selected:focus,
+.message .message-header .message-expand-button:selected:focus,
+.message .message-header .message-close-button:selected:focus,
+.message-notification-group .message-collapse-button:selected:focus,
+.calendar .calendar-month-header .pager-button:selected:focus,
+.button:selected:focus,
+.icon-button:active:focus,
+.login-dialog-button.cancel-button:active:focus,
+.login-dialog-button.switch-user-button:active:focus,
+.login-dialog-button.login-dialog-session-list-button:active:focus,
+.screenshot-ui-show-pointer-button:active:focus,
+.message .message-header .message-expand-button:active:focus,
+.message .message-header .message-close-button:active:focus,
+.message-notification-group .message-collapse-button:active:focus,
+.calendar .calendar-month-header .pager-button:active:focus,
+.button:active:focus {
+  background-color: #1a1a1a;
+}
+
+.icon-button:checked,
+.login-dialog-button.cancel-button:checked,
+.login-dialog-button.switch-user-button:checked,
+.login-dialog-button.login-dialog-session-list-button:checked,
+.screenshot-ui-show-pointer-button:checked,
+.message .message-header .message-expand-button:checked,
+.message .message-header .message-close-button:checked,
+.message-notification-group .message-collapse-button:checked,
+.calendar .calendar-month-header .pager-button:checked,
+.button:checked {
+  background-color: #1a1a1a;
+}
+.icon-button:checked:hover,
+.login-dialog-button.cancel-button:checked:hover,
+.login-dialog-button.switch-user-button:checked:hover,
+.login-dialog-button.login-dialog-session-list-button:checked:hover,
+.screenshot-ui-show-pointer-button:checked:hover,
+.message .message-header .message-expand-button:checked:hover,
+.message .message-header .message-close-button:checked:hover,
+.message-notification-group .message-collapse-button:checked:hover,
+.calendar .calendar-month-header .pager-button:checked:hover,
+.button:checked:hover {
+  background-color: #202020;
+}
+.icon-button:checked:active,
+.login-dialog-button.cancel-button:checked:active,
+.login-dialog-button.switch-user-button:checked:active,
+.login-dialog-button.login-dialog-session-list-button:checked:active,
+.screenshot-ui-show-pointer-button:checked:active,
+.message .message-header .message-expand-button:checked:active,
+.message .message-header .message-close-button:checked:active,
+.message-notification-group .message-collapse-button:checked:active,
+.calendar .calendar-month-header .pager-button:checked:active,
+.button:checked:active {
+  background-color: #202020;
+}
+
+.calendar .calendar-day-heading,
+.calendar .calendar-day,
+.calendar .calendar-month-header .calendar-month-label,
+.icon-button.flat,
+.flat.login-dialog-button.cancel-button,
+.flat.login-dialog-button.switch-user-button,
+.flat.login-dialog-button.login-dialog-session-list-button,
+.flat.screenshot-ui-show-pointer-button,
+.message .message-header .flat.message-expand-button,
+.message .message-header .flat.message-close-button,
+.message-notification-group .flat.message-collapse-button,
+.calendar .calendar-month-header .pager-button,
+.button.flat {
+  color: -st-accent-color;
+  background-color: #1a1a1a;
+}
+
+.calendar .calendar-day-heading:focus,
+.calendar .calendar-day:focus,
+.calendar .calendar-month-header .calendar-month-label:focus,
+.icon-button.flat:focus,
+.flat.login-dialog-button.cancel-button:focus,
+.flat.login-dialog-button.switch-user-button:focus,
+.flat.login-dialog-button.login-dialog-session-list-button:focus,
+.flat.screenshot-ui-show-pointer-button:focus,
+.message .message-header .flat.message-expand-button:focus,
+.message .message-header .flat.message-close-button:focus,
+.message-notification-group .flat.message-collapse-button:focus,
+.calendar .calendar-month-header .pager-button:focus,
+.button.flat:focus {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+  box-shadow: inset 0 0 0 2px
+    st-transparentize(st-mix(-st-accent-color, #ffffff, 60%), 0.1) !important;
+  background-color: st-mix(
+    st-mix(-st-accent-color, #ffffff, 60%),
+    rgba(26, 26, 26, 0.25),
+    5%
+  );
+}
+.calendar .calendar-day-heading:focus:hover,
+.calendar .calendar-day:focus:hover,
+.calendar .calendar-month-header .calendar-month-label:focus:hover,
+.icon-button.flat:focus:hover,
+.flat.login-dialog-button.cancel-button:focus:hover,
+.flat.login-dialog-button.switch-user-button:focus:hover,
+.flat.login-dialog-button.login-dialog-session-list-button:focus:hover,
+.flat.screenshot-ui-show-pointer-button:focus:hover,
+.message .message-header .flat.message-expand-button:focus:hover,
+.message .message-header .flat.message-close-button:focus:hover,
+.message-notification-group .flat.message-collapse-button:focus:hover,
+.calendar .calendar-month-header .pager-button:focus:hover,
+.button.flat:focus:hover {
+  background-color: st-mix(
+    st-mix(-st-accent-color, #ffffff, 60%),
+    st-mix(st-lighten(#1a1a1a, 7%), #ffffff, 87%),
+    5%
+  );
+}
+.calendar .calendar-day-heading:hover,
+.calendar .calendar-day:hover,
+.calendar .calendar-month-header .calendar-month-label:hover,
+.icon-button.flat:hover,
+.flat.login-dialog-button.cancel-button:hover,
+.flat.login-dialog-button.switch-user-button:hover,
+.flat.login-dialog-button.login-dialog-session-list-button:hover,
+.flat.screenshot-ui-show-pointer-button:hover,
+.message .message-header .flat.message-expand-button:hover,
+.message .message-header .flat.message-close-button:hover,
+.message-notification-group .flat.message-collapse-button:hover,
+.calendar .calendar-month-header .pager-button:hover,
+.button.flat:hover {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+  background-color: st-mix(st-lighten(#1a1a1a, 7%), #ffffff, 87%);
+}
+.calendar .calendar-day-heading:insensitive,
+.calendar .calendar-day:insensitive,
+.calendar .calendar-month-header .calendar-month-label:insensitive,
+.icon-button.flat:insensitive,
+.flat.login-dialog-button.cancel-button:insensitive,
+.flat.login-dialog-button.switch-user-button:insensitive,
+.flat.login-dialog-button.login-dialog-session-list-button:insensitive,
+.flat.screenshot-ui-show-pointer-button:insensitive,
+.message .message-header .flat.message-expand-button:insensitive,
+.message .message-header .flat.message-close-button:insensitive,
+.message-notification-group .flat.message-collapse-button:insensitive,
+.calendar .calendar-month-header .pager-button:insensitive,
+.button.flat:insensitive {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+  color: st-transparentize(#ffffff, 0.3);
+  background-color: #1a1a1a;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+  box-shadow: none;
+  border: none;
+}
+.calendar .calendar-day-heading:selected,
+.calendar .calendar-day:selected,
+.calendar .calendar-month-header .calendar-month-label:selected,
+.icon-button.flat:selected,
+.flat.login-dialog-button.cancel-button:selected,
+.flat.login-dialog-button.switch-user-button:selected,
+.flat.login-dialog-button.login-dialog-session-list-button:selected,
+.flat.screenshot-ui-show-pointer-button:selected,
+.message .message-header .flat.message-expand-button:selected,
+.message .message-header .flat.message-close-button:selected,
+.message-notification-group .flat.message-collapse-button:selected,
+.calendar .calendar-month-header .pager-button:selected,
+.button.flat:selected,
+.calendar .calendar-day-heading:active,
+.calendar .calendar-day:active,
+.calendar .calendar-month-header .calendar-month-label:active,
+.icon-button.flat:active,
+.flat.login-dialog-button.cancel-button:active,
+.flat.login-dialog-button.switch-user-button:active,
+.flat.login-dialog-button.login-dialog-session-list-button:active,
+.flat.screenshot-ui-show-pointer-button:active,
+.message .message-header .flat.message-expand-button:active,
+.message .message-header .flat.message-close-button:active,
+.message-notification-group .flat.message-collapse-button:active,
+.calendar .calendar-month-header .pager-button:active,
+.button.flat:active {
+  background-color: st-mix(st-lighten(#1a1a1a, 9%), #ffffff, 87%);
+}
+.calendar .calendar-day-heading:selected:hover,
+.calendar .calendar-day:selected:hover,
+.calendar .calendar-month-header .calendar-month-label:selected:hover,
+.icon-button.flat:selected:hover,
+.flat.login-dialog-button.cancel-button:selected:hover,
+.flat.login-dialog-button.switch-user-button:selected:hover,
+.flat.login-dialog-button.login-dialog-session-list-button:selected:hover,
+.flat.screenshot-ui-show-pointer-button:selected:hover,
+.message .message-header .flat.message-expand-button:selected:hover,
+.message .message-header .flat.message-close-button:selected:hover,
+.message-notification-group .flat.message-collapse-button:selected:hover,
+.calendar .calendar-month-header .pager-button:selected:hover,
+.button.flat:selected:hover,
+.calendar .calendar-day-heading:active:hover,
+.calendar .calendar-day:active:hover,
+.calendar .calendar-month-header .calendar-month-label:active:hover,
+.icon-button.flat:active:hover,
+.flat.login-dialog-button.cancel-button:active:hover,
+.flat.login-dialog-button.switch-user-button:active:hover,
+.flat.login-dialog-button.login-dialog-session-list-button:active:hover,
+.flat.screenshot-ui-show-pointer-button:active:hover,
+.message .message-header .flat.message-expand-button:active:hover,
+.message .message-header .flat.message-close-button:active:hover,
+.message-notification-group .flat.message-collapse-button:active:hover,
+.calendar .calendar-month-header .pager-button:active:hover,
+.button.flat:active:hover {
+  background-color: st-lighten(st-lighten(#1a1a1a, 9%), 7%);
+}
+.calendar .calendar-day-heading:selected:focus,
+.calendar .calendar-day:selected:focus,
+.calendar .calendar-month-header .calendar-month-label:selected:focus,
+.icon-button.flat:selected:focus,
+.flat.login-dialog-button.cancel-button:selected:focus,
+.flat.login-dialog-button.switch-user-button:selected:focus,
+.flat.login-dialog-button.login-dialog-session-list-button:selected:focus,
+.flat.screenshot-ui-show-pointer-button:selected:focus,
+.message .message-header .flat.message-expand-button:selected:focus,
+.message .message-header .flat.message-close-button:selected:focus,
+.message-notification-group .flat.message-collapse-button:selected:focus,
+.calendar .calendar-month-header .pager-button:selected:focus,
+.button.flat:selected:focus,
+.calendar .calendar-day-heading:active:focus,
+.calendar .calendar-day:active:focus,
+.calendar .calendar-month-header .calendar-month-label:active:focus,
+.icon-button.flat:active:focus,
+.flat.login-dialog-button.cancel-button:active:focus,
+.flat.login-dialog-button.switch-user-button:active:focus,
+.flat.login-dialog-button.login-dialog-session-list-button:active:focus,
+.flat.screenshot-ui-show-pointer-button:active:focus,
+.message .message-header .flat.message-expand-button:active:focus,
+.message .message-header .flat.message-close-button:active:focus,
+.message-notification-group .flat.message-collapse-button:active:focus,
+.calendar .calendar-month-header .pager-button:active:focus,
+.button.flat:active:focus {
+  background-color: st-mix(
+    st-mix(-st-accent-color, #ffffff, 60%),
+    st-mix(st-lighten(#1a1a1a, 9%), #ffffff, 87%),
+    5%
+  );
+}
+.calendar .calendar-day-heading:checked,
+.calendar .calendar-day:checked,
+.calendar .calendar-month-header .calendar-month-label:checked,
+.icon-button.flat:checked,
+.flat.login-dialog-button.cancel-button:checked,
+.flat.login-dialog-button.switch-user-button:checked,
+.flat.login-dialog-button.login-dialog-session-list-button:checked,
+.flat.screenshot-ui-show-pointer-button:checked,
+.message .message-header .flat.message-expand-button:checked,
+.message .message-header .flat.message-close-button:checked,
+.message-notification-group .flat.message-collapse-button:checked,
+.calendar .calendar-month-header .pager-button:checked,
+.button.flat:checked {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  background-color: st-mix(st-lighten(#1a1a1a, 8%), #ffffff, 87%);
+}
+.calendar .calendar-day-heading:checked:hover,
+.calendar .calendar-day:checked:hover,
+.calendar .calendar-month-header .calendar-month-label:checked:hover,
+.icon-button.flat:checked:hover,
+.flat.login-dialog-button.cancel-button:checked:hover,
+.flat.login-dialog-button.switch-user-button:checked:hover,
+.flat.login-dialog-button.login-dialog-session-list-button:checked:hover,
+.flat.screenshot-ui-show-pointer-button:checked:hover,
+.message .message-header .flat.message-expand-button:checked:hover,
+.message .message-header .flat.message-close-button:checked:hover,
+.message-notification-group .flat.message-collapse-button:checked:hover,
+.calendar .calendar-month-header .pager-button:checked:hover,
+.button.flat:checked:hover {
+  background-color: st-lighten(st-lighten(#1a1a1a, 8%), 7%);
+}
+.calendar .calendar-day-heading:checked:active,
+.calendar .calendar-day:checked:active,
+.calendar .calendar-month-header .calendar-month-label:checked:active,
+.icon-button.flat:checked:active,
+.flat.login-dialog-button.cancel-button:checked:active,
+.flat.login-dialog-button.switch-user-button:checked:active,
+.flat.login-dialog-button.login-dialog-session-list-button:checked:active,
+.flat.screenshot-ui-show-pointer-button:checked:active,
+.message .message-header .flat.message-expand-button:checked:active,
+.message .message-header .flat.message-close-button:checked:active,
+.message-notification-group .flat.message-collapse-button:checked:active,
+.calendar .calendar-month-header .pager-button:checked:active,
+.button.flat:checked:active {
+  background-color: st-lighten(st-lighten(#1a1a1a, 8%), 9%);
+}
+
+/* #quickSettings, */
+/* .quick-settings { */
+/*   background-color: #101010; */
+/*   border-color: #101010; */
+/* } */
+
+/* .quick-settings .icon-button, */
+/* .quick-settings .login-dialog-button.cancel-button, */
+/* .quick-settings .login-dialog-button.switch-user-button, */
+/* .quick-settings .login-dialog-button.login-dialog-session-list-button, */
+/* .quick-settings .calendar .calendar-month-header .pager-button, */
+/* .calendar .calendar-month-header .quick-settings .pager-button, */
+/* .quick-settings .message-notification-group .message-collapse-button, */
+/* .message-notification-group .quick-settings .message-collapse-button, */
+/* .quick-settings .message .message-header .message-expand-button, */
+/* .message .message-header .quick-settings .message-expand-button, */
+/* .quick-settings .message .message-header .message-close-button, */
+/* .message .message-header .quick-settings .message-close-button, */
+/* .quick-settings .screenshot-ui-show-pointer-button, */
+/* .quick-settings .button { */
+/*   background-color: #202020; */
+/*   border-color: transparent; */
+/* } */
+
+.search-entry {
+  border-color: transparent;
+  background: #1a1a1a;
+}
+
+.search-section-content {
+  background: #171717;
+}
+
+.list-search-result {
+  background: #1a1a1a;
+}
+
+.list-search-result:focus,
+.search-provider-icon:focus {
+  color: #fafafb;
+  box-shadow: inset 0 0 0 2px
+    st-transparentize(st-mix(-st-accent-color, #ffffff, 60%), 0.2) !important;
+  background-color: st-mix(
+    st-mix(-st-accent-color, #ffffff, 60%),
+    rgba(56, 56, 59, 0.25),
+    5%
+  );
+}
+.list-search-result:focus:hover,
+.search-provider-icon:focus:hover {
+  background-color: st-mix(
+    st-mix(-st-accent-color, #ffffff, 60%),
+    st-lighten(#38383b, 7%),
+    5%
+  );
+}
+.list-search-result:hover,
+.search-provider-icon:hover {
+  background-color: #2a2a2a;
+}
