@@ -1,7 +1,6 @@
-vim.scriptencoding = "utf-8"
+-- vim.scriptencoding = "utf-8"
 
 vim.loader.enable()
-vim.lsp.set_log_level("off")
 
 vim.o.winborder = "rounded"
 local home = os.getenv("HOME")
@@ -17,6 +16,8 @@ vim.filetype.add({
         env = "env",
     },
 })
+
+vim.g.deprecation_warnings = false
 
 g.vim_markdown_math = 1
 g.loaded_perl_provider = 0
@@ -40,20 +41,17 @@ g.copilot_filetypes = {
 }
 
 -- disable unused stuff
-g.loaded = 1
-g.loaded_netrw = 1
-g.loaded_netrwPlugin = 1
+-- g.loaded = 0
+-- g.loaded_netrw = 0
+-- g.loaded_netrwPlugin = 0
 g.loaded_2html_plugin = 1
 g.loaded_tutor_mode_plugin = 1
 g.loaded_matchit = 1 -- use vim-matchup
 g.loaded_matchparen = 1 -- use vim-matchup
-g.netrw_list_hide = 0
-g.netrw_hide = 0
 g.completeopt = { "menu", "menuone", "noselect" }
 g.netrw_keepdir = 1
-g.netrw_liststyle = 0
 g.netrw_banner = 0
-g.netrw_altv = 1
+g.netrw_clipboard = 0
 g.root_spec = { "cwd" }
 
 o.syntax = "on"
@@ -140,12 +138,6 @@ o.foldexpr = "nvim_treesitter#foldexpr()"
 -- Undercurl
 vim.cmd([[let &t_Cs = "\e[4:3m"]])
 vim.cmd([[let &t_Ce = "\e[4:0m"]])
-
--- Turn off paste mode when leaving insert
-vim.api.nvim_create_autocmd("InsertLeave", {
-    pattern = "*",
-    command = "set nopaste",
-})
 
 -- Add asterisks in block comments
 o.formatoptions:append({

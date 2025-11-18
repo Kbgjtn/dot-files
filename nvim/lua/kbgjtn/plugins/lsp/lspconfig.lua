@@ -3,7 +3,6 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
         "hrsh7th/cmp-nvim-lsp",
-        { "antosha417/nvim-lsp-file-operations", config = true },
     },
     opts = {
         ui = {
@@ -14,15 +13,16 @@ return {
             },
         },
     },
+
     config = function()
-        vim.lsp.set_log_level("OFF")
-        local lspconfig = require("lspconfig")
         local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
         local keymap = vim.keymap
         local opts = { noremap = true, silent = true }
+
         local on_attach = function(_, bufnr)
             opts.buffer = bufnr
+
             opts.desc = "Show LSP references"
             keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts)
 
@@ -30,14 +30,13 @@ return {
             keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
 
             opts.desc = "Show LSP definitions"
-            keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
+            keymap.set("n", "gd", vim.lsp.buf.definition, opts)
 
             opts.desc = "Show LSP implementations"
-            -- keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
             keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
 
             opts.desc = "Show LSP type definitions"
-            keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
+            keymap.set("n", "gy", vim.lsp.buf.type_definition, opts)
 
             opts.desc = "See available code actions"
             keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
@@ -52,16 +51,32 @@ return {
             keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
 
             opts.desc = "Go to previous diagnostic"
-            keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+            keymap.set("n", "[d", function()
+                return vim.diagnostic.jump({ count = -1, float = true })
+            end, opts)
 
             opts.desc = "Go to next diagnostic"
-            keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+            keymap.set("n", "]d", function()
+                return vim.diagnostic.jump({ count = 1, float = true })
+            end, opts)
+
+            opts.desc = "Open diagnostic list"
+            keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
 
             opts.desc = "Show documentation for what is under cursor"
-            keymap.set("n", "K", vim.lsp.buf.hover, opts)
+            keymap.set("n", "K", function()
+                return vim.lsp.buf.hover({
+                    border = "rounded",
+                    title = "",
+                    max_width = 50,
+                    max_height = 20,
+                    min_width = 16,
+                    loadfile = true,
+                })
+            end, opts)
 
             opts.desc = "Restart LSP"
-            keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
+            keymap.set("n", "<leader>lr", ":LspRestart<CR>", opts)
         end
 
         local capabilities = cmp_nvim_lsp.default_capabilities()
@@ -82,24 +97,6 @@ return {
             },
         })
 
-        vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
-            config = config or {}
-            config.border = "rounded"
-            config.max_width = 50
-            config.max_height = 20
-            config.min_width = 20
-            return vim.lsp.util.open_floating_preview(result.contents, "markdown", config)
-        end
-
-        vim.lsp.buf.hover({
-            border = "rounded",
-            title = "",
-            max_width = 50,
-            max_height = 24,
-            min_width = 20,
-            loadfile = true,
-        })
-
         vim.lsp.buf.signature_help({
             border = "rounded",
             title = "",
@@ -114,36 +111,164 @@ return {
             vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
         end
 
-        lspconfig["cmake"].setup({
+        vim.lsp.config("*", {
+            on_attach = on_attach,
+            capabilities = capabilities,
+        })
+
+        vim.lsp.enable("gopls")
+        vim.lsp.enable("lua_ls")
+        vim.lsp.enable("ts_ls")
+        vim.lsp.enable("html")
+        vim.lsp.enable("yamlls")
+        vim.lsp.enable("tailwindcss")
+
+        vim.lsp.config("lua_ls", {
+            capabilities = capabilities,
+            on_attach = on_attach,
+            cmd = { "lua-language-server" },
+            filetypes = { "lua" },
+            root_markers = {
+                ".luarc.json",
+                ".luarc.jsonc",
+                ".luacheckrc",
+                ".stylua.toml",
+                ".git",
+            },
+            settings = {
+                Lua = {
+                    telemetry = {
+                        enable = false,
+                    },
+                    diagnostics = {
+                        globals = { "vim" },
+                    },
+                    workspace = {
+                        library = {
+                            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+                            [vim.fn.stdpath("config") .. "/lua"] = true,
+                        },
+                    },
+                },
+            },
+        })
+
+        vim.lsp.config("cssls", {
+            capabilities = capabilities,
+            on_attach = on_attach(),
+            root_markers = {
+                ".css",
+            },
+        })
+
+        vim.lsp.config("yamlls", {
+            format = {
+                enable = true,
+                singleQuote = true,
+                bracketSpacing = true,
+            },
+            filetypes = { "yml", "yaml" },
+            validate = true,
+            completion = true,
+        })
+
+        vim.lsp.config("gopls", {
+            -- root_dir = vim.fs.dirname(vim.fs.find({ "go.sum", "go.mod", "*.go", "go.work", ".git" }, { upward = true })[1]),
+            on_attach = on_attach(),
+            capabilities = capabilities,
+            cmd = { "gopls" },
+            filetypes = { "go", "gomod" },
+            root_markers = {
+                "go.sum",
+                "go.mod",
+                "go.work",
+                ".git",
+            },
+            settings = {
+                gopls = {
+                    experimentalPostfixCompletions = true,
+                    analyses = {
+                        assign = true,
+                        atomic = true,
+                        bools = true,
+                        composites = true,
+                        copylocks = true,
+                        deepequalerrors = true,
+                        embed = true,
+                        errorsas = true,
+                        fieldalignment = false,
+                        httpresponse = true,
+                        ifaceassert = true,
+                        loopclosure = true,
+                        lostcancel = true,
+                        nilfunc = true,
+                        nilness = true,
+                        nonewvars = true,
+                        printf = true,
+                        shadow = true,
+                        shift = true,
+                        simplifycompositelit = true,
+                        simplifyrange = true,
+                        simplifyslice = true,
+                        sortslice = true,
+                        stdmethods = true,
+                        stringintconv = true,
+                        structtag = true,
+                        testinggoroutine = true,
+                        tests = true,
+                        timeformat = true,
+                        umarshal = true,
+                        unreachable = true,
+                        unsafeptr = true,
+                        unusedparams = true,
+                        unusedresult = true,
+                        unusedvariable = true,
+                        useany = true,
+                    },
+                    staticcheck = false,
+                    gofumpt = true,
+                },
+            },
+        })
+
+        vim.lsp.config("cmake", {
             capabilities = capabilities,
             on_attach = on_attach,
         })
 
-        lspconfig["ts_ls"].setup({
+        vim.lsp.config("ts_ls", {
             capabilities = capabilities,
             on_attach = on_attach,
+            cmd = { "typescript-language-server", "--stdio" },
+            root_markers = {
+                "package.json",
+            },
+            workspace_required = true,
+            filetypes = {
+                "javascript",
+                "javascriptreact",
+                "javascript.jsx",
+                "typescript",
+                "typescriptreact",
+                "typescript.tsx",
+            },
         })
 
-        lspconfig["html"].setup({
+        vim.lsp.config("html", {
             capabilities = capabilities,
             on_attach = on_attach,
             filetypes = { "html", "typescriptreact", "javascriptreact" },
             init_options = { userLanguages = { templ = "html" } },
         })
 
-        lspconfig["htmx"].setup({
+        vim.lsp.config("htmx", {
             capabilities = capabilities,
             on_attach = on_attach,
             filetypes = { "html", "templ" },
             init_options = { userLanguages = { templ = "html" } },
         })
 
-        lspconfig["cssls"].setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-        })
-
-        lspconfig["tailwindcss"].setup({
+        vim.lsp.config("tailwindcss", {
             capabilities = capabilities,
             on_attach = on_attach,
             filetypes = {
@@ -197,14 +322,6 @@ return {
                 "vue",
                 "svelte",
             },
-            root_dir = function(fname)
-                return lspconfig.util.root_pattern("tailwind.config.js", "tailwind.config.ts")(fname)
-                    or lspconfig.util.root_pattern("*.md", ".md")(fname)
-                    or lspconfig.util.root_pattern("postcss.config.js", "postcss.config.ts")(fname)
-                    or lspconfig.util.find_package_json_ancestor(fname)
-                    or lspconfig.util.find_node_modules_ancestor(fname)
-                    or lspconfig.util.find_git_ancestor(fname)
-            end,
             init_options = { userLanguages = { templ = "html" } },
             settings = {
                 tailwindCSS = {
@@ -226,7 +343,14 @@ return {
             },
         })
 
-        lspconfig["emmet_ls"].setup({
+        vim.lsp.config("marksman", {
+            capabilities = capabilities,
+            on_attach = on_attach,
+            filetypes = { "markdown", "markdown.mdx", "md", "mdx" },
+            -- root_dir = lspconfig.util.root_pattern("*.md", ".md"),
+        })
+
+        vim.lsp.config("emmet_ls", {
             capabilities = capabilities,
             on_attach = on_attach,
             filetypes = {
@@ -244,138 +368,46 @@ return {
             init_options = { userLanguages = { templ = "html" } },
         })
 
-        lspconfig["gopls"].setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-            filetypes = { "go" },
-            root_dir = lspconfig.util.root_pattern("go.sum", "go.mod", "*.go", "go.work", ".git"),
-            cmd = { "gopls" },
-            settings = {
-                gopls = {
-                    experimentalPostfixCompletions = true,
-                    analyses = {
-                        assign = true,
-                        atomic = true,
-                        bools = true,
-                        composites = true,
-                        copylocks = true,
-                        deepequalerrors = true,
-                        embed = true,
-                        errorsas = true,
-                        fieldalignment = false,
-                        httpresponse = true,
-                        ifaceassert = true,
-                        loopclosure = true,
-                        lostcancel = true,
-                        nilfunc = true,
-                        nilness = true,
-                        nonewvars = true,
-                        printf = true,
-                        shadow = true,
-                        shift = true,
-                        simplifycompositelit = true,
-                        simplifyrange = true,
-                        simplifyslice = true,
-                        sortslice = true,
-                        stdmethods = true,
-                        stringintconv = true,
-                        structtag = true,
-                        testinggoroutine = true,
-                        tests = true,
-                        timeformat = true,
-                        umarshal = true,
-                        unreachable = true,
-                        unsafeptr = true,
-                        unusedparams = true,
-                        unusedresult = true,
-                        unusedvariable = true,
-                        useany = true,
-                    },
-                    staticcheck = false,
-                    gofumpt = true,
-                },
-            },
-        })
-
-        lspconfig["marksman"].setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-            filetypes = { "markdown", "markdown.mdx", "md", "mdx" },
-            root_dir = lspconfig.util.root_pattern("*.md", ".md"),
-        })
-
-        lspconfig["bashls"].setup({
+        vim.lsp.config("bashls", {
             capabilities = capabilities,
             on_attach = on_attach,
             single_file_support = true,
         })
 
-        lspconfig["buf_ls"].setup({
+        vim.lsp.config("buf_ls", {
             capabilities = capabilities,
             on_attach = on_attach,
             -- filetypes = { "proto" },
             -- root_dir = lspconfig.util.root_pattern("*.proto"),
             -- cmd = { "buf", "beta", "lsp", "--timeout=0", "--log-format=text" },
             filetypes = { "proto" },
-            root_dir = lspconfig.util.root_pattern("buf.yaml", "buf.work.yaml", ".git"),
+            --root_dir = lspconfig.util.root_pattern("buf.yaml", "buf.work.yaml", ".git"),
             single_file_support = true,
         })
 
-        lspconfig["templ"].setup({
+        vim.lsp.config("templ", {
             capabilities = capabilities,
             on_attach = on_attach,
             filetypes = { "templ" },
         })
 
-        lspconfig["clangd"].setup({
+        vim.lsp.config("clangd", {
             capabilities = capabilities,
             on_attach = on_attach,
             filetypes = { "c", "c++", "h" },
-            root_dir = lspconfig.util.root_pattern("compile_commands.json", "CMakeLists.txt"),
+            --root_dir = lspconfig.util.root_pattern("compile_commands.json", "CMakeLists.txt"),
         })
 
-        lspconfig["yamlls"].setup({
-            format = {
-                enable = true,
-                singleQuote = true,
-                bracketSpacing = true,
-            },
-            filetypes = { "yml", "yaml" },
-            validate = true,
-            completion = true,
-        })
-
-        lspconfig["rust_analyzer"].setup({
+        vim.lsp.config("rust_analyzer", {
             capabilities = capabilities,
             on_attach = on_attach,
         })
 
-        lspconfig["phpactor"].setup({
+        vim.lsp.config("phpactor", {
             capabilities = capabilities,
             on_attach = on_attach,
             filetypes = { "php" },
-            root_dir = lspconfig.util.root_pattern("composer.json", ".git"),
-        })
-
-        lspconfig["lua_ls"].setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = {
-                Lua = {
-                    telemetry = {
-                        enable = false,
-                    },
-                    diagnostics = {
-                        globals = { "vim" },
-                    },
-                    workspace = {
-                        library = {
-                            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-                            [vim.fn.stdpath("config") .. "/lua"] = true,
-                        },
-                    },
-                },
-            },
+            --root_dir = lspconfig.util.root_pattern("composer.json", ".git"),
         })
     end,
 }

@@ -1,7 +1,7 @@
 return {
-   "stevearc/dressing.nvim",
-   event = "VeryLazy",
-   opts = {
-      input = { enabled = true },
-   },
+    -- snack.nvim("stevearc/dressing.nvim"),
+    -- event = "VeryLazy",
+    -- opts = {
+    --     input = { enabled = true },
+    -- },
 }
