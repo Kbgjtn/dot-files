@@ -1,0 +1,23 @@
+[/]
+edge-tiling-offset=uint32 48
+enable-autotiling=true
+enable-blur-selected-tilepreview=true
+enable-blur-snap-assistant=true
+enable-directional-focus-tiled-only=true
+enable-screen-edges-windows-suggestions=true
+enable-smart-window-border-radius=true
+enable-snap-assistant-windows-suggestions=true
+enable-span-multiple-tiles=true
+enable-tiling-system-windows-suggestions=true
+enable-window-border=false
+inner-gaps=uint32 4
+outer-gaps=uint32 0
+override-alt-tab=false
+restore-window-original-size=false
+selected-layouts=[['1196114', 'Layout 3'], ['1196114', 'Layout 3'], ['1196114', 'Layout 3']]
+show-indicator=true
+snap-assistant-animation-time=uint32 50
+snap-assistant-threshold=100
+tile-preview-animation-time=uint32 50
+window-border-color='rgb(0,0,0)'
+window-use-custom-border-color=false
