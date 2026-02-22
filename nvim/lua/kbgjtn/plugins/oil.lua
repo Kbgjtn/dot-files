@@ -7,10 +7,14 @@ return {
 				show_hidden = true,
 			},
 
+			override = {
+				icon = "",
+				name = "oil",
+			},
 			columns = {
-				--"permissions",
+				-- "permissions",
 				"size",
-				--"mtime",
+				-- "mtime",
 			},
 		})
 

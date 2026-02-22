@@ -5,23 +5,26 @@ return {
 		config = function()
 			require("gitsigns").setup({
 				signs = {
-					add = { text = "┃" },
-					change = { text = "┃" },
+					add = { text = "|" },
+					change = { text = "|" },
 					delete = { text = "_" },
-					topdelete = { text = "‾" },
+					topdelete = { text = "⎻" },
 					changedelete = { text = "~" },
-					untracked = { text = "┆" },
+					untracked = { text = "¦" },
 				},
+
 				signs_staged = {
 					add = { text = "┃" },
 					change = { text = "┃" },
 					delete = { text = "_" },
-					topdelete = { text = "‾" },
+					topdelete = { text = "⎻" },
 					changedelete = { text = "~" },
-					untracked = { text = "┆" },
+					untracked = { text = "¦" },
 				},
+
 				signs_staged_enable = true,
 				signcolumn = true,
+
 				on_attach = function(bufnr)
 					local gitsigns = require("gitsigns")
 
@@ -49,8 +52,13 @@ return {
 					end)
 
 					-- Actions
-					map("n", "<leader>hs", gitsigns.stage_hunk)
-					map("n", "<leader>hr", gitsigns.reset_hunk)
+					map("n", "<leader>hs", function()
+						gitsigns.stage_hunk()
+					end)
+
+					map("n", "<leader>hr", function()
+						gitsigns.reset_hunk()
+					end)
 
 					map("v", "<leader>hs", function()
 						gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
@@ -60,7 +68,7 @@ return {
 						gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
 					end)
 
-					map("n", "<leader>hS", gitsigns.stage_buffer)
+					map("n", "<leader>hS", gitsigns.stage_buffer, { desc = "toggle stage or unstage a hunk" })
 					map("n", "<leader>hR", gitsigns.reset_buffer)
 					map("n", "<leader>hp", gitsigns.preview_hunk)
 					map("n", "<leader>hi", gitsigns.preview_hunk_inline)

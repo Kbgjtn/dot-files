@@ -4,10 +4,59 @@ vim.g.maplocalleader = " "
 
 local keymap = vim.keymap
 local opts = {
-    noremap = true,
-    silent = true,
+	noremap = true,
+	silent = true,
 }
 
+vim.keymap.set("n", "<leader>gp", function()
+	-- Get local branches
+	local local_branches = vim.fn.systemlist("git branch --list --format='%(refname:short)'")
+	local current_branch = vim.fn.systemlist("git rev-parse --abbrev-ref HEAD")[1]
+
+	-- Get remote branches
+	local remote_branches = vim.fn.systemlist("git branch -r --format='%(refname:short)'")
+
+	-- First: choose local branch (default = current)
+	vim.ui.select(local_branches, { prompt = "Select local branch", default = current_branch }, function(local_choice)
+		if not local_choice then
+			return
+		end
+
+		-- Second: choose remote branch or create new
+		table.insert(remote_branches, 1, "set remote branch")
+		vim.ui.select(remote_branches, { prompt = "Select remote branch" }, function(remote_choice)
+			if not remote_choice then
+				return
+			end
+
+			if remote_choice == "set remote branch" then
+				vim.ui.input({ prompt = "New remote branch name:" }, function(new_remote)
+					if new_remote and new_remote ~= "" then
+						local refspec = local_choice .. ":" .. new_remote
+						vim.cmd("Git push origin " .. refspec .. " -u")
+					end
+				end)
+			else
+				-- Strip "origin/" prefix if present
+				local remote_branch = remote_choice:gsub("^origin/", "")
+				local refspec = local_choice .. ":" .. remote_branch
+				vim.cmd("Git push origin " .. refspec)
+			end
+		end)
+	end)
+end, { desc = "Git push with local/remote branch selection" })
+
+vim.keymap.set("n", "<leader>gcm", function()
+	vim.ui.input({ prompt = "commit message" }, function(msg)
+		if msg and msg ~= "" then
+			vim.cmd("Git commit -m " .. vim.fn.shellescape(msg))
+		else
+			print("Commit aborted: empty message")
+		end
+	end)
+end, { desc = "Git commit with floating prompt" })
+
+-- greatest vim keymap ever
 keymap.set("n", "Q", "<Nop>")
 keymap.set("n", "n", "nzzzv")
 keymap.set("n", "N", "Nzzzv")
@@ -19,16 +68,46 @@ keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
 keymap.set({ "v", "n" }, "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gc<Left><Left><Left>]])
 
+vim.keymap.set("n", "<leader>e", function()
+	local found = false
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		local name = vim.api.nvim_buf_get_name(buf)
+		if name:match("^fugitive://") then
+			found = true
+			-- close all windows showing this buffer
+			for _, win in ipairs(vim.api.nvim_list_wins()) do
+				if vim.api.nvim_win_get_buf(win) == buf then
+					vim.api.nvim_win_close(win, true)
+				end
+			end
+			-- wipe the buffer so Fugitive can recreate it next time
+			vim.api.nvim_buf_delete(buf, { force = true })
+		end
+	end
+
+	if not found then
+		vim.cmd("leftabove vert Git")
+		vim.cmd("vertical resize 44")
+	end
+end, { desc = "Toggle Fugitive Git status left split (50 cols)" })
+
+vim.keymap.set("n", "<leader>gs", function()
+	vim.cmd("leftabove vert Git")
+	vim.cmd("vertical resize 50")
+end, { desc = "Fugitive Git status left split (50 cols)" })
+
 -- save all buffer files
 keymap.set("n", "<leader>w", ":wall<CR>")
 
 -- cloack togle
--- keymap.set("n", "<leader>cl", ":CloakToggle<CR>")
+keymap.set("n", "<leader>cl", ":CloakToggle<CR>")
 
--- vim.keymap.set("n", "n", "h", { noremap = true }) -- Map n to h (move left)
--- vim.keymap.set("n", "e", "j", { noremap = true }) -- Map e to j (move down)
--- vim.keymap.set("n", "u", "k", { noremap = true }) -- Map u to k (move up)
--- vim.keymap.set("n", "a", "l", { noremap = true }) -- Map a to l (move right)
+keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
+
+--[[ vim.keymap.set("n", "n", "h", { noremap = true }) -- Map n to h (move left)
+vim.keymap.set("n", "e", "j", { noremap = true }) -- Map e to j (move down)
+vim.keymap.set("n", "u", "k", { noremap = true }) -- Map u to k (move up)
+vim.keymap.set("n", "a", "l", { noremap = true }) -- Map a to l (move right) ]]
 
 vim.keymap.set("t", "<C-d>", [[<C-\><C-n>]], { noremap = true })
 vim.keymap.set("t", "<A-h>", [[<C-\><C-n><C-w>h]], { noremap = true })
@@ -41,6 +120,13 @@ keymap.set("n", "<leader>n", ":nohl<CR>")
 
 -- delete single character without copying into register
 keymap.set("n", "x", '"_x')
+
+-- Select all
+-- keymap.set("n", "<C-a>", "gg<S-v>G", opts)
+
+-- increment/decrement numbers
+-- keymap.set("n", "<C-i>", "<C-a>")
+-- keymap.set("n", "<C-d>", "<C-x>")
 
 -- window management
 keymap.set("n", "<leader>sv", "<C-w>v")
@@ -77,59 +163,58 @@ keymap.set("v", "<A-k>", ":m .-2<CR>==", opts)
 -- Move text up and down
 keymap.set("x", "J", ":move '>+1<CR>gv=gv", opts)
 keymap.set("x", "K", ":move '<-2<CR>gv=gv", opts)
--- keymap.set("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
--- keymap.set("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
+keymap.set("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
+keymap.set("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
 local function toggle_numbering()
-    local is_relative = vim.api.nvim_get_option_value("relativenumber", { scope = "global" })
-    local new_value = not is_relative
+	local is_relative = vim.api.nvim_get_option_value("relativenumber", { scope = "global" })
+	local new_value = not is_relative
 
-    -- Update global defaults
-    vim.opt.number = new_value
-    vim.opt.relativenumber = new_value
-    vim.opt.cursorline = new_value
+	-- Update global defaults
+	vim.opt.number = new_value
+	vim.opt.relativenumber = new_value
+	vim.opt.cursorline = new_value
 
-    -- Highlight
-    vim.api.nvim_set_hl(
-        0,
-        "LineNr",
-        is_relative and { fg = "#101010", bg = "#000000" } or { fg = "#202020", bg = "#000000" }
-    )
+	-- Highlight
+	vim.api.nvim_set_hl(
+		0,
+		"LineNr",
+		is_relative and { fg = "#101010", bg = "#000000" } or { fg = "#202020", bg = "#000000" }
+	)
 
-    -- Update each window's local options
-    for _, win in ipairs(vim.api.nvim_list_wins()) do
-        vim.api.nvim_set_option_value("number", new_value, { scope = "local", win = win })
-        vim.api.nvim_set_option_value("relativenumber", new_value, { scope = "local", win = win })
-        vim.api.nvim_set_option_value("cursorline", new_value, { scope = "local", win = win })
-    end
+	-- Update each window's local options
+	for _, win in ipairs(vim.api.nvim_list_wins()) do
+		vim.api.nvim_set_option_value("number", new_value, { scope = "local", win = win })
+		vim.api.nvim_set_option_value("relativenumber", new_value, { scope = "local", win = win })
+		vim.api.nvim_set_option_value("cursorline", new_value, { scope = "local", win = win })
+	end
 end
 
 keymap.set("n", "<leader>nc", toggle_numbering, { desc = "toggle relative/absolute line numbering" })
 
 local function coverageToggle()
-    vim.cmd("CoverageLoad")
-    vim.cmd("CoverageToggle")
+	vim.cmd("CoverageLoad")
+	vim.cmd("CoverageToggle")
 end
 
 keymap.set("n", "<leader>cc", coverageToggle, { desc = "load test coverage" })
 keymap.set("n", "<leader>co", "<cmd>CoverageToggle<cr>", { desc = "toggle show coverage" })
 keymap.set("n", "<leader>cs", "<cmd>CoverageSummary<cr>", { desc = "toggle coverage summary" })
 
--- keymap.set("n", "<c-j>", "<cmd>TmuxNavigateDown<cr>", opts)
--- keymap.set("n", "<c-k>", "<cmd>TmuxNavigateUp<cr>", opts)
--- keymap.set("n", "<c-h>", "<cmd>TmuxNavigateLeft<cr>", opts)
--- keymap.set("n", "<c-l>", "<cmd>TmuxNavigateRight<cr>", opts)
-
--- keymap.set("n", "-", "<cmd>Explore<cr>", opts)
+keymap.set("n", "<c-j>", "<cmd>TmuxNavigateDown<cr>", opts)
+keymap.set("n", "<c-k>", "<cmd>TmuxNavigateUp<cr>", opts)
+keymap.set("n", "<c-h>", "<cmd>TmuxNavigateLeft<cr>", opts)
+keymap.set("n", "<c-l>", "<cmd>TmuxNavigateRight<cr>", opts)
+keymap.set("n", "-", "<cmd>Explore<cr>", opts)
 
 -- gitsigns
-vim.keymap.set("n", "<leader>gd", function()
-    require("gitsigns").preview_hunk()
+--[[ vim.keymap.set("n", "<leader>gd", function()
+   require("gitsigns").preview_hunk()
 end, opts)
 
 vim.keymap.set("n", "<leader>gg", function()
-    require("gitsigns").toggle_current_line_blame()
-end, opts)
+   require("gitsigns").toggle_current_line_blame()
+end, opts) ]]
 
 -- nvim-dap
 -- vim.keymap.set("n", "<leader>do", function()

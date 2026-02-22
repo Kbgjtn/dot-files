@@ -35,6 +35,7 @@ require("lazy").setup({
 
 	install = { colorscheme = { "coocobolo" } },
 	change_detection = { enabled = false },
+
 	performance = {
 		rtp = {
 			-- disable some rtp plugins
@@ -47,6 +48,21 @@ require("lazy").setup({
 				"tohtml",
 				"tutor",
 				"zipPlugin",
+				"2html_plugin",
+				"getscript",
+				"getscriptPlugin",
+				"logipat",
+				"matchit",
+				"tar",
+				"tarPlugin",
+				"rrhelper",
+				"spellfile_plugin",
+				"vimball",
+				"vimballPlugin",
+				"rplugin",
+				"compiler",
+				"bugreport",
+				"ftplugin",
 			},
 		},
 	},

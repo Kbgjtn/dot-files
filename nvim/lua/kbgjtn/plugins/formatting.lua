@@ -28,10 +28,10 @@ return {
 			format_on_save = {
 				async = false,
 				lsp_format = "fallback",
-				timeout_ms = 500,
+				timeout_ms = 250,
 			},
 			log_level = vim.log.levels.ERROR,
-			notify_on_error = true,
+			notify_on_error = false,
 		})
 
 		vim.keymap.set({ "n", "v" }, "<leader>p", function()

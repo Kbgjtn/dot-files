@@ -3,10 +3,20 @@ return {
 	event = "VeryLazy",
 	config = function()
 		local icons = require("nvim-web-devicons")
-		-- local colors = require("kbgjtn.config.highlight")
 
-		icons.set_default_icon("󰈔", "#202020", 65)
-		icons.setup({ color_icons = false, default = true })
+		icons.set_default_icon("", "#606060", 100)
+
+		icons.setup({
+			color_icons = false,
+			default = true,
+			override_by_filename = {
+				["oil"] = {
+					icon = "",
+					name = "Oil",
+				},
+			},
+		})
+
 		icons.set_icon({
 			yml = { icon = "ξ", name = "Yaml" },
 			out = { icon = "", name = "Yaml" },
