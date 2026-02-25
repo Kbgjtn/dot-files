@@ -4,17 +4,13 @@
 # italic_font      auto
 # bold_italic_font auto
 
-kitty_mod ctrl+shift
-shell_integration enabled
 
-map kitty_mod+h launch --type=overlay --stdin-source=@screen_scrollback nvim -u NONE -i NONE -M -c 'normal G' -c 'colorscheme vim' -c 'map q :q!<CR>' -c 'set clipboard=unnamedplus laststatus=0 nospell syntax=' -
-
-font_size 16
+font_size 24
 hide_window_decorations no
-background_opacity 0.98
+background_opacity 0.99
 
 modify_font cell_width 100%
-modify_font cell_height 1px
+modify_font cell_height 2px
 modify_font baseline 0
 
 text_fg_override_threshold 0
@@ -24,14 +20,14 @@ remember_window_size  yes
 #initial_window_width 150c
 #initial_window_height 30c
 
-cursor_beam_thickness 0.99
+cursor_beam_thickness 0.69
 cursor_blink_interval 0.15
 cursor_stop_blinking_after 15.0
 cursor_trail_color #eeeeee
 
 # BEGIN_KITTY_THEME
 # Adwaita darker
-#  include Batman.conf
+include Batman.conf
 hide_window_decorations no
 #include Adwaita darker.conf
 # END_KITTY_THEME
@@ -74,7 +70,7 @@ inactive_tab_background #000000
 enable_audio_bell no
 
 # BEGIN_KITTY_FONTS
-font_family      family="Google Sans Code"
+font_family      family="0xProto Nerd Font Mono"
 bold_font        auto
 italic_font      auto
 bold_italic_font auto
