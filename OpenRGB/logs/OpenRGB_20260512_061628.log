@@ -1,0 +1,93 @@
+    OpenRGB v0.9+ (1.0rc2)
+    Commit: 0fca93e4544f943d4d7ec8073dba4e47c18ef54b from 2025-09-14 14:31:57 -0500
+    Launched: 20260512_061628
+====================================================================================================
+
+53    |Info:    [ResourceManager] Initializing HID interfaces: Success
+53    |Info:    ------------------------------------------------------
+53    |Info:    |               Start device detection               |
+53    |Info:    ------------------------------------------------------
+59    |Info:    ------------------------------------------------------
+59    |Info:    |             Detecting I2C interfaces               |
+59    |Info:    ------------------------------------------------------
+59    |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-3 Device 10DE:1AED Subsystem: 10DE:139D
+59    |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-1 Device 1022:790B Subsystem: 1462:7C02
+59    |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-6 Device 10DE:2187 Subsystem: 10DE:139D
+59    |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-4 Device 10DE:2187 Subsystem: 10DE:139D
+60    |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-2 Device 1022:790B Subsystem: 1462:7C02
+60    |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-0 Device 1022:790B Subsystem: 1462:7C02
+60    |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-7 Device 10DE:2187 Subsystem: 10DE:139D
+60    |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-5 Device 10DE:2187 Subsystem: 10DE:139D
+60    |Info:    ------------------------------------------------------
+60    |Info:    |               Detecting I2C devices                |
+60    |Info:    ------------------------------------------------------
+1130  |Info:    [ENE DRAM] Registering RGB controller
+1298  |Info:    [ENE DRAM] Registering RGB controller
+1338  |Info:    ------------------------------------------------------
+1338  |Info:    |            Detecting I2C DIMM modules              |
+1338  |Info:    ------------------------------------------------------
+1437  |Info:    [ResourceManager] Detected occupied slot 1, bus 5, type DDR4
+1454  |Info:    [ResourceManager] Detected occupied slot 2, bus 5, type DDR4
+1475  |Info:    [ResourceManager] Detected occupied slot 3, bus 5, type DDR4
+1501  |Info:    [ResourceManager] Detected occupied slot 4, bus 5, type DDR4
+1554  |Info:    ------------------------------------------------------
+1554  |Info:    |               Detecting I2C PCI devices            |
+1554  |Info:    ------------------------------------------------------
+1555  |Info:    ------------------------------------------------------
+1555  |Info:    |               Detecting HID devices                |
+1555  |Info:    ------------------------------------------------------
+1916  |Info:    [NZXT Kraken X2] Registering RGB controller
+1916  |Info:    ------------------------------------------------------
+1916  |Info:    |            Detecting libusb HID devices            |
+1916  |Info:    ------------------------------------------------------
+1916  |Info:    ------------------------------------------------------
+1916  |Info:    |              Detecting other devices               |
+1916  |Info:    ------------------------------------------------------
+1944  |Info:    [ResourceManager] Calling Post-detection callbacks
+1944  |Info:    ------------------------------------------------------
+1944  |Info:    |                Detection completed                 |
+1944  |Info:    ------------------------------------------------------
+11033 |Info:    [ResourceManager] Initializing HID interfaces: Success
+11033 |Info:    ------------------------------------------------------
+11033 |Info:    |               Start device detection               |
+11033 |Info:    ------------------------------------------------------
+11039 |Info:    ------------------------------------------------------
+11039 |Info:    |             Detecting I2C interfaces               |
+11039 |Info:    ------------------------------------------------------
+11039 |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-3 Device 10DE:1AED Subsystem: 10DE:139D
+11039 |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-1 Device 1022:790B Subsystem: 1462:7C02
+11039 |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-6 Device 10DE:2187 Subsystem: 10DE:139D
+11039 |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-4 Device 10DE:2187 Subsystem: 10DE:139D
+11039 |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-2 Device 1022:790B Subsystem: 1462:7C02
+11040 |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-0 Device 1022:790B Subsystem: 1462:7C02
+11040 |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-7 Device 10DE:2187 Subsystem: 10DE:139D
+11040 |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-5 Device 10DE:2187 Subsystem: 10DE:139D
+11040 |Info:    ------------------------------------------------------
+11040 |Info:    |               Detecting I2C devices                |
+11040 |Info:    ------------------------------------------------------
+12107 |Info:    [ENE DRAM] Registering RGB controller
+12276 |Info:    [ENE DRAM] Registering RGB controller
+12318 |Info:    ------------------------------------------------------
+12318 |Info:    |            Detecting I2C DIMM modules              |
+12318 |Info:    ------------------------------------------------------
+12418 |Info:    [ResourceManager] Detected occupied slot 1, bus 5, type DDR4
+12435 |Info:    [ResourceManager] Detected occupied slot 2, bus 5, type DDR4
+12456 |Info:    [ResourceManager] Detected occupied slot 3, bus 5, type DDR4
+12484 |Info:    [ResourceManager] Detected occupied slot 4, bus 5, type DDR4
+12536 |Info:    ------------------------------------------------------
+12536 |Info:    |               Detecting I2C PCI devices            |
+12536 |Info:    ------------------------------------------------------
+12538 |Info:    ------------------------------------------------------
+12538 |Info:    |               Detecting HID devices                |
+12538 |Info:    ------------------------------------------------------
+12938 |Info:    [NZXT Kraken X2] Registering RGB controller
+12938 |Info:    ------------------------------------------------------
+12938 |Info:    |            Detecting libusb HID devices            |
+12938 |Info:    ------------------------------------------------------
+12938 |Info:    ------------------------------------------------------
+12938 |Info:    |              Detecting other devices               |
+12938 |Info:    ------------------------------------------------------
+12945 |Info:    [ResourceManager] Calling Post-detection callbacks
+12945 |Info:    ------------------------------------------------------
+12945 |Info:    |                Detection completed                 |
+12945 |Info:    ------------------------------------------------------

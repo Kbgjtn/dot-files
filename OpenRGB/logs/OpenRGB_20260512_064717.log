@@ -1,0 +1,54 @@
+    OpenRGB v0.9+ (1.0rc2)
+    Commit: 0fca93e4544f943d4d7ec8073dba4e47c18ef54b from 2025-09-14 14:31:57 -0500
+    Launched: 20260512_064717
+====================================================================================================
+
+0     |Info:    [ProfileManager] Found file: rgbs.orp attempting to validate header
+0     |Info:    [ProfileManager] Valid v5 profile found for rgbs
+53    |Info:    [ResourceManager] Initializing HID interfaces: Success
+53    |Info:    ------------------------------------------------------
+53    |Info:    |               Start device detection               |
+53    |Info:    ------------------------------------------------------
+58    |Info:    ------------------------------------------------------
+58    |Info:    |             Detecting I2C interfaces               |
+58    |Info:    ------------------------------------------------------
+58    |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-3 Device 10DE:1AED Subsystem: 10DE:139D
+59    |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-1 Device 1022:790B Subsystem: 1462:7C02
+59    |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-6 Device 10DE:2187 Subsystem: 10DE:139D
+59    |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-4 Device 10DE:2187 Subsystem: 10DE:139D
+59    |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-2 Device 1022:790B Subsystem: 1462:7C02
+59    |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-0 Device 1022:790B Subsystem: 1462:7C02
+59    |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-7 Device 10DE:2187 Subsystem: 10DE:139D
+59    |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-5 Device 10DE:2187 Subsystem: 10DE:139D
+59    |Info:    ------------------------------------------------------
+59    |Info:    |               Detecting I2C devices                |
+59    |Info:    ------------------------------------------------------
+1142  |Info:    [ENE DRAM] Registering RGB controller
+1309  |Info:    [ENE DRAM] Registering RGB controller
+1350  |Info:    ------------------------------------------------------
+1350  |Info:    |            Detecting I2C DIMM modules              |
+1350  |Info:    ------------------------------------------------------
+1449  |Info:    [ResourceManager] Detected occupied slot 1, bus 5, type DDR4
+1465  |Info:    [ResourceManager] Detected occupied slot 2, bus 5, type DDR4
+1486  |Info:    [ResourceManager] Detected occupied slot 3, bus 5, type DDR4
+1512  |Info:    [ResourceManager] Detected occupied slot 4, bus 5, type DDR4
+1565  |Info:    ------------------------------------------------------
+1565  |Info:    |               Detecting I2C PCI devices            |
+1565  |Info:    ------------------------------------------------------
+1566  |Info:    ------------------------------------------------------
+1566  |Info:    |               Detecting HID devices                |
+1566  |Info:    ------------------------------------------------------
+1751  |Info:    [NZXT Kraken X2] Registering RGB controller
+1751  |Info:    ------------------------------------------------------
+1751  |Info:    |            Detecting libusb HID devices            |
+1751  |Info:    ------------------------------------------------------
+1751  |Info:    ------------------------------------------------------
+1751  |Info:    |              Detecting other devices               |
+1751  |Info:    ------------------------------------------------------
+1779  |Info:    [ResourceManager] Calling Post-detection callbacks
+1779  |Info:    ------------------------------------------------------
+1779  |Info:    |                Detection completed                 |
+1779  |Info:    ------------------------------------------------------
+1779  |Info:    [ProfileManager] Profile loading: Succeeded for ENE DRAM @ I2C: /dev/i2c-0, address 0x71
+1779  |Info:    [ProfileManager] Profile loading: Succeeded for ENE DRAM @ I2C: /dev/i2c-0, address 0x73
+1779  |Info:    [ProfileManager] Profile loading: Succeeded for NZXT Kraken X2 @ HID: /dev/hidraw4

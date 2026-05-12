@@ -1,0 +1,44 @@
+    OpenRGB v0.9+ (1.0rc2)
+    Commit: 0fca93e4544f943d4d7ec8073dba4e47c18ef54b from 2025-09-14 14:31:57 -0500
+    Launched: 20260511_155244
+====================================================================================================
+
+72    |Info:    [ResourceManager] Initializing HID interfaces: Success
+72    |Info:    ------------------------------------------------------
+72    |Info:    |               Start device detection               |
+72    |Info:    ------------------------------------------------------
+78    |Info:    ------------------------------------------------------
+78    |Info:    |             Detecting I2C interfaces               |
+78    |Info:    ------------------------------------------------------
+78    |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-3 Device 1022:790B Subsystem: 1462:7C02
+78    |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-1 Device 10DE:1AED Subsystem: 10DE:139D
+78    |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-6 Device 10DE:2187 Subsystem: 10DE:139D
+79    |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-4 Device 10DE:2187 Subsystem: 10DE:139D
+79    |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-2 Device 1022:790B Subsystem: 1462:7C02
+79    |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-0 Device 1022:790B Subsystem: 1462:7C02
+79    |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-7 Device 10DE:2187 Subsystem: 10DE:139D
+79    |Info:    [ResourceManager] Registering I2C interface: /dev/i2c-5 Device 10DE:2187 Subsystem: 10DE:139D
+79    |Info:    ------------------------------------------------------
+79    |Info:    |               Detecting I2C devices                |
+79    |Info:    ------------------------------------------------------
+905   |Info:    ------------------------------------------------------
+905   |Info:    |            Detecting I2C DIMM modules              |
+905   |Info:    ------------------------------------------------------
+982   |Info:    ------------------------------------------------------
+982   |Info:    |               Detecting I2C PCI devices            |
+982   |Info:    ------------------------------------------------------
+983   |Info:    ------------------------------------------------------
+983   |Info:    |               Detecting HID devices                |
+983   |Info:    ------------------------------------------------------
+1013  |Info:    [NZXT Kraken X2] Registering RGB controller
+1013  |Info:    ------------------------------------------------------
+1013  |Info:    |            Detecting libusb HID devices            |
+1013  |Info:    ------------------------------------------------------
+1013  |Info:    ------------------------------------------------------
+1013  |Info:    |              Detecting other devices               |
+1013  |Info:    ------------------------------------------------------
+1042  |Info:    [ResourceManager] Calling Post-detection callbacks
+1042  |Info:    ------------------------------------------------------
+1042  |Info:    |                Detection completed                 |
+1042  |Info:    ------------------------------------------------------
+1042  |Dialog:  <h2>WARNING:</h2><p>The OpenRGB udev rules are not installed.</p><p>Most devices will not be available unless running OpenRGB as root.</p><p>If using AppImage, Flatpak, or self-compiled versions of OpenRGB you must install the udev rules manually</p><p>See <a href='https://openrgb.org/udev'>https://openrgb.org/udev</a> to install the udev rules manually</p>
