@@ -8,8 +8,9 @@ msi-rgb 000000 000000 000000 -ir -ig -ib -d 5
 
 openrgb --profile rgbs
 
-if ! xmodmap ~/.Xmodmap; then
-   echo "failed to setup xmodmap"
+# check what Caps Lock key currently maps to
+if ! xmodmap -pke | grep -q '^keycode[[:space:]]\+66[[:space:]]*=.*Control_R'; then
+    xmodmap ~/.Xmodmap
 fi
 
 # need to configure the !whoami to allow this command
