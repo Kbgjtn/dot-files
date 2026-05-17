@@ -1,7 +1,4 @@
--- vim.scriptencoding = "utf-8"
-
 vim.loader.enable()
-
 vim.o.winborder = "rounded"
 
 local home = os.getenv("HOME")
@@ -16,6 +13,7 @@ vim.filetype.add({
 		mdx = "markdown",
 		env = "env",
 		sql = "sql",
+		zon = "zon",
 	},
 })
 
@@ -42,10 +40,54 @@ g.copilot_filetypes = {
 	templ = false,
 }
 
+-- -- Move around pairs backwards
+-- local function MoveToPrevPairs()
+--   -- Define search pattern
+--   local backsearch = [[(\|)\|\[\|\]\|{\|}\|"\|`\|']]
+--   -- Uncomment below to include < >
+--   -- local backsearch = [[(\|)\| \[\|\] \|{\|}\|"\|`\|'\|<\|>]]
+--
+--   -- Perform search backwards
+--   local lnum, col = unpack(vim.fn.searchpos(backsearch, 'bn'))
+--   -- Move cursor
+--   vim.fn.setpos('.', {0, lnum, col, 0})
+-- end
+--
+-- -- Map keys
+-- vim.keymap.set('n', '<C-k>', MoveToPrevPairs, {silent = true})
+-- vim.keymap.set('i', '<C-k>', function()
+--   MoveToPrevPairs()
+--   return vim.api.nvim_replace_termcodes('a', true, false, true)
+-- end, {silent = true, expr = true})
+--
+--
+-- -- Move around pairs forward
+-- local function MoveToNextPairs()
+--   -- Define search pattern
+--   local forwardsearch = [[(\|)\|\[\|\]\|{\|}\|"\|`\|']]
+--   -- Uncomment below to include < >
+--   -- local forwardsearch = [[(\|)\|\[\|\]\|{\|}\|"\|`\|'\|<\|>]]
+--
+--   -- Perform search forward
+--   local lnum, col = unpack(vim.fn.searchpos(forwardsearch, 'n'))
+--   -- Move cursor
+--   vim.fn.setpos('.', {0, lnum, col, 0})
+-- end
+--
+-- -- Map keys
+-- vim.keymap.set('n', '<C-j>', MoveToNextPairs, {silent = true})
+-- vim.keymap.set('i', '<C-j>', function()
+--   MoveToNextPairs()
+--   return vim.api.nvim_replace_termcodes('a', true, false, true)
+-- end, {silent = true, expr = true})
+
+o.showmatch = true
+g.matchtime = 3
+
 -- disable unused stuff
 -- g.loaded = 0
--- g.loaded_netrw = 0
--- g.loaded_netrwPlugin = 0
+g.loaded_netrw = 1
+g.loaded_netrwPlugin = 1
 g.loaded_2html_plugin = 1
 g.loaded_tutor_mode_plugin = 1
 g.loaded_matchit = 1 -- use vim-matchup
@@ -61,10 +103,10 @@ g.netrw_clipboard = 0
 g.root_spec = { "cwd" }
 
 o.syntax = "on"
-vim.o.shell = "/bin/sh"
+vim.o.shell = "/bin/bash"
 o.hidden = true
 
-vim.g.terminal_emulator = "/bin/sh"
+vim.g.terminal_emulator = "/bin/bash"
 -- Pmenusell to transparancy
 -- o.pumblend = 15
 
@@ -137,8 +179,8 @@ function FoldText()
 end
 
 o.foldtext = "v:lua.FoldText()"
-
 o.shortmess:append("c")
+
 vim.cmd("set whichwrap+=<,>,[,],h,l")
 vim.cmd([[set iskeyword+=-]])
 
@@ -169,6 +211,7 @@ o.foldlevel = 2
 o.foldmethod = "expr" -- fold based on syntax level
 o.foldlevelstart = 69
 o.foldcolumn = "0" -- show fold column when there are folds
+-- o.foldexpr = "nvim_treesitter#foldexpr()"
 o.foldexpr = "nvim_treesitter#foldexpr()"
 o.eol = false -- show if there's no eol char
 o.showbreak = "↳ " -- show this when line is broken
@@ -197,6 +240,8 @@ o.relativenumber = true -- show relative line numbers
 o.number = true -- shows absolute line number on cursor line (when relative number is on)
 vim.wo.number = true
 
+-- o.viewoptions:append("folds")
+
 -- tabs & indentation
 o.tabstop = 3 -- 3 spaces for tabs (prettier default)
 o.softtabstop = 3
@@ -218,7 +263,7 @@ o.linebreak = true
 
 o.showtabline = 2
 
-function get_git_branch(bufnr)
+local function get_git_branch(bufnr)
 	-- prefer gitsigns if available
 	local branch = vim.b[bufnr] and vim.b[bufnr].gitsigns_head or ""
 
@@ -236,26 +281,27 @@ function get_git_branch(bufnr)
 
 	return branch
 end
+
 -- table of custom filetype icons
-local ft_icons = {
-	oil = { icon = "", hl = "DevIconOil" },
-	fzf = { icon = "", hl = "DevIconFzf" },
-	mason = { icon = "", hl = "DevIconMason" },
-	checkhealth = { icon = "󰿘", hl = "DevIconCheckhealth" },
-}
+-- local ft_icons = {
+-- 	oil = { icon = "", hl = "DevIconOil" },
+-- 	fzf = { icon = "", hl = "DevIconFzf" },
+-- 	mason = { icon = "", hl = "DevIconMason" },
+-- 	checkhealth = { icon = "󰿘", hl = "DevIconCheckhealth" },
+-- }
 
-local function get_icon_for_buf(bufnr)
-	local ft = vim.bo[bufnr].filetype
-	local entry = ft_icons[ft]
-
-	if entry then
-		return entry.icon, entry.hl
-	else
-		local name = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ":t")
-		local ext = vim.fn.fnamemodify(name, ":e")
-		return require("nvim-web-devicons").get_icon(name, ext, { default = true })
-	end
-end
+-- local function get_icon_for_buf(bufnr)
+-- 	local ft = vim.bo[bufnr].filetype
+-- 	local entry = ft_icons[ft]
+--
+-- 	if entry then
+-- 		return entry.icon, entry.hl
+-- 	else
+-- 		local name = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ":t")
+-- 		local ext = vim.fn.fnamemodify(name, ":e")
+-- 		return require("nvim-web-devicons").get_icon(name, ext, { default = true })
+-- 	end
+-- end
 
 function Bufferline()
 	local current_buf = vim.api.nvim_get_current_buf()
@@ -328,6 +374,7 @@ o.smartcase = true -- if you include mixed case in your search, assumes you want
 -- cursor line
 o.cursorline = true -- highlight the current cursor line
 local group = vim.api.nvim_create_augroup("CursorLineControl", { clear = true })
+
 local set_cursorline = function(event, value, pattern)
 	vim.api.nvim_create_autocmd(event, {
 		group = group,
@@ -337,6 +384,7 @@ local set_cursorline = function(event, value, pattern)
 		end,
 	})
 end
+
 set_cursorline("WinLeave", false)
 set_cursorline("WinEnter", true)
 set_cursorline("FileType", false, "TelescopePrompt")

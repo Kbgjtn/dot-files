@@ -1,192 +1,28 @@
 return {
 	{
 		"hrsh7th/nvim-cmp",
-		lazy = false,
 		event = { "InsertEnter" },
 		dependencies = {
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-nvim-lsp",
-			"saadparwaiz1/cmp_luasnip",
-			"rafamadriz/friendly-snippets",
-			"onsails/lspkind.nvim",
-			"ray-x/cmp-sql",
-			{
-				"L3MON4D3/LuaSnip",
-				build = "make install_jsregexp",
-				config = function()
-					require("luasnip.loaders.from_vscode").lazy_load()
-					local luasnip = require("luasnip")
-					local snip = luasnip.snippet
-					local text_node = luasnip.text_node
-
-					require("luasnip").filetype_extend("typescript", { "tsdoc" })
-					require("luasnip").filetype_extend("javascript", { "jsdoc" })
-
-					-- Jump forward
-					vim.keymap.set({ "i", "s" }, "<Tab>", function()
-						if luasnip.jumpable(1) then
-							luasnip.jump(1)
-						end
-					end, { silent = true })
-
-					-- Jump backward
-					vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
-						if luasnip.jumpable(-1) then
-							luasnip.jump(-1)
-						end
-					end, { silent = true })
-
-					luasnip.add_snippets("zig", {
-						snip("println", {
-							text_node({ 'std.debug.print("' }),
-							luasnip.insert_node(1, ""), -- First insert: format string
-							text_node({ '{}\\n", .{' }),
-							luasnip.insert_node(2), -- Second insert: variables
-							text_node({ "});" }),
-						}),
-					})
-
-					luasnip.add_snippets("go", {
-						snip("enn", {
-							text_node({
-								"if err != nil {",
-								"  return ",
-							}),
-							luasnip.insert_node(1, ""), -- Cursor will be placed here
-							text_node({ "", "}" }),
-						}),
-						snip("en", {
-							text_node({
-								"; err != nil {",
-								"  return ",
-							}),
-							luasnip.insert_node(1, ""), -- Cursor will be placed here
-							text_node({ "", "}" }),
-						}),
-						snip("ni", {
-							text_node({
-								'panic("not impelmented!")',
-							}),
-						}),
-						snip("cx", {
-							text_node({
-								"ctx context.Context",
-							}),
-						}),
-						snip("wrp", {
-							text_node({ "w http.ResponseWriter, r *http.Request" }),
-						}),
-						-- snip("bf", {
-						-- 	text_node("func Benchmark"),
-						-- 	luasnip.insert_node(1, ""),
-						-- 	text_node({
-						-- 		"(b *testing.B) {",
-						-- 		"}",
-						-- 	}),
-						-- 	luasnip.insert_node(0),
-						-- }),
-						snip("tsc", {
-							text_node("func Test"),
-							luasnip.insert_node(1, ""),
-							text_node({
-								"(t *testing.T) {",
-								"  tests := []struct{",
-								"     name string",
-								"     in any",
-								"     exp any",
-								"     expErr error",
-								"  }{",
-								"     {",
-								'        name: "",',
-								"        in: nil,",
-								"        exp: nil,",
-								"        expErr: nil,",
-								"     },",
-								"  }",
-								"",
-								"  for _, tc := range tests {",
-								"     t.Run(tc.name, func(t *testing.T) {",
-								"     })",
-								"  }",
-								"}",
-							}),
-							luasnip.insert_node(0),
-						}),
-						snip("gorm", {
-							text_node({ '`gorm:"' }),
-							luasnip.insert_node(1, ""), -- Cursor will be placed here
-							text_node('"`'),
-						}),
-						snip("validate", {
-							text_node({ '`validate:"' }),
-							luasnip.insert_node(1, ""), -- Cursor will be placed here
-							text_node('"`'),
-						}),
-						snip("col", {
-							text_node({ '`col:"' }),
-							luasnip.insert_node(1, ""), -- Cursor will be placed here
-							text_node('"`'),
-						}),
-						snip("default", {
-							text_node({ '`default:"' }),
-							luasnip.insert_node(1, ""), -- Cursor will be placed here
-							text_node('"`'),
-						}),
-						snip("envconfig", {
-							text_node({ '`envconfig:"' }),
-							luasnip.insert_node(1, ""), -- Cursor will be placed here
-							text_node('"`'),
-						}),
-						snip("path", {
-							text_node({ '`path:"' }),
-							luasnip.insert_node(1, ""), -- Cursor will be placed here
-							text_node('"`'),
-						}),
-						snip("query", {
-							text_node({ '`query:"' }),
-							luasnip.insert_node(1, ""), -- Cursor will be placed here
-							text_node('"`'),
-						}),
-						snip("required", {
-							text_node({ '`required:"' }),
-							luasnip.insert_node(1, ""), -- Cursor will be placed here
-							text_node('"`'),
-						}),
-						snip("split_words", {
-							text_node({ '`split_words:"' }),
-							luasnip.insert_node(1, "true"), -- Cursor will be placed here
-							text_node('"`'),
-						}),
-						snip("rn", {
-							text_node("return"),
-						}),
-						snip("ct", {
-							text_node("continue"),
-						}),
-					})
-
-					require("luasnip.loaders.from_vscode").lazy_load()
-
-					luasnip.filetype_extend("typescriptreact", { "html" })
-					luasnip.filetype_extend("templ", { "html", "tailwindcss", "htmx" })
-					luasnip.filetype_extend("proto", { "proto" })
-				end,
-			},
+			-- "onsails/lspkind.nvim",
+			-- "saadparwaiz1/cmp_luasnip",
+			-- "rafamadriz/friendly-snippets",
+			-- { "ray-x/cmp-sql", },
 		},
 		config = function()
 			-- Register nvim-cmp lsp capabilities
 			vim.lsp.config("*", { capabilities = require("cmp_nvim_lsp").default_capabilities() })
-			vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
 
 			local cmp = require("cmp")
-			--local lspkind = require("lspkind")
+			-- local my_snippets_source = require("kbgjtn.snip")
+			-- cmp.register_source("my_snippets", my_snippets_source.new())
 
 			cmp.setup({
+				-- performance = { max_view_entries = 7 },
 				preselect = cmp.PreselectMode.None,
-				completion = {
-					completeopt = "menu,menuone,noinsert",
-				},
+				completion = { completeopt = "menu,menuone,noinsert" },
 				window = {
 					completion = cmp.config.window.bordered(),
 					documentation = cmp.config.window.bordered(),
@@ -216,10 +52,10 @@ return {
 							return require("cmp.types").lsp.CompletionItemKind[entry:get_kind()] ~= "Text"
 						end,
 					},
-					{ name = "luasnip" }, -- snippets
 					{ name = "buffer" }, -- text within current buffer
 					{ name = "path" }, -- file system paths
-					{ name = "sql" }, -- file system paths
+					-- { name = "luasnip" }, -- snippets
+					-- { name = "sql" }, -- file system paths
 				}),
 				view = {
 					docs = {
@@ -281,3 +117,171 @@ return {
 		end,
 	},
 }
+
+-- 	{
+-- 		"L3MON4D3/LuaSnip",
+-- 		build = "make install_jsregexp",
+-- 		config = function()
+-- 			require("luasnip.loaders.from_vscode").lazy_load()
+-- 			local luasnip = require("luasnip")
+-- 			local snip = luasnip.snippet
+-- 			local text_node = luasnip.text_node
+--
+-- 			require("luasnip").filetype_extend("typescript", { "tsdoc" })
+-- 			require("luasnip").filetype_extend("javascript", { "jsdoc" })
+--
+-- 			-- -- Jump forward
+-- 			-- vim.keymap.set({ "i", "s" }, "<Tab>", function()
+-- 			-- 	if luasnip.jumpable(1) then
+-- 			-- 		luasnip.jump(1)
+-- 			-- 	end
+-- 			-- end, { silent = true })
+-- 			--
+-- 			-- -- Jump backward
+-- 			-- vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
+-- 			-- 	if luasnip.jumpable(-1) then
+-- 			-- 		luasnip.jump(-1)
+-- 			-- 	end
+-- 			-- end, { silent = true })
+--
+-- 			luasnip.add_snippets("zig", {
+-- 				snip("println", {
+-- 					text_node({ 'std.debug.print("' }),
+-- 					luasnip.insert_node(1, ""), -- First insert: format string
+-- 					text_node({ '{}\\n", .{' }),
+-- 					luasnip.insert_node(2), -- Second insert: variables
+-- 					text_node({ "});" }),
+-- 				}),
+--
+-- 				snip("!impl", {
+-- 					text_node({ '@panic("no implemented!");' }),
+-- 				}),
+-- 			})
+--
+-- 			luasnip.add_snippets("go", {
+-- 				snip("enn", {
+-- 					text_node({
+-- 						"if err != nil {",
+-- 						"  return ",
+-- 					}),
+-- 					luasnip.insert_node(1, ""), -- Cursor will be placed here
+-- 					text_node({ "", "}" }),
+-- 				}),
+-- 				snip("en", {
+-- 					text_node({
+-- 						"; err != nil {",
+-- 						"  return ",
+-- 					}),
+-- 					luasnip.insert_node(1, ""), -- Cursor will be placed here
+-- 					text_node({ "", "}" }),
+-- 				}),
+-- 				snip("ni", {
+-- 					text_node({
+-- 						'panic("not impelmented!")',
+-- 					}),
+-- 				}),
+-- 				snip("cx", {
+-- 					text_node({
+-- 						"ctx context.Context",
+-- 					}),
+-- 				}),
+-- 				snip("wrp", {
+-- 					text_node({ "w http.ResponseWriter, r *http.Request" }),
+-- 				}),
+-- 				-- snip("bf", {
+-- 				-- 	text_node("func Benchmark"),
+-- 				-- 	luasnip.insert_node(1, ""),
+-- 				-- 	text_node({
+-- 				-- 		"(b *testing.B) {",
+-- 				-- 		"}",
+-- 				-- 	}),
+-- 				-- 	luasnip.insert_node(0),
+-- 				-- }),
+-- 				snip("tsc", {
+-- 					text_node("func Test"),
+-- 					luasnip.insert_node(1, ""),
+-- 					text_node({
+-- 						"(t *testing.T) {",
+-- 						"  tests := []struct{",
+-- 						"     name string",
+-- 						"     in any",
+-- 						"     exp any",
+-- 						"     expErr error",
+-- 						"  }{",
+-- 						"     {",
+-- 						'        name: "",',
+-- 						"        in: nil,",
+-- 						"        exp: nil,",
+-- 						"        expErr: nil,",
+-- 						"     },",
+-- 						"  }",
+-- 						"",
+-- 						"  for _, tc := range tests {",
+-- 						"     t.Run(tc.name, func(t *testing.T) {",
+-- 						"     })",
+-- 						"  }",
+-- 						"}",
+-- 					}),
+-- 					luasnip.insert_node(0),
+-- 				}),
+-- 				snip("gorm", {
+-- 					text_node({ '`gorm:"' }),
+-- 					luasnip.insert_node(1, ""), -- Cursor will be placed here
+-- 					text_node('"`'),
+-- 				}),
+-- 				snip("validate", {
+-- 					text_node({ '`validate:"' }),
+-- 					luasnip.insert_node(1, ""), -- Cursor will be placed here
+-- 					text_node('"`'),
+-- 				}),
+-- 				snip("col", {
+-- 					text_node({ '`col:"' }),
+-- 					luasnip.insert_node(1, ""), -- Cursor will be placed here
+-- 					text_node('"`'),
+-- 				}),
+-- 				snip("default", {
+-- 					text_node({ '`default:"' }),
+-- 					luasnip.insert_node(1, ""), -- Cursor will be placed here
+-- 					text_node('"`'),
+-- 				}),
+-- 				snip("envconfig", {
+-- 					text_node({ '`envconfig:"' }),
+-- 					luasnip.insert_node(1, ""), -- Cursor will be placed here
+-- 					text_node('"`'),
+-- 				}),
+-- 				snip("path", {
+-- 					text_node({ '`path:"' }),
+-- 					luasnip.insert_node(1, ""), -- Cursor will be placed here
+-- 					text_node('"`'),
+-- 				}),
+-- 				snip("query", {
+-- 					text_node({ '`query:"' }),
+-- 					luasnip.insert_node(1, ""), -- Cursor will be placed here
+-- 					text_node('"`'),
+-- 				}),
+-- 				snip("required", {
+-- 					text_node({ '`required:"' }),
+-- 					luasnip.insert_node(1, ""), -- Cursor will be placed here
+-- 					text_node('"`'),
+-- 				}),
+-- 				snip("split_words", {
+-- 					text_node({ '`split_words:"' }),
+-- 					luasnip.insert_node(1, "true"), -- Cursor will be placed here
+-- 					text_node('"`'),
+-- 				}),
+-- 				snip("rn", {
+-- 					text_node("return"),
+-- 				}),
+-- 				snip("ct", {
+-- 					text_node("continue"),
+-- 				}),
+-- 			})
+--
+-- 			require("luasnip.loaders.from_vscode").lazy_load()
+--
+-- 			luasnip.filetype_extend("typescriptreact", { "html" })
+-- 			luasnip.filetype_extend("templ", { "html", "tailwindcss", "htmx" })
+-- 			luasnip.filetype_extend("proto", { "proto" })
+-- 		end,
+-- 	},
+-- },

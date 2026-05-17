@@ -1,405 +1,397 @@
 return {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
-	dependencies = {
-		"hrsh7th/cmp-nvim-lsp",
-	},
-	opts = {
-		ui = {
-			windows = {
-				default_options = {
+	dependencies = { "hrsh7th/cmp-nvim-lsp" },
+	opts = function()
+		local cmp_nvim_lsp = require("cmp_nvim_lsp")
+		local keymap = vim.keymap
+
+		local opts = {
+			-- global diagnostic defaults (used later in config)
+			diagnostics = {
+				underline = true,
+				update_in_insert = false,
+				virtual_text = false,
+				virtual_lines = false,
+				severity_sort = true,
+				signs = false,
+				float = {
+					header = "",
+					max_width = 80,
+					max_height = 30,
+					wrap = true,
 					border = "rounded",
+					source = true,
 				},
 			},
-		},
-	},
+			-- on_attach used for all servers
+			on_attach = function(_, bufnr)
+				local map_opts = { noremap = true, silent = true, buffer = bufnr }
 
-	config = function()
-		local cmp_nvim_lsp = require("cmp_nvim_lsp")
+				map_opts.desc = "Go to declaration"
+				keymap.set("n", "gD", vim.lsp.buf.declaration, map_opts)
 
-		local keymap = vim.keymap
-		local opts = { noremap = true, silent = true }
+				map_opts.desc = "Show LSP definitions"
+				keymap.set("n", "gd", vim.lsp.buf.definition, map_opts)
 
-		-- local border = {
-		-- 	{ "╭", "FloatBorder" }, -- Rounded upper-left corner (boldish)
-		-- 	{ "─", "FloatBorder" }, -- Bold horizontal line
-		-- 	{ "╮", "FloatBorder" }, -- Rounded upper-right corner (boldish)
-		-- 	{ "│", "FloatBorder" }, -- Bold vertical line
-		-- 	{ "╯", "FloatBorder" }, -- Rounded lower-right corner (boldish)
-		-- 	{ "─", "FloatBorder" }, -- Bold horizontal line
-		-- 	{ "╰", "FloatBorder" }, -- Rounded lower-left corner (boldish)
-		-- 	{ "│", "FloatBorder" }, -- Bold vertical line
-		-- }
-		local on_attach = function(_, bufnr)
-			opts.buffer = bufnr
+				map_opts.desc = "Show LSP implementations"
+				keymap.set("n", "gi", vim.lsp.buf.implementation, map_opts)
 
-			opts.desc = "Show LSP references"
-			keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts)
+				map_opts.desc = "Show LSP type definitions"
+				keymap.set("n", "gy", vim.lsp.buf.type_definition, map_opts)
 
-			opts.desc = "Go to declaration"
-			keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+				map_opts.desc = "See available code actions"
+				keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, map_opts)
 
-			opts.desc = "Show LSP definitions"
-			keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+				map_opts.desc = "Smart rename"
+				keymap.set("n", "<leader>rn", vim.lsp.buf.rename, map_opts)
 
-			opts.desc = "Show LSP implementations"
-			keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+				map_opts.desc = "Show line diagnostics"
+				keymap.set("n", "<leader>d", vim.diagnostic.open_float, map_opts)
 
-			opts.desc = "Show LSP type definitions"
-			keymap.set("n", "gy", vim.lsp.buf.type_definition, opts)
+				map_opts.desc = "Go to previous diagnostic"
+				keymap.set("n", "[d", function()
+					return vim.diagnostic.jump({ count = -1, float = true })
+				end, map_opts)
 
-			opts.desc = "See available code actions"
-			keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
+				map_opts.desc = "Go to next diagnostic"
+				keymap.set("n", "]d", function()
+					return vim.diagnostic.jump({ count = 1, float = true })
+				end, map_opts)
 
-			opts.desc = "Smart rename"
-			keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+				map_opts.desc = "Show documentation for what is under cursor"
+				keymap.set("n", "K", function()
+					return vim.lsp.buf.hover({
+						border = "rounded",
+						title = "",
+						max_width = 80,
+						max_height = 20,
+						min_width = 16,
+						focusable = true,
+						loadfile = true,
+					})
+				end, map_opts)
 
-			--[[ opts.desc = "Show buffer diagnostics in location list"
-			vim.keymap.set("n", "<leader>dl", function()
-				vim.diagnostic.setloclist({ open = true })
-			end, opts) ]]
+				map_opts.desc = "Restart LSP"
+				keymap.set("n", "<leader>lr", ":LspRestart<CR>", map_opts)
+			end,
+			-- capabilities
+			capabilities = (function()
+				local caps = cmp_nvim_lsp.default_capabilities()
+				caps.textDocument.completion.completionItem.snippetSupport = true
+				caps.offsetEncoding = { "utf-8", "utf-16" }
+				return caps
+			end)(),
 
-			opts.desc = "Show line diagnostics"
-			keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
+			-- servers table: configure servers here
+			servers = {
+				["*"] = {
+					capabilities = {
+						workspace = {
+							fileOperations = {
+								didRename = true,
+								willRename = true,
+							},
+						},
+					},
+					keys = {
+						{ "gd", vim.lsp.buf.definition, desc = "Goto Definition", has = "definition" },
+						{ "gr", vim.lsp.buf.references, desc = "References", nowait = true },
+						{ "gI", vim.lsp.buf.implementation, desc = "Goto Implementation" },
+						{ "gy", vim.lsp.buf.type_definition, desc = "Goto Type Definition" },
+						{ "gD", vim.lsp.buf.declaration, desc = "Goto Declaration" },
+						{
+							"K",
+							function()
+								return vim.lsp.buf.hover()
+							end,
+							desc = "Hover",
+						},
+						{
+							"<c-k>",
+							function()
+								return vim.lsp.buf.signature_help()
+							end,
+							mode = "i",
+							desc = "Signature Help",
+							has = "signatureHelp",
+						},
+						{
+							"<leader>ca",
+							vim.lsp.buf.code_action,
+							desc = "Code Action",
+							mode = { "n", "x" },
+							has = "codeAction",
+						},
+						{ "<leader>cr", vim.lsp.buf.rename, desc = "Rename", has = "rename" },
+						{
+							"<leader>cc",
+							vim.lsp.codelens.run,
+							desc = "Run Codelens",
+							mode = { "n", "x" },
+							has = "codeLens",
+						},
+						{
+							"<leader>cC",
+							vim.lsp.codelens.refresh,
+							desc = "Refresh & Display Codelens",
+							mode = { "n" },
+							has = "codeLens",
+						},
+					},
+				},
 
-			opts.desc = "Go to previous diagnostic"
-			keymap.set("n", "[d", function()
-				return vim.diagnostic.jump({ count = -1, float = true })
-			end, opts)
+				-- lua_ls with proper runtime/workspace settings
+				lua_ls = {
+					settings = {
+						Lua = {
+							runtime = { version = "LuaJIT" },
+							diagnostics = { globals = { "vim", "LazyVim" } },
+							workspace = {
+								library = {
+									vim.fn.expand("$VIMRUNTIME/lua"),
+									vim.fn.stdpath("config") .. "/lua",
+								},
+								checkThirdParty = false,
+							},
+							telemetry = { enable = false },
+							codeLens = { enable = true },
+							completion = { callSnippet = "Replace" },
+							doc = { privateName = { "^_" } },
+							hint = {
+								enable = true,
+								setType = false,
+								paramType = true,
+								paramName = "Disable",
+								semicolon = "Disable",
+								arrayIndex = "Disable",
+							},
+						},
+					},
+				},
 
-			opts.desc = "Go to next diagnostic"
-			keymap.set("n", "]d", function()
-				return vim.diagnostic.jump({ count = 1, float = true })
-			end, opts)
+				-- other servers (kept from your original)
+				zls = {
+					capabilities = true, -- will be merged with global capabilities in config
+					on_attach = true,
+					cmd = { "/home/ozy/.zvm/bin/zls" },
+					filetypes = { "zig", "zon" },
+					settings = {
+						zls = {
+							enable_argument_placeholders = false,
+							warn_style = true,
+							inlay_hints_hide_redundant_param_names = true,
+							inlay_hints_hide_redundant_param_names_last_token = true,
+						},
+					},
+					single_file_support = true,
+					root_markers = { ".git", "build.zig" },
+				},
 
-			opts.desc = "Show documentation for what is under cursor"
-			keymap.set("n", "K", function()
-				return vim.lsp.buf.hover({
-					border = "rounded",
-					title = "",
-					max_width = 80,
-					max_height = 20,
-					min_width = 16,
-					focusable = true,
-					loadfile = true,
-				})
-			end, opts)
+				cssls = true,
+				rust_analyzer = true,
 
-			opts.desc = "Restart LSP"
-			keymap.set("n", "<leader>lr", ":LspRestart<CR>", opts)
+				yamlls = {
+					filetypes = { "yml", "yaml" },
+					settings = {
+						yaml = {
+							format = { enable = true, singleQuote = true, bracketSpacing = true },
+						},
+					},
+				},
+
+				gopls = {
+					on_attach = true,
+					capabilities = true,
+					cmd = { "gopls" },
+					filetypes = { "go", "gomod" },
+					root_markers = { "go.sum", "go.mod", "go.work", ".git" },
+					settings = {
+						gopls = {
+							analyses = { rangeint = false },
+							staticcheck = false,
+							gofumpt = true,
+						},
+					},
+				},
+				cmake = true,
+				ts_ls = {
+					cmd = { "typescript-language-server", "--stdio" },
+					workspace_required = true,
+					filetypes = {
+						"html",
+						"javascript",
+						"javascriptreact",
+						"javascript.jsx",
+						"typescript",
+						"typescriptreact",
+						"typescript.tsx",
+					},
+				},
+				html = {
+					filetypes = { "html", "typescriptreact", "javascriptreact" },
+					init_options = { userLanguages = { templ = "html" } },
+				},
+				-- htmx = { filetypes = { "html", "templ" }, init_options = { userLanguages = { templ = "html" } } },
+				-- tailwindcss = {
+				-- 	filetypes = {
+				-- 		"templ",
+				-- 		"astro",
+				-- 		"markdown",
+				-- 		"javascript",
+				-- 		"react",
+				-- 		"typescript",
+				-- 		"aspnetcorerazor",
+				-- 		"astro-markdown",
+				-- 		"blade",
+				-- 		"django-html",
+				-- 		"edge",
+				-- 		"eelixir",
+				-- 		"ejs",
+				-- 		"erb",
+				-- 		"eruby",
+				-- 		"gohtml",
+				-- 		"haml",
+				-- 		"handlebars",
+				-- 		"hbs",
+				-- 		"html",
+				-- 		"html-eex",
+				-- 		"jade",
+				-- 		"leaf",
+				-- 		"liquid",
+				-- 		"mdx",
+				-- 		"mustache",
+				-- 		"njk",
+				-- 		"nunjucks",
+				-- 		"php",
+				-- 		"razor",
+				-- 		"slim",
+				-- 		"twig",
+				-- 		"css",
+				-- 		"less",
+				-- 		"postcss",
+				-- 		"sass",
+				-- 		"scss",
+				-- 		"stylus",
+				-- 		"sugarss",
+				-- 		"javascriptreact",
+				-- 		"reason",
+				-- 		"rescript",
+				-- 		"vue",
+				-- 		"svelte",
+				-- 	},
+				-- 	init_options = { userLanguages = { templ = "html" } },
+				-- 	settings = {
+				-- 		tailwindCSS = {
+				-- 			classAttributes = { "class", "className", "class:list", "classList", "ngClass" },
+				-- 			includeLanguages = { templ = "html" },
+				-- 			lint = {
+				-- 				cssConflict = "warning",
+				-- 				invalidApply = "error",
+				-- 				invalidConfigPath = "error",
+				-- 				invalidScreen = "error",
+				-- 				invalidTailwindDirective = "error",
+				-- 				invalidVariant = "error",
+				-- 				recommendedVariantOrder = "warning",
+				-- 			},
+				-- 			validate = true,
+				-- 		},
+				-- 	},
+				-- },
+
+				-- marksman = { filetypes = { "markdown", "markdown.mdx", "md", "mdx" } },
+
+				-- emmet_ls = {
+				-- 	filetypes = {
+				-- 		"html",
+				-- 		"astro",
+				-- 		"templ",
+				-- 		"typescriptreact",
+				-- 		"javascriptreact",
+				-- 		"css",
+				-- 		"sass",
+				-- 		"scss",
+				-- 		"less",
+				-- 		"svelte",
+				-- 	},
+				-- 	init_options = { userLanguages = { templ = "html" } },
+				-- },
+				bashls = { single_file_support = true },
+				-- buf_ls = { filetypes = { "proto" }, single_file_support = true },
+				-- templ = { filetypes = { "templ" } },
+				clangd = { filetypes = { "c", "c++", "h" } },
+				-- phpactor = { filetypes = { "php" } },
+			},
+
+			-- optional per-server setup overrides
+			setup = {},
+		}
+
+		return opts
+	end,
+
+	config = function(_, opts)
+		-- apply diagnostics config
+		vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
+
+		-- register formatter (if you use LazyVim.format)
+		-- if LazyVim and LazyVim.format and LazyVim.lsp then
+		-- 	LazyVim.format.register(LazyVim.lsp.formatter())
+		-- end
+
+		-- set global "*" config first if present
+		if opts.servers["*"] then
+			vim.lsp.config("*", opts.servers["*"])
 		end
 
-		local capabilities = cmp_nvim_lsp.default_capabilities()
-		capabilities.textDocument.completion.completionItem.snippetSupport = true
-		capabilities.offsetEncoding = { "utf-8", "utf-16" }
+		-- helper to normalize server options and configure then enable
+		local have_mason = pcall(require, "mason-lspconfig")
+		local mason_map = have_mason and require("mason-lspconfig.mappings").get_mason_map().lspconfig_to_package or {}
+		local mason_all = vim.tbl_keys(mason_map)
 
-		vim.diagnostic.config({
-			underline = true,
-			virtual_text = false,
-			virtual_lines = false,
-			severity_sort = true,
-			signs = false,
-			update_in_insert = true,
-			float = {
-				max_width = 80,
-				max_height = 30,
-				wrap = true,
-				border = "rounded",
-				source = true,
-			},
-		})
+		local mason_exclude = {}
 
-		-- vim.lsp.handlers["textDocument/hover"] = function(_, result, _, config)
-		-- 	config = config or {}
-		-- 	config.border = "rounded"
-		-- 	config.max_width = 20
-		-- 	config.max_height = 20
-		-- 	config.min_width = 10
-		-- 	return vim.lsp.util.open_floating_preview(result.contents, "markdown", config)
-		-- end
+		local function configure(server)
+			if server == "*" then
+				return false
+			end
+			local sopts = opts.servers[server]
+			sopts = sopts == true and {} or (not sopts and { enabled = false }) or sopts
 
-		-- vim.lsp.buf.hover({
-		-- 	border = "rounded",
-		-- 	title = "abcd",
-		-- 	max_width = 50,
-		-- 	max_height = 16,
-		-- 	min_width = 20,
-		-- 	loadfile = true,
-		-- })
+			if sopts.enabled == false then
+				mason_exclude[#mason_exclude + 1] = server
+				return
+			end
 
-		vim.lsp.buf.signature_help({
-			border = "rounded",
-			title = "",
-			max_width = 50,
-			min_width = 20,
-			loadfile = true,
-		})
+			local use_mason = sopts.mason ~= false and vim.tbl_contains(mason_all, server)
+			local setup_fn = opts.setup[server] or opts.setup["*"]
+			if setup_fn and setup_fn(server, sopts) then
+				mason_exclude[#mason_exclude + 1] = server
+			else
+				-- merge common capabilities/on_attach if server opts reference true
+				if sopts.on_attach == true then
+					sopts.on_attach = opts.on_attach
+				end
+				if sopts.capabilities == true then
+					sopts.capabilities = opts.capabilities
+				end
 
-		-- local signs = { Error = "󰅚 ", Warn = " ", Hint = "󰘥 ", Info = "󰋽 " }
-		-- for type, icon in pairs(signs) do
-		-- 	local hl = "DiagnosticSign" .. type
-		-- 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-		-- end
+				vim.lsp.config(server, sopts) -- register config
+				if not use_mason then
+					vim.lsp.enable(server) -- enable after config
+				end
+			end
+			return use_mason
+		end
 
-		vim.lsp.config("*", {
-			on_attach = on_attach,
-			capabilities = capabilities,
-		})
+		local servers = vim.tbl_keys(opts.servers)
+		local install = vim.tbl_filter(configure, servers)
 
-		vim.lsp.enable("yamlls")
-		vim.lsp.enable("gopls")
-		vim.lsp.enable("lua_ls")
-		vim.lsp.enable("rust_analyzer")
-		vim.lsp.enable("zls")
-
-		vim.lsp.enable("ts_ls")
-		vim.lsp.enable("html")
-		-- vim.lsp.enable("tailwindcss")
-
-		vim.lsp.config("zls", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-			cmd = { "zls" },
-			filetypes = { "zig", "zir" },
-			settings = {
-				zls = {
-					enable_argument_placeholders = false,
-					warn_style = true,
-				},
-			},
-			root_markers = {
-				".git",
-				"build.zig",
-			},
-			single_file_support = true,
-		})
-
-		vim.lsp.config("cssls", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-
-		vim.lsp.config("rust_analyzer", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-
-		vim.lsp.config("yamlls", {
-			format = {
-				enable = true,
-				singleQuote = true,
-				bracketSpacing = true,
-			},
-			filetypes = { "yml", "yaml" },
-			validate = true,
-			completion = true,
-		})
-
-		vim.lsp.config("gopls", {
-			-- root_dir = vim.fs.dirname(vim.fs.find({ "go.sum", "go.mod", "*.go", "go.work", ".git" }, { upward = true })[1]),
-			on_attach = on_attach,
-			capabilities = capabilities,
-			cmd = { "gopls" },
-			filetypes = { "go", "gomod" },
-			root_markers = {
-				"go.sum",
-				"go.mod",
-				"go.work",
-				".git",
-			},
-			settings = {
-				gopls = {
-					analyses = {
-						rangeint = false,
-					},
-					staticcheck = false,
-					gofumpt = true,
-				},
-			},
-		})
-
-		vim.lsp.config("cmake", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-
-		vim.lsp.config("ts_ls", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-			cmd = { "typescript-language-server", "--stdio" },
-			root_markers = {
-				"package.json",
-			},
-			workspace_required = true,
-			filetypes = {
-				"html",
-				"javascript",
-				"javascriptreact",
-				"javascript.jsx",
-				"typescript",
-				"typescriptreact",
-				"typescript.tsx",
-			},
-		})
-
-		vim.lsp.config("html", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-			filetypes = { "html", "typescriptreact", "javascriptreact" },
-			init_options = { userLanguages = { templ = "html" } },
-		})
-
-		vim.lsp.config("htmx", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-			filetypes = { "html", "templ" },
-			init_options = { userLanguages = { templ = "html" } },
-		})
-
-		vim.lsp.config("tailwindcss", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-			filetypes = {
-				"templ",
-				"astro",
-				"markdown",
-				"javascript",
-				"react",
-				"typescript",
-				"aspnetcorerazor",
-				"astro",
-				"astro-markdown",
-				"blade",
-				"django-html",
-				"edge",
-				"eelixir",
-				"ejs",
-				"erb",
-				"eruby",
-				"gohtml",
-				"haml",
-				"handlebars",
-				"hbs",
-				"html",
-				"html-eex",
-				"jade",
-				"leaf",
-				"liquid",
-				"markdown",
-				"mdx",
-				"mustache",
-				"njk",
-				"nunjucks",
-				"php",
-				"razor",
-				"slim",
-				"twig",
-				"css",
-				"less",
-				"postcss",
-				"sass",
-				"scss",
-				"stylus",
-				"sugarss",
-				"javascript",
-				"javascriptreact",
-				"reason",
-				"rescript",
-				"typescript",
-				"typescriptreact",
-				"vue",
-				"svelte",
-			},
-			-- root_dir = function(fname)
-			-- 	return lspconfig.util.root_pattern("tailwind.config.js", "tailwind.config.ts")(fname)
-			-- 		or lspconfig.util.root_pattern("*.md", ".md")(fname)
-			-- 		or lspconfig.util.root_pattern("postcss.config.js", "postcss.config.ts")(fname)
-			-- 		or lspconfig.util.find_package_json_ancestor(fname)
-			-- 		or lspconfig.util.find_node_modules_ancestor(fname)
-			-- 		or lspconfig.util.find_git_ancestor(fname)
-			-- end,
-			init_options = { userLanguages = { templ = "html" } },
-			settings = {
-				tailwindCSS = {
-					classAttributes = { "class", "className", "class:list", "classList", "ngClass" },
-					includeLanguages = {
-						templ = "html",
-					},
-					lint = {
-						cssConflict = "warning",
-						invalidApply = "error",
-						invalidConfigPath = "error",
-						invalidScreen = "error",
-						invalidTailwindDirective = "error",
-						invalidVariant = "error",
-						recommendedVariantOrder = "warning",
-					},
-					validate = true,
-				},
-			},
-		})
-
-		vim.lsp.config("marksman", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-			filetypes = { "markdown", "markdown.mdx", "md", "mdx" },
-			-- root_dir = lspconfig.util.root_pattern("*.md", ".md"),
-		})
-
-		vim.lsp.config("emmet_ls", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-
-			filetypes = {
-				"html",
-				"astro",
-				"templ",
-				"typescriptreact",
-				"javascriptreact",
-				"css",
-				"sass",
-				"scss",
-				"less",
-				"svelte",
-			},
-			init_options = { userLanguages = { templ = "html" } },
-		})
-
-		vim.lsp.config("bashls", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-			single_file_support = true,
-		})
-
-		vim.lsp.config("buf_ls", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-			-- filetypes = { "proto" },
-			-- root_dir = lspconfig.util.root_pattern("*.proto"),
-			-- cmd = { "buf", "beta", "lsp", "--timeout=0", "--log-format=text" },
-			filetypes = { "proto" },
-			--root_dir = lspconfig.util.root_pattern("buf.yaml", "buf.work.yaml", ".git"),
-			single_file_support = true,
-		})
-
-		vim.lsp.config("templ", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-			filetypes = { "templ" },
-		})
-
-		vim.lsp.config("clangd", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-			filetypes = { "c", "c++", "h" },
-			--root_dir = lspconfig.util.root_pattern("compile_commands.json", "CMakeLists.txt"),
-		})
-
-		vim.lsp.config("phpactor", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-			filetypes = { "php" },
-			--root_dir = lspconfig.util.root_pattern("composer.json", ".git"),
-		})
+		if have_mason then
+			require("mason-lspconfig").setup({
+				ensure_installed = vim.list_extend(install, {}),
+				automatic_enable = { exclude = mason_exclude },
+			})
+		end
 	end,
 }

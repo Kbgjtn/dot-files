@@ -15,7 +15,7 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 vim.o.shell = "/bin/sh"
-vim.lsp.log.set_level(vim.log.levels.OFF)
+-- vim.lsp.log.set_level(vim.log.levels.ERROR)
 
 require("lazy").setup({
 	spec = {
